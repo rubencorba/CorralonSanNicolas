@@ -76,19 +76,19 @@ function Create() {
         UserId: userId }) //Si currentUser es 1, el UserId será 1
     }, [image]);
 
-    const handleSubmit = (event) => {
-      event.preventDefault(); // Evita el comportamiento por defecto
+    /* const handleSubmit = (event) => {
+      event.preventDefault(); 
       dispatch(postTramite(input))
 
       setShowPopup(true);
-    };
+    }; */
 
   return (
     <div>
     <Navbar></Navbar>
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full my-24">
-    <form onSubmit={handleSubmit}>
+    <form /* onSubmit={handleSubmit} */>
       <div class="space-y-12">
       <h2 class="text-base font-semibold leading-7 text-gray-900">Información personal para el Trámite</h2>
   

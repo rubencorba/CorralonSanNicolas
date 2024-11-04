@@ -1,14 +1,17 @@
 import axios from 'axios';
 
-export const GET_ALL_USERS="GET_ALL_USERS"
+/* export const GET_ALL_USERS="GET_ALL_USERS"
 export const POST_TRAMITE="POST_TRAMITE"
 export const UPDATE_CURRENT_USER="UPDATE_CURRENT_USER"
 export const GET_ALL_TRAMITES="GET_ALL_TRAMITES"
 export const APROBAR_TRAMITE="APROBAR_TRAMITE"
 export const RECHAZAR_TRAMITE="RECHAZAR_TRAMITE"
-export const POST_USERS="POST_USERS"
+export const POST_USERS="POST_USERS" */
 
-export const getAllUsers=()=>{
+
+export const UPDATE_PAGE="UPDATE_PAGE"
+
+/* export const getAllUsers=()=>{
     try {
         const endpoint='http://localhost:3001/user';
         return async (dispatch)=>{
@@ -44,8 +47,6 @@ export const getAllTramites=()=>{
 }
 
 export const postTramite=(info)=>{
-        /* console.log(info) */
-        /* info.UserId= 1; */
         info.estado= "pendiente";
         info.comentario='';
         info.domicilio= info.domicilio + ' ' + info.numero + ' ' + '(' + info.dptoPiso + ')' 
@@ -98,7 +99,6 @@ export const updateTramiteRechazado=(comentario,id)=>{
             estado:'rechazado',
             id:id
         }
-        /* console.log(info) */
         try {
             const endpoint='http://localhost:3001/tramite';
             return async (dispatch)=>{
@@ -151,4 +151,13 @@ export const postUsers=()=>{
         console.log(error);
     }
         
+} */
+
+export const updatePage=(p)=>{
+    console.log("llega2",p)
+    return ({
+            type:UPDATE_PAGE,
+            payload:p
+    })
+    
 }

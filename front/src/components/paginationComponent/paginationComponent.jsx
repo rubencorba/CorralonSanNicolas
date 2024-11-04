@@ -1,7 +1,19 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import {useDispatch,useSelector} from "react-redux"
+import { updatePage } from '../../redux/actions';
 
 function PaginationComponent() {
 
+  const dispatch= useDispatch();
+
+  /* const currentPagina= useSelector((state)=>state.pagina); */
+
+  const handlePage =(p)=>{
+    console.log("llega")
+    dispatch(updatePage(p))
+  }
+
+  
     
     return (
         <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -20,12 +32,12 @@ function PaginationComponent() {
           </a>
         </div>
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
+          {/* <div>
             <p className="text-sm text-gray-700">
               Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
               <span className="font-medium">97</span> results
             </p>
-          </div>
+          </div> */}
           <div>
             <nav aria-label="Pagination" className="isolate inline-flex -space-x-px rounded-md shadow-sm">
               <a
@@ -43,12 +55,14 @@ function PaginationComponent() {
               >
                 1
               </a>
+              <button onClick={()=>handlePage(2)}>
               <a
-                href="#"
+                /* href="#" */
                 className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
               >
                 2
               </a>
+              </button>
               <a
                 href="#"
                 className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
