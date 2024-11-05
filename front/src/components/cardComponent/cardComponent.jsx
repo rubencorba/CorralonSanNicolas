@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import imagen from './vehiculoCorralon.png'
 
 function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha, hora}) {
@@ -6,7 +7,7 @@ function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha, hor
     return (
         
 
-    <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
+    <Link to={`/detail/${id}`} class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
         <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src={imagen} alt=""/>
     </div>
@@ -16,7 +17,7 @@ function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha, hor
         <p className="mb-1 md:text-sm text-xl font-normal leading-tight">{lugar}</p>
         <p className="md:text-sm text-xl font-normal text-gray-700 dark:text-gray-400 leading-tight">{fecha}, {hora}</p>
     </div>
-</a>
+    </Link>
 
        
        

@@ -10,19 +10,12 @@ function CardsComponent() {
 
   const [vehiculosAmostrar, setVehiculosAmostrar]= useState([]);
 
-  //Recorto los 10 primeros vehiculos del total, en cuanto se monta el componente
+  //Recorto los 9 primeros vehiculos del total, en cuanto se monta el componente
   useEffect(() => {
     
-    setVehiculosAmostrar([...vehiculosSecuestrados].splice(0, 3));
-    
-  }, []);
-  useEffect(() => {
-    if (currentPagina==1) setVehiculosAmostrar([...vehiculosSecuestrados].splice(0, 3));
-    else {
-      const elementoInicial= (currentPagina-1)*3
-      const elementoFinal= elementoInicial+3
-      setVehiculosAmostrar([...vehiculosSecuestrados].splice(elementoInicial, 3));
-    }
+    const elementoInicial= (currentPagina-1)*9
+    const elementoFinal= elementoInicial+3
+    setVehiculosAmostrar([...vehiculosSecuestrados].splice(elementoInicial, 9));
     
   }, [currentPagina]);
 
@@ -41,6 +34,7 @@ function CardsComponent() {
           origin={origin}
           fecha={fecha}
           hora ={hora}
+          id ={id}
           />
        })
       }

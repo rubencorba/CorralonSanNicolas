@@ -1,4 +1,5 @@
 import axios from 'axios';
+import vehiculosSecuestrados from "../../utils/vehiculos";
 
 /* export const GET_ALL_USERS="GET_ALL_USERS"
 export const POST_TRAMITE="POST_TRAMITE"
@@ -10,6 +11,7 @@ export const POST_USERS="POST_USERS" */
 
 
 export const UPDATE_PAGE="UPDATE_PAGE"
+export const GET_DETAIL_VEHICULO="GET_DETAIL_VEHICULO"
 
 /* export const getAllUsers=()=>{
     try {
@@ -154,10 +156,28 @@ export const postUsers=()=>{
 } */
 
 export const updatePage=(p)=>{
-    console.log("llega2",p)
+    
     return ({
             type:UPDATE_PAGE,
             payload:p
     })
+    
+}
+
+export const getDetailVehiculo=(id)=>{
+    try {
+        const data=vehiculosSecuestrados[id];
+        return async (dispatch)=>{
+            
+            return dispatch({
+                
+                type:GET_DETAIL_VEHICULO,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
     
 }

@@ -124,9 +124,9 @@ function Landing() {
 
     <p class="mt-6 text-center text-sm text-gray-500">
       No estás registrado?
-      <a /* href="#" */ class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crea una cuenta</a>
+      <a  class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crea una cuenta</a>
     </p>
-    <p class="mt-6 text-center text-sm text-gray-500">
+    {/* <p class="mt-6 text-center text-sm text-gray-500">
       Usuario1: usuario | Contraseña: 123asd
     </p>
     <p class="mt-3 text-center text-sm text-gray-500">
@@ -134,7 +134,7 @@ function Landing() {
     </p>
     <p class="mt-3 text-center text-sm text-gray-500">
       Administrador: admin | Contraseña: 123asd
-    </p>
+    </p> */}
   </div>
 </div>
   );

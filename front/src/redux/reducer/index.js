@@ -1,17 +1,20 @@
-import { APROBAR_TRAMITE, GET_ALL_TRAMITES, GET_ALL_USERS, POST_USERS, RECHAZAR_TRAMITE, UPDATE_CURRENT_USER, UPDATE_PAGE } from "../actions";
+import { APROBAR_TRAMITE, GET_ALL_TRAMITES, GET_ALL_USERS, GET_DETAIL_VEHICULO, POST_USERS, RECHAZAR_TRAMITE, UPDATE_CURRENT_USER, UPDATE_PAGE } from "../actions";
 
 const initialState={
     /* allUsers:[],
     allTramites:[],
     currentUser: 0, */
 
-    pagina: 1
+    pagina: 1,
+    detail: {}
 };
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
       case UPDATE_PAGE:
         return { ...state, pagina: action.payload };
+      case GET_DETAIL_VEHICULO:
+        return { ...state, detail: action.payload };
 
       /* case GET_ALL_USERS:
         
