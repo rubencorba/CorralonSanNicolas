@@ -42,7 +42,7 @@ function Navbar() {
       </Link>
       <Link to="/usuarios" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
       ${
-            location.pathname === "/vehiculos" ? "underline" : ""
+            location.pathname === "/usuarios" ? "underline" : ""
           }`}>
         <div className="flex items-center justify-center h-full">
           <span>Usuarios</span>
@@ -50,7 +50,7 @@ function Navbar() {
       </Link>
       <Link to="/" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
       ${
-            location.pathname === "/vehiculos" ? "underline" : ""
+            location.pathname === "/salir" ? "underline" : ""
           }`}>
         <div className="flex items-center justify-center h-full">
           <span>Salir</span>

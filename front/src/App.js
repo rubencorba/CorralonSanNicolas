@@ -6,6 +6,8 @@ import Home from './views/home/homeComponent';
 import Landing from './views/landing/landingComponent';
 import DetailComponent from "./views/detail/detailComponent";
 import IngresoComponent from "./views/ingreso/ingresoComponent";
+import VehiculosComponent from "./views/vehiculos/vehiculosComponent";
+import UsuariosComponent from "./views/usuarios/usuariosComponent";
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/detail/:id' element={<DetailComponent/>}/>
         <Route path='/ingreso' element={<IngresoComponent/>}/>
+        <Route path='/vehiculos' element={<VehiculosComponent/>}/>
+        <Route path='/usuarios' element={<UsuariosComponent/>}/>
         
         {/* <Route path='/create' element={<Create/>}/>
         <Route path='/allTramites' element={<AllTramites/>}/>
