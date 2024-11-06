@@ -14,7 +14,7 @@ function Navbar() {
 
   <nav className="bg-gradient-to-r from-blue-300 to-blue-600 h-20 flex justify-around items-center">
       <Link
-       to="/" 
+       to="/home" 
        className={`
         flex-1 
         h-full 
@@ -48,7 +48,7 @@ function Navbar() {
           <span>Usuarios</span>
         </div>
       </Link>
-      <Link to="/salir" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
+      <Link to="/" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
       ${
             location.pathname === "/vehiculos" ? "underline" : ""
           }`}>
