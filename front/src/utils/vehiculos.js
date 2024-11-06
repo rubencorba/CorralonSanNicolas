@@ -24,7 +24,7 @@ const vehiculosSecuestrados =
         "sexo": "Masculino",
         "cuil": 67568768679,
 
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc J.- Por circular sin casco"
         ]
 
@@ -47,7 +47,7 @@ const vehiculosSecuestrados =
         "dni": 123456789,
         "sexo": "Femenino",
         "cuil": 20123456789,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 25 Inc. C.- Por estacionar en lugar prohibido"
         ]
     },
@@ -69,7 +69,7 @@ const vehiculosSecuestrados =
         "dni": 456789123,
         "sexo": "Masculino",
         "cuil": 20456789123,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 30 Inc. B.- Por exceso de velocidad"
         ]
     },
@@ -91,7 +91,7 @@ const vehiculosSecuestrados =
         "dni": 654321987,
         "sexo": "Femenino",
         "cuil": 27654321987,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc J.- Por circular sin luces encendidas"
         ]
     },
@@ -113,7 +113,7 @@ const vehiculosSecuestrados =
         "dni": 123456789,
         "sexo": "Masculino",
         "cuil": 20123456789,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc B.- Por exceso de velocidad"
         ]
     },
@@ -135,7 +135,7 @@ const vehiculosSecuestrados =
         "dni": 234567890,
         "sexo": "Femenino",
         "cuil": 27234567890,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc F.- Por estacionar en zona prohibida"
         ]
     },
@@ -157,7 +157,7 @@ const vehiculosSecuestrados =
         "dni": 345678901,
         "sexo": "Femenino",
         "cuil": 27345678901,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc C.- Por uso indebido de luces altas"
         ]
     },
@@ -179,7 +179,7 @@ const vehiculosSecuestrados =
         "dni": 456789012,
         "sexo": "Masculino",
         "cuil": 20456789012,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc D.- Por circular sin cinturón de seguridad"
         ]
     },
@@ -201,7 +201,7 @@ const vehiculosSecuestrados =
         "dni": 567890123,
         "sexo": "Masculino",
         "cuil": 20567890123,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc G.- Por exceso de ruidos molestos"
         ]
     },
@@ -223,7 +223,7 @@ const vehiculosSecuestrados =
         "dni": 678901234,
         "sexo": "Femenino",
         "cuil": 27678901234,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc H.- Por circular sin documentación"
         ]
     },
@@ -245,7 +245,7 @@ const vehiculosSecuestrados =
         "dni": 112233445,
         "sexo": "Femenino",
         "cuil": 27112233445,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc K.- Por circular en contramano"
         ]
     },
@@ -267,7 +267,7 @@ const vehiculosSecuestrados =
         "dni": 223344556,
         "sexo": "Masculino",
         "cuil": 20223344556,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc L.- Por exceso de velocidad"
         ]
     },
@@ -289,7 +289,7 @@ const vehiculosSecuestrados =
         "dni": 334455667,
         "sexo": "Masculino",
         "cuil": 20334455667,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc M.- Por estacionar en zona prohibida"
         ]
     },
@@ -311,7 +311,7 @@ const vehiculosSecuestrados =
         "dni": 445566778,
         "sexo": "Femenino",
         "cuil": 27445566778,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc N.- Por circular sin cinturón de seguridad"
         ]
     },
@@ -333,7 +333,7 @@ const vehiculosSecuestrados =
         "dni": 556677889,
         "sexo": "Masculino",
         "cuil": 20556677889,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc O.- Por circular sin casco"
         ]
     },
@@ -355,7 +355,7 @@ const vehiculosSecuestrados =
         "dni": 667788990,
         "sexo": "Femenino",
         "cuil": 27667788990,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc P.- Por falta de documentación"
         ]
     },
@@ -377,7 +377,7 @@ const vehiculosSecuestrados =
         "dni": 778899001,
         "sexo": "Masculino",
         "cuil": 20778899001,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc Q.- Por circular sin luces encendidas"
         ]
     },
@@ -399,7 +399,7 @@ const vehiculosSecuestrados =
         "dni": 889900112,
         "sexo": "Masculino",
         "cuil": 20889900112,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc R.- Por uso indebido de luces altas"
         ]
     },
@@ -421,7 +421,7 @@ const vehiculosSecuestrados =
         "dni": 901122334,
         "sexo": "Femenino",
         "cuil": 27901122334,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc S.- Por falta de espejos retrovisores"
         ]
     },
@@ -443,7 +443,7 @@ const vehiculosSecuestrados =
         "dni": 112233445,
         "sexo": "Femenino",
         "cuil": 27112233445,
-        "infraccion/es": [
+        "infracciones": [
             "Art. 18 Dcto. 532/09 anexo 5 Inc T.- Por circular sin patente"
         ]
     }
