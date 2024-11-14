@@ -30,14 +30,14 @@ conn.models = Object.fromEntries(capsEntries);
 
 //Relaciones
 
-const { Actas } = conn.models;
+/* const { Actas } = conn.models; */
 const { Infracciones } = conn.models;
-const { Compactados } = conn.models;
+const { Users } = conn.models;
+/* const { Compactados } = conn.models;
 const { Egresos } = conn.models;
 const { Vehiculos } = conn.models;
-const { Users } = conn.models;
 const { Infractores } = conn.models;
-const { Secuestros } = conn.models;
+const { Secuestros } = conn.models; */
 
 /* Secuestros.belongsToMany(Infracciones, {through: 'secuestros_infracciones'});
 Infracciones.belongsToMany(Secuestros, {through: 'secuestros_infracciones'}); */
