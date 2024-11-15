@@ -41,6 +41,8 @@ const { Secuestros } = conn.models;
 
 /* Secuestros.belongsToMany(Infracciones, {through: 'secuestros_infracciones'});
 Infracciones.belongsToMany(Secuestros, {through: 'secuestros_infracciones'}); */
+Actas.hasOne(Secuestros, { foreignKey: 'acta' });
+Secuestros.belongsTo(Actas, { foreignKey: 'acta' });
 
 
 module.exports = { 

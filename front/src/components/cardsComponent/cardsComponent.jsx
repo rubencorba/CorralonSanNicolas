@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import vehiculosSecuestrados from "../../utils/vehiculos";
 import CardComponent from "../cardComponent/cardComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVehiculos } from "../../redux/actions";
 
 
 function CardsComponent() {
 
+  const dispatch=useDispatch()
+
   const currentPagina= useSelector((state)=>state.pagina);
+
+
+  /* useEffect(() => {
+    
+    dispatch(getAllVehiculos())
+    
+  }, []); */
 
   const [vehiculosAmostrar, setVehiculosAmostrar]= useState([]);
 

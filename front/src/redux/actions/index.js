@@ -12,6 +12,7 @@ export const POST_USERS="POST_USERS" */
 
 export const UPDATE_PAGE="UPDATE_PAGE"
 export const GET_DETAIL_VEHICULO="GET_DETAIL_VEHICULO"
+export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
 
 /* export const getAllUsers=()=>{
     try {
@@ -172,6 +173,24 @@ export const getDetailVehiculo=(id)=>{
             return dispatch({
                 
                 type:GET_DETAIL_VEHICULO,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+
+export const getAllVehiculos=()=>{
+    try {
+        const endpoint='http://localhost:3001/vehiculos';
+        return async (dispatch)=>{
+            const {data}= await axios.get(endpoint);
+            return dispatch({
+                
+                type:GET_ALL_VEHICULOS,
                 payload:data
             })
            
