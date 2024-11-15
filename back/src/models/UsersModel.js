@@ -21,16 +21,16 @@ module.exports = (sequelize) => {
       
     },
     apynom:{
-      /* type:DataTypes.INTEGER,
-      allowNull:true */
+      type:DataTypes.STRING,
+      allowNull:true,
     },
     password:{
-      /* type:DataTypes.ENUM('verano','otoño','invierno','primavera'),
-      allowNull:false */
+      type:DataTypes.STRING,
+      allowNull:true,
     },
     date:{
-      /* type:DataTypes.ENUM('verano','otoño','invierno','primavera'),
-      allowNull:false */
+      type:DataTypes.DATE,
+      allowNull:true,
     },
   },
   {timestamps:false});

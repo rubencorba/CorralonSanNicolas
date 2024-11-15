@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Actas', {
     _id:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull: false,
       primaryKey:true,
       /* autoIncrement:true */
@@ -13,7 +13,6 @@ module.exports = (sequelize) => {
     cords: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      unique:true
     },
     nro:{
       type:DataTypes.STRING,

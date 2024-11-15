@@ -13,10 +13,10 @@ module.exports = (sequelize) => {
     id_mysql: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      unique:true
+      /* unique:true */
     },
     descrip:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       /* validate: {
         max: 5,
@@ -24,16 +24,16 @@ module.exports = (sequelize) => {
       } */
     },
     digesto:{
-      /* type:DataTypes.INTEGER,
-      allowNull:true */
+      type:DataTypes.STRING,
+      allowNull:true,
     },
     _v:{
-      /* type:DataTypes.ENUM('verano','otoño','invierno','primavera'),
-      allowNull:false */
+      type:DataTypes.INTEGER,
+      allowNull:true,
     },
     tipo:{
-      /* type:DataTypes.ENUM('verano','otoño','invierno','primavera'),
-      allowNull:false */
+      type:DataTypes.STRING,
+      allowNull:true,
     },
   },
   {timestamps:false});
