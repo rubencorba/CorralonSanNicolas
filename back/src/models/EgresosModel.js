@@ -5,23 +5,23 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Egresos', {
     _id:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull: false,
       primaryKey:true,
       /* autoIncrement:true */
     },
-    /* inspector: {
-      type: DataTypes.INTEGER,
+    inspector: {
+      type: DataTypes.STRING,
       allowNull: true,
       
-    }, */
+    },
     apynom:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
     domicilio:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     licencia:{
@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     fechaHora:{
-      type:DataTypes.BIGINT,
+      type:DataTypes.DOUBLE,
       allowNull:true
     },
     tarjetaVerde:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     bPago:{
@@ -41,13 +41,10 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     obs:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
-    __v:{
-      type:DataTypes.INTEGER,
-      allowNull:true
-    },
+    
   },
   {timestamps:false});
 };

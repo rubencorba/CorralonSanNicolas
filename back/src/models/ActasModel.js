@@ -10,12 +10,20 @@ module.exports = (sequelize) => {
       primaryKey:true,
       /* autoIncrement:true */
     },
-    cords: {
-      type: DataTypes.INTEGER,
+    coordinada0: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+    },
+    coordinada1: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+    },
+    tipoDeCoordinada: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     nro:{
-      type:DataTypes.STRING,
+      type:DataTypes.INTEGER,
       allowNull:true,
       
     },
@@ -24,7 +32,7 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     lugar:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     fecha_hora:{

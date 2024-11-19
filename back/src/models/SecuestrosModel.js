@@ -10,52 +10,81 @@ module.exports = (sequelize) => {
       primaryKey:true,
       /* autoIncrement:true */
     },
+    infraccion_0_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_1_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_2_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_3_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_0: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_1: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_2: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    infraccion_3: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     acta: {
       type: DataTypes.STRING,
       allowNull: true,
       
     },
     foto:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
     vehiculo:{
-      type:DataTypes.STRING(24),
+      type:DataTypes.STRING,
       allowNull:true
     },
     sector:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     inventario:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     ingreso:{
-      type:DataTypes.BIGINT,
+      type:DataTypes.DOUBLE,
       allowNull:true
     },
     fecha_hora:{
-      type:DataTypes.BIGINT,
+      type:DataTypes.DOUBLE,
       allowNull:true
     },
-    /* egreso: {
+    egreso: {
         type: DataTypes.INTEGER,
         allowNull: true,
-    }, */
-    /* infractor:{
+    },
+    infractor:{
       type:DataTypes.STRING,
-      allowNull:true
-    }, */
-    /* compactado:{
-      type:DataTypes.STRING,
-      allowNull:true
-    }, */
-    __v:{
-      type:DataTypes.INTEGER,
       allowNull:true
     },
+    compactado:{
+      type:DataTypes.STRING,
+      allowNull:true
+    },
+    
   },
   {timestamps:false});
 };

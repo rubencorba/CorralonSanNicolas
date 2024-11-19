@@ -11,29 +11,25 @@ module.exports = (sequelize) => {
       /* autoIncrement:true */
     },
     dominio: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
       
     },
     tipovh:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
     marcavh:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
     modelovh:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
-    __v:{
-        type:DataTypes.INTEGER,
-        allowNull:true
-      },
     
   },
   {timestamps:false});

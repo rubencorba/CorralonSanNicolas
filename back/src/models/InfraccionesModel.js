@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Infracciones', {
     _id:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull: false,
       primaryKey:true,
       /* autoIncrement:true */
@@ -24,15 +24,11 @@ module.exports = (sequelize) => {
       } */
     },
     digesto:{
-      type:DataTypes.STRING,
-      allowNull:true,
-    },
-    _v:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.TEXT,
       allowNull:true,
     },
     tipo:{
-      type:DataTypes.STRING,
+      type:DataTypes.DOUBLE,
       allowNull:true,
     },
   },

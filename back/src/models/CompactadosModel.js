@@ -10,16 +10,19 @@ module.exports = (sequelize) => {
       primaryKey:true,
       /* autoIncrement:true */
     },
-    fecha_hora: {
-      type: DataTypes.INTEGER,
+    fechaHora: {
+      type: DataTypes.DOUBLE,
       allowNull: true,
       
     },
-    /* inspector:{
-      type:DataTypes.INTEGER,
+    inspector:{
+      type:DataTypes.STRING,
       allowNull:true,
-      
-    }, */
+      /* get() {
+        const rawValue = this.getDataValue('inspector');
+        return rawValue ? rawValue.toString('hex') : null; // Lo conviertes a texto hexadecimal
+      }, */
+    },
     
   },
   {timestamps:false});

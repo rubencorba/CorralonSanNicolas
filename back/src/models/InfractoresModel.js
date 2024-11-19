@@ -16,22 +16,19 @@ module.exports = (sequelize) => {
       
     },
     apynom:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true,
       
     },
     sexo:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
     cuil:{
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:true
     },
-    __v:{
-      type:DataTypes.INTEGER,
-      allowNull:true
-    },
+    
   },
   {timestamps:false});
 };
