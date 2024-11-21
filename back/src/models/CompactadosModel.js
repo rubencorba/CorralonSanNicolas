@@ -4,24 +4,19 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Compactados', {
-    _id:{
-      type:DataTypes.STRING,
+    id_mysql:{
+      type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
-      /* autoIncrement:true */
+      autoIncrement:true
     },
     fechaHora: {
       type: DataTypes.DOUBLE,
       allowNull: true,
-      
     },
-    inspector:{
-      type:DataTypes.STRING,
+    inspector_mysql:{
+      type:DataTypes.INTEGER,
       allowNull:true,
-      /* get() {
-        const rawValue = this.getDataValue('inspector');
-        return rawValue ? rawValue.toString('hex') : null; // Lo conviertes a texto hexadecimal
-      }, */
     },
     
   },

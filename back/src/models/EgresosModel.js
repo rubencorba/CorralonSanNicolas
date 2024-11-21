@@ -4,16 +4,19 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Egresos', {
-    _id:{
-      type:DataTypes.STRING,
+    id_mysql:{
+      type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
-      /* autoIncrement:true */
+      autoIncrement:true
     },
-    inspector: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      
+    inspector_mysql:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+    },
+    dni:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
     },
     apynom:{
       type:DataTypes.TEXT,

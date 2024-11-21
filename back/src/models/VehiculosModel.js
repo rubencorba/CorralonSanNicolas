@@ -4,11 +4,11 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Vehiculos', {
-    _id:{
-      type:DataTypes.STRING,
+    id_mysql:{
+      type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
-      /* autoIncrement:true */
+      autoIncrement:true
     },
     dominio: {
       type: DataTypes.TEXT,
