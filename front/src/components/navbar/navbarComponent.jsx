@@ -12,51 +12,45 @@ function Navbar() {
 
   return (
 
-  <nav className="bg-gradient-to-r from-blue-300 to-blue-600 h-20 flex justify-around items-center">
-      <Link
-       to="/home" 
-       className={`
-        flex-1 
-        h-full 
-        flex 
-        items-center 
-        justify-center 
-        text-black 
-        font-bold 
-        text-center 
-        hover:bg-blue-700 transition-colors duration-200
-        ${
-            location.pathname === "/home" ? "underline" : ""
-          }`}>
-        <div className="flex items-center justify-center h-full">
-          <span>Inicio</span>
-        </div>
-      </Link>
-      <Link to="/vehiculos" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
-      ${
-            location.pathname === "/vehiculos" ? "underline" : ""
-          }`}>
-        <div className="flex items-center justify-center h-full">
-          <span>Vehículos</span>
-        </div>
-      </Link>
-      <Link to="/usuarios" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
-      ${
-            location.pathname === "/usuarios" ? "underline" : ""
-          }`}>
-        <div className="flex items-center justify-center h-full">
-          <span>Usuarios</span>
-        </div>
-      </Link>
-      <Link to="/" className={`flex-1 h-full flex items-center justify-center text-black font-bold text-center border-l border-black hover:bg-blue-700 transition-colors duration-200
-      ${
-            location.pathname === "/salir" ? "underline" : ""
-          }`}>
-        <div className="flex items-center justify-center h-full">
-          <span>Salir</span>
-        </div>
-      </Link>
-    </nav>
+    <div style={{
+        width: '100%',
+        height: '100%',
+        /* justifyContent: 'flex-start', */
+        /* justifyContent: 'space-between', */
+        /* alignItems: 'flex-start', */
+        alignItems: 'center',
+        display: 'flex',
+        
+        }}>      
+        {['home', 'vehiculos', 'usuarios', 'salir'].map((path, index) => (
+        <Link to={`/${path}`} key={index} style={{ flex: 1 }}>
+          <div style={{
+            /* width: '100%', */
+            /* flex: '1', */
+            minWidth: '150px',
+            height: '105px',
+            padding: '20px 0',
+            background: '#0477AD',
+            borderRight: '1px solid white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            /* gap: '10px', */
+            display: 'flex',
+            boxSizing: 'border-box',
+          }}>
+            <div style={{
+              color: 'white',
+              fontSize: '1.5rem',
+              fontFamily: 'Inter',
+              fontWeight: 700,
+              wordWrap: 'break-word',
+            }}>
+              {path.charAt(0).toUpperCase() + path.slice(1)}
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
 
 
 

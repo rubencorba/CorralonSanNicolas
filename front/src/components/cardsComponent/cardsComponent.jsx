@@ -39,7 +39,7 @@ function CardsComponent() {
           key={id}
           tipo={Vehiculo.tipovh}
           dominio={Vehiculo.dominio}
-          estado={egreso_mysql}
+          egreso={egreso_mysql}
           numeroActa={Acta.nro}
           lugar={Acta.lugar}
           origin={origin}
@@ -49,7 +49,6 @@ function CardsComponent() {
        })
       }
        
-        
       </div>
     );
   }
