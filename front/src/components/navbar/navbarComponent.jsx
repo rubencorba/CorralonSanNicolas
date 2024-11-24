@@ -22,29 +22,12 @@ function Navbar() {
         display: 'flex',
         
         }}>      
-        {['home', 'vehiculos', 'usuarios', 'salir'].map((path, index) => (
+        {['home', 'vehiculos', 'usuarios', 'salir'].map((path, index, array) => (
         <Link to={`/${path}`} key={index} style={{ flex: 1 }}>
-          <div style={{
-            /* width: '100%', */
-            /* flex: '1', */
-            minWidth: '150px',
-            height: '105px',
-            padding: '20px 0',
-            background: '#0477AD',
-            borderRight: '1px solid white',
-            justifyContent: 'center',
-            alignItems: 'center',
-            /* gap: '10px', */
-            display: 'flex',
-            boxSizing: 'border-box',
-          }}>
-            <div style={{
-              color: 'white',
-              fontSize: '1.5rem',
-              fontFamily: 'Inter',
-              fontWeight: 700,
-              wordWrap: 'break-word',
-            }}>
+          <div className={`h-[105px] py-5 bg-[#0477AD] flex justify-center items-center box-border
+           ${index !== array.length - 1 ? 'border-r border-white' : ''}`}
+           >
+            <div class="text-white text-[1.5rem] font-inter font-bold break-words">
               {path.charAt(0).toUpperCase() + path.slice(1)}
             </div>
           </div>

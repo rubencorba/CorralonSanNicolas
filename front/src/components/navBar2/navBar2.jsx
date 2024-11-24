@@ -8,13 +8,25 @@ function NavBar2() {
     
 
 
+    {/* <nav class=" p-4 flex justify-around items-center"> */}
   return (
-    <nav class=" p-4 flex justify-around items-center">
-      <Link to='/ingreso'>
-    <button  className="px-14 py-5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Nuevo Ingreso</button>
-      </Link>
-    <button  className="px-14 py-5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Nuevo oficio policial</button>
-      </nav>
+    <div className="flex justify-center items-center sm:gap-[2rem] gap-[1rem] my-[25px] mx-[1rem]">
+
+      <div class="w-[12rem] h-[50px] px-[18px] py-[13px] bg-[#0477AD] rounded-[8px] overflow-hidden justify-center items-center gap-[4px] flex">
+        <Link to='/ingreso'>
+          <button class="text-[#F6F5F5] text-[16px] font-inter font-semibold break-words">
+            Nuevo ingreso
+          </button>
+        </Link>
+      </div>
+
+      <div class="flex w-[12rem] h-[50px] px-[18px] py-[13px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center gap-[4px]">
+        <button class="text-[#0477AD] text-[16px] font-inter font-semibold break-words">
+          Nuevo oficio policial
+        </button>
+      </div>
+
+      </div>
   );
 }
 

@@ -18,7 +18,7 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
     return (
         
 
-    <Link to={`/detail/${id}`} class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
+    <Link to={`/detail/${id}`} class="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
         <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src={imagen} alt=""/>
     </div>
