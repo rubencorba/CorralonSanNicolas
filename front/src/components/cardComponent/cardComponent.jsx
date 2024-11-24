@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import imagen from './vehiculoCorralon.png'
 
-function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha, hora}) {
+function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha_hora}) {
 
     
     return (
@@ -15,7 +15,7 @@ function CardComponent({id, tipo, dominio, estado, numeroActa, lugar, fecha, hor
         <h5 className="mb-1 text-l font-bold tracking-tight text-gray-900 dark:text-black leading-tight">{tipo}, {dominio}</h5>
         <p className="mb-1 md:text-sm text-xl font-normal leading-tight text-gray-700 dark:text-gray-400">Estado: {estado} N° acta: {numeroActa}</p>
         <p className="mb-1 md:text-sm text-xl font-normal leading-tight">{lugar}</p>
-        <p className="md:text-sm text-xl font-normal text-gray-700 dark:text-gray-400 leading-tight">{fecha}, {hora}</p>
+        <p className="md:text-sm text-xl font-normal text-gray-700 dark:text-gray-400 leading-tight">{fecha_hora}</p>
     </div>
     </Link>
 

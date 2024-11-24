@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import vehiculosSecuestrados from "../../utils/vehiculos";
+/* import vehiculosSecuestrados from "../../utils/vehiculos"; */
 import CardComponent from "../cardComponent/cardComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVehiculos } from "../../redux/actions";
+import { getAllSecuestros, getAllVehiculos } from "../../redux/actions";
 
 
 function CardsComponent() {
@@ -10,22 +10,23 @@ function CardsComponent() {
   const dispatch=useDispatch()
 
   const currentPagina= useSelector((state)=>state.pagina);
+  const secuestros= useSelector((state)=>state.secuestros);
 
 
-  /* useEffect(() => {
+  useEffect(() => {
     
-    dispatch(getAllVehiculos())
+    dispatch(getAllSecuestros())
     
-  }, []); */
+  }, []);
 
-  const [vehiculosAmostrar, setVehiculosAmostrar]= useState([]);
+  const [secuestrosAmostrar, setSecuestrosAmostrar]= useState([]);
 
-  //Recorto los 9 primeros vehiculos del total, en cuanto se monta el componente
+  //Recorto los 9 primeros secuestros del total, en cuanto se monta el componente
   useEffect(() => {
     
     const elementoInicial= (currentPagina-1)*9
     const elementoFinal= elementoInicial+3
-    setVehiculosAmostrar([...vehiculosSecuestrados].splice(elementoInicial, 9));
+    setSecuestrosAmostrar([...secuestros].splice(elementoInicial, 9));
     
   }, [currentPagina]);
 
@@ -33,17 +34,16 @@ function CardsComponent() {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
        
-       {vehiculosAmostrar.map(({id, tipo, dominio, estado, numeroActa, lugar, fecha, hora}) => {
+       {secuestrosAmostrar.map(({id, Vehiculo, egreso_mysql, Acta, fecha_hora}) => {
           return  <CardComponent
           key={id}
-          tipo={tipo}
-          dominio={dominio}
-          estado={estado}
-          numeroActa={numeroActa}
-          lugar={lugar}
+          tipo={Vehiculo.tipovh}
+          dominio={Vehiculo.dominio}
+          estado={egreso_mysql}
+          numeroActa={Acta.nro}
+          lugar={Acta.lugar}
           origin={origin}
-          fecha={fecha}
-          hora ={hora}
+          fecha_hora={fecha_hora}
           id ={id}
           />
        })

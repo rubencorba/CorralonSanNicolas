@@ -1,13 +1,12 @@
-import {  GET_ALL_VEHICULOS, GET_DETAIL_VEHICULO, UPDATE_PAGE } from "../actions";
+import {  GET_ALL_SECUESTROS, GET_ALL_VEHICULOS, GET_DETAIL_VEHICULO, UPDATE_PAGE } from "../actions";
 
 const initialState={
-    /* allUsers:[],
-    allTramites:[],
-    currentUser: 0, */
-
+    
+    secuestros: [],
     vehiculos: [],
     pagina: 1,
-    detail: {}
+    detail: {},
+
 };
 
 export const reducer = (state = initialState, action) => {
@@ -20,6 +19,9 @@ export const reducer = (state = initialState, action) => {
        case GET_ALL_VEHICULOS:
         
         return { ...state, vehiculos: action.payload}; 
+       case GET_ALL_SECUESTROS:
+        
+        return { ...state, secuestros: action.payload}; 
       /* case GET_ALL_USERS:
         
         return { ...state }; 

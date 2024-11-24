@@ -13,6 +13,7 @@ export const POST_USERS="POST_USERS" */
 export const UPDATE_PAGE="UPDATE_PAGE"
 export const GET_DETAIL_VEHICULO="GET_DETAIL_VEHICULO"
 export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
+export const GET_ALL_SECUESTROS="GET_ALL_SECUESTROS"
 
 /* export const getAllUsers=()=>{
     try {
@@ -191,6 +192,23 @@ export const getAllVehiculos=()=>{
             return dispatch({
                 
                 type:GET_ALL_VEHICULOS,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const getAllSecuestros=()=>{
+    try {
+        const endpoint='http://localhost:3001/secuestros';
+        return async (dispatch)=>{
+            const {data}= await axios.get(endpoint);
+            return dispatch({
+                
+                type:GET_ALL_SECUESTROS,
                 payload:data
             })
            
