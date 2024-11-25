@@ -34,7 +34,7 @@ function CardsComponent() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
        
-       {secuestrosAmostrar.map(({id, Vehiculo, egreso_mysql, Acta, fecha_hora}) => {
+       {secuestrosAmostrar.map(({id, Vehiculo, egreso_mysql, Acta, fecha_hora, foto}) => {
           return  <CardComponent
           key={id}
           tipo={Vehiculo.tipovh}
@@ -44,11 +44,12 @@ function CardsComponent() {
           lugar={Acta.lugar}
           origin={origin}
           fecha_hora={fecha_hora}
+          foto={foto}
           id ={id}
           />
        })
       }
-       
+      
       </div>
     );
   }

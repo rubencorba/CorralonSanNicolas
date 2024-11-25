@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import imagen from './vehiculoCorralon.png'
 
-function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora}) {
+function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora, foto}) {
 
     const date = new Date(fecha_hora); // Fecha en UTC
 
@@ -12,7 +12,7 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
     const estado = egreso ? "Egresado" : "Ingresado";
     const dominioA = dominio ? dominio : "Sin dominio";
 
-
+    foto = foto.replace(".png", ".jpg");
 
     
     return (
@@ -20,7 +20,7 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
 
     <Link to={`/detail/${id}`} class="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
-        <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src={imagen} alt=""/>
+        <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src={`https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
     </div>
     <div className="flex flex-col justify-between px-2 leading-normal">
         <h5 className="mb-1 text-l font-bold tracking-tight text-gray-900 dark:text-black leading-tight">{tipo}, {dominioA}</h5>
