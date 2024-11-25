@@ -8,7 +8,7 @@ function Home() {
 
 
   return (
-    <div>
+    <div className="bg-[#F5FAFF]">
       <Navbar></Navbar>
       <NavBar2/>
       <CardsComponent></CardsComponent>

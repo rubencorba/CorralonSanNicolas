@@ -7,10 +7,9 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
 
     // Ajustar a zona horaria de Argentina
     const options = { timeZone: 'America/Argentina/Buenos_Aires', hour12: false };
-    /* console.log(date.toLocaleString('es-AR', options)); */
+    
 
     const estado = egreso ? "Egresado" : "Ingresado";
-    const dominioA = dominio ? dominio : "Sin dominio";
 
     foto = foto.replace(".png", ".jpg");
 
@@ -18,15 +17,18 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
     return (
         
 
-    <Link to={`/detail/${id}`} class="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl">
+    <Link to={`/detail/${id}`} class="flex overflow-hidden border-[0.5px] items-center bg-white border border-[#C5E0FF] gap-1 pr-1 rounded-lg shadow-[1px_2px_8px_1px_rgba(219,219,219,0.45)] flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
-        <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src={`https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
+        <img class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg" src={`https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
     </div>
-    <div className="flex flex-col justify-between px-2 leading-normal">
-        <h5 className="mb-1 text-l font-bold tracking-tight text-gray-900 dark:text-black leading-tight">{tipo}, {dominioA}</h5>
-        <p className="mb-1 md:text-sm text-xl font-normal leading-tight text-gray-700 dark:text-gray-400">Estado: {estado} N° acta: {numeroActa}</p>
-        <p className="mb-1 md:text-sm text-xl font-normal leading-tight">{lugar}</p>
-        <p className="md:text-sm text-xl font-normal text-gray-700 dark:text-gray-400 leading-tight">{date.toLocaleString('es-AR', options)}</p>
+    <div className="flex flex-col justify-between px-2 leading-normal gap-1.5">
+        <div className="mb-1 text-[18px] font-inter font-bold break-words  text-[#3E4345] ">{tipo}, {dominio}</div>
+    <div className="gap-1">
+        <div class="self-stretch text-[#687073] text-[14px] font-inter font-medium break-words">Estado: {estado}</div>
+        <div class="self-stretch text-[#687073] text-[14px] font-inter font-medium break-words">N° acta: {numeroActa}</div>
+        <div class="text-[#687073] text-[14px] font-inter font-medium break-words">{lugar}</div>
+        <div class="self-stretch text-[#687073] text-[14px] font-inter font-medium break-words">{date.toLocaleString('es-AR', options)}</div>
+    </div>
     </div>
     </Link>
 

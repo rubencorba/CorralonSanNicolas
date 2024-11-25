@@ -32,7 +32,7 @@ function CardsComponent() {
 
     
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
+      <div className="grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2 gap-4 p-4">
        
        {secuestrosAmostrar.map(({id, Vehiculo, egreso_mysql, Acta, fecha_hora, foto}) => {
           return  <CardComponent
@@ -49,7 +49,7 @@ function CardsComponent() {
           />
        })
       }
-      
+    
       </div>
     );
   }
