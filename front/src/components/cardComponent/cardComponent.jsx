@@ -17,7 +17,7 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
     return (
         
 
-    <Link to={`/detail/${id}`} class="flex overflow-hidden border-[0.5px] items-center bg-white border border-[#C5E0FF] gap-1 pr-1 rounded-lg shadow-[1px_2px_8px_1px_rgba(219,219,219,0.45)] flex-row md:max-w-xl">
+    <Link to={`/detail/${3}`} class="flex overflow-hidden border-[0.5px] items-center bg-white border border-[#C5E0FF] gap-1 pr-1 rounded-lg shadow-[1px_2px_8px_1px_rgba(219,219,219,0.45)] flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
         <img class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg" src={`https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
     </div>
