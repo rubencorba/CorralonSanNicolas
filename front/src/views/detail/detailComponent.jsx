@@ -25,11 +25,25 @@ function DetailComponent() {
       <div className=" flex flex-col items-center justify-center bg-[#F5FAFF]">
 
 
-        
-      <div className=" font-semibold text-gray-900 text-center">{detail.dominio}</div>
+        <div className="flex items-center max-w-[65rem] px-2.5 w-full my-5">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="flex flex-start h-12 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.3)]">
+            <defs>
+              {/* <!-- Define the gradient for the arrow --> */}
+                <linearGradient id="arrow-gradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="white" />
+                    <stop offset="100%" stopColor="white" />
+                </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="8" fill="#0477AD" />
+            <path fillRule="evenodd" fill="url(#arrow-gradient)" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clipRule="evenodd" />
+          </svg>
+
+          <div className="text-3xl mx-auto font-semibold text-gray-900 text-center font-inter text-[#687073]">{detail.tipo},{detail.dominio}</div>
+        </div>
 
 
-    <div className=" px-2.5 my-5 max-w-[70rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
+
+    <div className=" px-2.5 my-2 max-w-[65rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
 
     <div>
     <div class="flex justify-center items-center gap-[0.5rem] mb-[1rem] ">
