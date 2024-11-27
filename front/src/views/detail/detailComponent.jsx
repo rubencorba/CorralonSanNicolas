@@ -21,34 +21,38 @@ function DetailComponent() {
   return (
     <div>
       <Navbar></Navbar>
-      <h3 className="text-base/7 font-semibold text-gray-900 text-center">{detail.dominio}</h3>
 
-      <div className="min-h-screen flex items-center justify-center bg-[#F5FAFF]">
-    <div className=" p-2.5   my-12  w-[70rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
+      <div className=" flex flex-col items-center justify-center bg-[#F5FAFF]">
+
+
+        
+      <div className=" font-semibold text-gray-900 text-center">{detail.dominio}</div>
+
+
+    <div className=" px-2.5 my-5 max-w-[70rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
 
     <div>
-    <div class="flex justify-center items-center gap-[0.5rem] mb-[2rem] ">
-      <div class="w-full h-[50px] px-[15px] py-[13px] bg-[#0477AD] rounded-[8px] overflow-hidden justify-center items-center  flex">
-        <button  class="text-[#F6F5F5] text-[16px] font-inter font-semibold break-words flex gap-[5px]">
+    <div class="flex justify-center items-center gap-[0.5rem] mb-[1rem] ">
+    <button class="w-full h-[50px] px-[4px] py-[13px] bg-[#0477AD] rounded-[8px] overflow-hidden justify-center items-center flex text-[#F6F5F5] text-[16px] font-inter font-semibold gap-[4px]">
       Imprimir QR
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="h-6 w-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
           </svg>
         </button>
-      </div>
       
-      <div class="flex w-full h-[50px] px-[18px] py-[13px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center ">
-        <button  class="text-[#0477AD] text-[16px] font-inter font-semibold break-words  flex gap-[4px]"> 
+      
+      <button class="flex w-full h-[50px] px-[4px] py-[13px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center text-[#0477AD] text-[16px] font-inter font-semibold flex gap-[4px]">
+      
           Egreso
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
             </svg>
         </button>
-      </div>
+      
     </div>
     
-    <div className=" sm:px-0 items-center flex justify-center">
+    <div className=" items-center flex justify-center">
       <img class="object-cover  h-[500px] w-full rounded-[12px]" src={imagen} alt=""/>
     </div>
     </div>
