@@ -24,11 +24,11 @@ function DetailComponent() {
       <h3 className="text-base/7 font-semibold text-gray-900 text-center">{detail.dominio}</h3>
 
       <div className="min-h-screen flex items-center justify-center bg-[#F5FAFF]">
-    <div className="bg-white p-2.5 rounded-lg shadow-lg  my-12     grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
+    <div className=" p-2.5   my-12  w-[70rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
 
     <div>
-    <div class="flex justify-center items-center gap-[0.5rem] my-[25px] ">
-      <div class="w-[13rem] h-[50px] px-[15px] py-[13px] bg-[#0477AD] rounded-[8px] overflow-hidden justify-center items-center  flex">
+    <div class="flex justify-center items-center gap-[0.5rem] mb-[2rem] ">
+      <div class="w-full h-[50px] px-[15px] py-[13px] bg-[#0477AD] rounded-[8px] overflow-hidden justify-center items-center  flex">
         <button  class="text-[#F6F5F5] text-[16px] font-inter font-semibold break-words flex gap-[5px]">
       Imprimir QR
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -38,7 +38,7 @@ function DetailComponent() {
         </button>
       </div>
       
-      <div class="flex w-[13rem] h-[50px] px-[18px] py-[13px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center ">
+      <div class="flex w-full h-[50px] px-[18px] py-[13px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center ">
         <button  class="text-[#0477AD] text-[16px] font-inter font-semibold break-words  flex gap-[4px]"> 
           Egreso
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -48,18 +48,17 @@ function DetailComponent() {
       </div>
     </div>
     
-    <div className="px-4 sm:px-0">
-      {/* <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details and application.</p> */}
-      <img class="object-cover w-full h-full" src={imagen} alt=""/>
+    <div className=" sm:px-0 items-center flex justify-center">
+      <img class="object-cover  h-[500px] w-full rounded-[12px]" src={imagen} alt=""/>
     </div>
     </div>
 
     
 
 
-    <div className="mt-6 border-t border-gray-100">
-      <dl className="divide-y divide-gray-100">
-        <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+    <div className="flex flex-col gap-4">
+      
+        <div className="px-4  grid grid-cols-2 sm:gap-4  bg-white rounded-[8px]  border border-[#0477AD]">
           
           <dt className="underline text-sm/6 font-medium text-gray-900">Secuestro</dt>
           <dd className="mt-1 text-sm/6 text-gray-700 sm:mt-0"></dd>
@@ -81,7 +80,7 @@ function DetailComponent() {
           
         </div>
 
-        <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <div className="px-4  grid grid-cols-2 sm:gap-4 bg-white rounded-[8px]  border border-[#0477AD]">
         <dt className="underline text-sm/6 font-medium text-gray-900">Acta</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
         <dt className="text-sm/6 font-medium text-gray-900">Nro.</dt>
@@ -96,14 +95,14 @@ function DetailComponent() {
           <span className="ml-4">{detail.hora}</span>
         </dd>
         </div>
-        </dl>
+        
         </div>
 
 
 
-        <div>
-        <dl className="divide-y divide-gray-100">
-        <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <div className='flex flex-col gap-4'>
+        
+        <div className="px-4 grid grid-cols-2 sm:gap-4  bg-white rounded-[8px]  border border-[#0477AD]">
         <dt className="underline text-sm/6 font-medium text-gray-900">Vehiculo</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
         <dt className="text-sm/6 font-medium text-gray-900">Dominio</dt>
@@ -115,7 +114,8 @@ function DetailComponent() {
         <dt className="text-sm/6 font-medium text-gray-900">Modelo</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.modelo}</dd>
         </div>
-        <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+
+        <div className="px-4  grid grid-cols-2 sm:gap-4  bg-white rounded-[8px]  border border-[#0477AD]">
           <dt className="underline text-sm/6 font-medium text-gray-900">Infractor</dt>
           <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
           <dt className="text-sm/6 font-medium text-gray-900">Apellido y Nombres</dt>
@@ -127,7 +127,8 @@ function DetailComponent() {
           <dt className="text-sm/6 font-medium text-gray-900">CUIL</dt>
           <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.cuil}</dd>
         </div>
-        <div className="px-4 py-6  sm:gap-4 sm:px-0">
+
+        <div className="px-4   gap-4  bg-white rounded-[8px]  border border-[#0477AD]">
         <dt className="underline mb-3 text-sm/6 font-medium text-gray-900">Infracción/es</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
         {detail.infracciones?.map((infr)=>
@@ -137,7 +138,7 @@ function DetailComponent() {
                     )}
         </div>
         
-      </dl>
+      
 
       </div>
 
