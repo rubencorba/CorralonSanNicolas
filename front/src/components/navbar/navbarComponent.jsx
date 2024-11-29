@@ -22,7 +22,7 @@ function Navbar() {
         display: 'flex',
         
         }}>      
-        {['home', 'vehiculos', 'usuarios', 'salir'].map((path, index, array) => (
+        {['inicio', 'vehiculos', 'usuarios', 'salir'].map((path, index, array) => (
         <Link to={`/${path}`} key={index} style={{ flex: 1 }}>
           <div className={`h-[105px] py-5 bg-[#0477AD] flex justify-center items-center box-border
            ${index !== array.length - 1 ? 'border-r border-white' : ''}`}
