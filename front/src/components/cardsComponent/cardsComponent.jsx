@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-/* import vehiculosSecuestrados from "../../utils/vehiculos"; */
+
 import CardComponent from "../cardComponent/cardComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSecuestros, getAllVehiculos } from "../../redux/actions";

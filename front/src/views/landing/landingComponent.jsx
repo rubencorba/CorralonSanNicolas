@@ -33,7 +33,7 @@ function Landing() {
     }else{
         throw Error("Usuario o contraseña incorrectos")
     } */
-        navigate('/home')
+        navigate('/inicio')
   }
 
 

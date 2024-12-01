@@ -43,7 +43,7 @@ function DetailComponent() {
 
 
 
-    <div className=" px-2.5 my-2 max-w-[65rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
+    <div className="mb-9 px-2.5 my-2 max-w-[65rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
 
     <div>
     <div class="flex justify-center items-center gap-[0.5rem] mb-[1rem] ">
@@ -193,7 +193,7 @@ function DetailComponent() {
           </div>
         </div>
         
-      
+    
 
       </div>
 

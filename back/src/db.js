@@ -38,6 +38,7 @@ const { Compactados } = conn.models;
 const { Egresos } = conn.models;
 const { Infractores } = conn.models;
 const { Secuestros } = conn.models;
+const { Secuestros_infracciones } = conn.models;
 
 /* Secuestros.belongsToMany(Infracciones, {through: 'secuestros_infracciones'});
 Infracciones.belongsToMany(Secuestros, {through: 'secuestros_infracciones'}); */
@@ -47,6 +48,15 @@ Secuestros.belongsTo(Actas, { foreignKey: 'acta_mysql' });
 
 Vehiculos.hasOne(Secuestros, { foreignKey: 'vehiculo_mysql' });
 Secuestros.belongsTo(Vehiculos, { foreignKey: 'vehiculo_mysql' });
+
+Infractores.hasOne(Secuestros, { foreignKey: 'infractor_mysql' });
+Secuestros.belongsTo(Infractores, { foreignKey: 'infractor_mysql' });
+
+Secuestros.hasOne(Secuestros_infracciones, { foreignKey: 'secuestro_id' });
+Secuestros_infracciones.belongsTo(Secuestros, { foreignKey: 'secuestro_id' });
+
+Infracciones.hasOne(Secuestros_infracciones, { foreignKey: 'infraccion_id' });
+Secuestros_infracciones.belongsTo(Infracciones, { foreignKey: 'infraccion_id' });
 
 
 module.exports = { 
