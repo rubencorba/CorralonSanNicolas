@@ -3,7 +3,14 @@ const { infraccionesBySecuestroId } = require('../controllers/infraccionesBySecu
 const { secuestroDetailById } = require('../controllers/secuestroDetailById');
 
 const getAllSecuestrosHandler= async (req,res)=>{
-    const response=await getAllSecuestros();
+    const {page = 1} =req.query
+
+    const options={
+        limit: 9,
+        offset: (page-1)*9
+    }
+
+    const response=await getAllSecuestros(options);
     res.status(200).json(response);
 }
 const getDetailSecuestroHandler= async (req,res)=>{
