@@ -1,9 +1,10 @@
 /* import {getDetailCountry} from '../../redux/actions/index' */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from '../../components/navbar/navbarComponent'
 import { getDetailSecuestro } from '../../redux/actions';
+import CambiarSectorComponent from '../../components/cambiarSectorComponent/cambiarSectorComponent';
 
 
 function DetailComponent() {
@@ -29,14 +30,39 @@ function DetailComponent() {
     ? parseInt(JSON.parse(detail.inventario)["$numberInt"], 10)
     : null;
 
+
+
+    
+  const navigate = useNavigate();
+    
+  const handleBackClick = () => {
+        navigate(-1); // Esto navega a la página anterior en el historial
+  };
+
+
+
+  // Estado para controlar el modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Abrir y cerrar modal
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div>
       <Navbar></Navbar>
+
+      {/* Render condicional del modal */}
+      {isModalOpen && <CambiarSectorComponent onClose={closeModal} />}
+
 
       <div className=" flex flex-col items-center justify-center bg-[#F5FAFF]">
 
 
         <div className="flex items-center max-w-[65rem] px-2.5 w-full my-5">
+          <button
+            onClick={handleBackClick}
+            className="flex items-center justify-center p-2 rounded-full hover:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] transition ease-in-out duration-200"
+          >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="flex flex-start h-12 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.3)]">
             <defs>
               {/* <!-- Define the gradient for the arrow --> */}
@@ -48,6 +74,7 @@ function DetailComponent() {
             <circle cx="12" cy="12" r="8" fill="#0477AD" />
             <path fillRule="evenodd" fill="url(#arrow-gradient)" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clipRule="evenodd" />
           </svg>
+          </button>
 
           <div className="text-3xl mx-auto font-semibold text-gray-900 text-center font-inter text-[#687073]">{detail.Vehiculo?.tipovh},{detail.Vehiculo?.dominio}</div>
         </div>
@@ -98,7 +125,7 @@ function DetailComponent() {
           <dt className="text-sm/6 font-medium text-gray-900 col-start-1 flex items-center">Sector</dt>
           <dd className=" text-sm/6 text-gray-700 justify-between  flex items-center">
             {detail.sector}
-            <button type="button" class="px-2 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg ">
+            <button type="button" onClick={openModal} class="px-2 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg ">
               Cambiar sector
             </button>
           </dd>
@@ -213,6 +240,8 @@ function DetailComponent() {
     
   </div>
   </div>
+
+  
   </div>
   )
 }

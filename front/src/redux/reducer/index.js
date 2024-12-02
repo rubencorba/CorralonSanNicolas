@@ -12,7 +12,7 @@ const initialState={
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
       case UPDATE_PAGE:
-        return { ...state, pagina: action.payload };
+        return { ...state, secuestros: action.payload };
       case GET_DETAIL_SECUESTRO:
         return { ...state, detail: action.payload };
 

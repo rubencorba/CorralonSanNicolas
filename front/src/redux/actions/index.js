@@ -157,13 +157,21 @@ export const postUsers=()=>{
         
 } */
 
-export const updatePage=(p)=>{
-    
-    return ({
-            type:UPDATE_PAGE,
-            payload:p
-    })
-    
+export const updatePage=(page)=>{
+    try {
+        const endpoint=`http://localhost:3001/secuestros/?page=${page}`;
+        return async (dispatch)=>{
+            const {data}= await axios.get(endpoint);
+            return dispatch({
+                
+                type:UPDATE_PAGE,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export const getDetailSecuestro=(id)=>{
