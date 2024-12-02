@@ -11,7 +11,7 @@ export const POST_USERS="POST_USERS" */
 
 
 export const UPDATE_PAGE="UPDATE_PAGE"
-export const GET_DETAIL_VEHICULO="GET_DETAIL_VEHICULO"
+export const GET_DETAIL_SECUESTRO="GET_DETAIL_SECUESTRO"
 export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
 export const GET_ALL_SECUESTROS="GET_ALL_SECUESTROS"
 
@@ -166,14 +166,14 @@ export const updatePage=(p)=>{
     
 }
 
-export const getDetailVehiculo=(id)=>{
+export const getDetailSecuestro=(id)=>{
     try {
-        const data=vehiculosSecuestrados[id];
+        const endpoint=`http://localhost:3001/secuestros/${id}`;
         return async (dispatch)=>{
-            
+            const {data}= await axios.get(endpoint);
             return dispatch({
                 
-                type:GET_DETAIL_VEHICULO,
+                type:GET_DETAIL_SECUESTRO,
                 payload:data
             })
            

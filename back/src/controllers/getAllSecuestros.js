@@ -2,6 +2,7 @@ const {Secuestros,Actas,Vehiculos}= require('../db.js');
 
 const getAllSecuestros = async () => {
     return await Secuestros.findAll({
+      limit: 9,
       include: [
         {
           model: Actas,

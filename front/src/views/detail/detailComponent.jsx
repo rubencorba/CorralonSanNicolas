@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router-dom";
 import Navbar from '../../components/navbar/navbarComponent'
-import { getDetailVehiculo } from '../../redux/actions';
-import imagen from './vehiculoCorralon.png'
+import { getDetailSecuestro } from '../../redux/actions';
+
 
 function DetailComponent() {
 
@@ -14,9 +14,20 @@ function DetailComponent() {
   let {id}= useParams();
   
   useEffect(()=>{
-    dispatch(getDetailVehiculo(id))
+    dispatch(getDetailSecuestro(id))
   },[id])
 
+  const foto = detail.foto?.replace(".png", ".jpg");
+
+  const date = new Date(detail.Acta?.fecha_hora); // Fecha en UTC
+  // Ajustar a zona horaria de Argentina
+  const options = { timeZone: 'America/Argentina/Buenos_Aires', hour12: false };
+
+
+  // Extraer el valor del campo "$numberInt"
+  const numeroInventario = detail.inventario
+    ? parseInt(JSON.parse(detail.inventario)["$numberInt"], 10)
+    : null;
 
   return (
     <div>
@@ -38,7 +49,7 @@ function DetailComponent() {
             <path fillRule="evenodd" fill="url(#arrow-gradient)" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clipRule="evenodd" />
           </svg>
 
-          <div className="text-3xl mx-auto font-semibold text-gray-900 text-center font-inter text-[#687073]">{detail.tipo},{detail.dominio}</div>
+          <div className="text-3xl mx-auto font-semibold text-gray-900 text-center font-inter text-[#687073]">{detail.Vehiculo?.tipovh},{detail.Vehiculo?.dominio}</div>
         </div>
 
 
@@ -67,7 +78,7 @@ function DetailComponent() {
     </div>
     
     <div className=" items-center flex justify-center">
-      <img class="object-cover  h-[500px] w-full rounded-[12px]" src={imagen} alt=""/>
+      <img class="object-cover  h-[500px] w-full rounded-[12px]" src={`https://corralon.movisn.com/api${foto}`} alt=""/>
     </div>
     </div>
 
@@ -95,7 +106,7 @@ function DetailComponent() {
 
           <div className="flex flex-col py-2 grid grid-cols-2 px-4">
           <dt className="text-sm/6 font-medium text-gray-900 sm:col-start-1">Inventario</dt>
-          <dd className=" text-sm/6 text-gray-700  sm:mt-0">{detail.inventario}</dd>
+          <dd className=" text-sm/6 text-gray-700  sm:mt-0">{numeroInventario}</dd>
           </div>
 
         </div>
@@ -107,21 +118,22 @@ function DetailComponent() {
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Nro.</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.numeroActa}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Acta?.nro}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Lugar</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.lugar}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Acta?.lugar}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Inspector</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.numeroInspector}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Acta?.inspector}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Fecha y Hora</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
-          <span>{detail.fecha}</span>
-          <span className="ml-4">{detail.hora}</span>
+          {/* <span>{detail.fecha}</span>
+          <span className="ml-4">{detail.hora}</span> */}
+          <span>{date.toLocaleString('es-AR', options)}</span>
         </dd>
         </div>
 
@@ -140,19 +152,19 @@ function DetailComponent() {
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Dominio</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.dominio}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Vehiculo?.dominio}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Tipo</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.tipo}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Vehiculo?.tipovh}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Marca</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.marca}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Vehiculo?.marcavh}</dd>
         </div>
         <div className="flex flex-col py-2 grid grid-cols-2 px-4">
         <dt className="text-sm/6 font-medium text-gray-900">Modelo</dt>
-        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.modelo}</dd>
+        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Vehiculo?.modelovh}</dd>
         </div>
         </div>
 
@@ -163,19 +175,19 @@ function DetailComponent() {
           </div>
           <div className="flex flex-col py-2 grid grid-cols-2 px-4">
           <dt className="text-sm/6 font-medium text-gray-900">Apellido y Nombres</dt>
-          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.ApellidoYnombres}</dd>
+          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Infractore?.apynom}</dd>
           </div>
           <div className="flex flex-col py-2 grid grid-cols-2 px-4">
           <dt className="text-sm/6 font-medium text-gray-900">DNI</dt>
-          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.dni}</dd>
+          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Infractore?.dni}</dd>
           </div>
           <div className="flex flex-col py-2 grid grid-cols-2 px-4">
           <dt className="text-sm/6 font-medium text-gray-900">Sexo</dt>
-          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.sexo}</dd>
+          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Infractore?.sexo}</dd>
           </div>
           <div className="flex flex-col py-2 grid grid-cols-2 px-4">
           <dt className="text-sm/6 font-medium text-gray-900">CUIL</dt>
-          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.cuil}</dd>
+          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">{detail.Infractore?.cuil}</dd>
           </div>
         </div>
 
@@ -184,10 +196,10 @@ function DetailComponent() {
         <dt className="text-sm/6 font-bold text-[#036395] font-inter">INFRACCIÓN/ES</dt>
         <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
         </div>
-        <div className="flex flex-col py-2  px-4">
+        <div className="flex flex-col divide-y divide-[#61ABCF]">
         {detail.infracciones?.map((infr)=>
-                      <div>
-                        {infr}
+                      <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
+                        {infr.Infraccione.descrip}{infr.Infraccione.digesto}
                       </div>
                     )}
           </div>
@@ -196,7 +208,6 @@ function DetailComponent() {
     
 
       </div>
-
 
 
     

@@ -1,4 +1,4 @@
-import {  GET_ALL_SECUESTROS, GET_ALL_VEHICULOS, GET_DETAIL_VEHICULO, UPDATE_PAGE } from "../actions";
+import {  GET_ALL_SECUESTROS, GET_ALL_VEHICULOS, GET_DETAIL_SECUESTRO, UPDATE_PAGE } from "../actions";
 
 const initialState={
     
@@ -13,7 +13,7 @@ export const reducer = (state = initialState, action) => {
     switch (action.type) {
       case UPDATE_PAGE:
         return { ...state, pagina: action.payload };
-      case GET_DETAIL_VEHICULO:
+      case GET_DETAIL_SECUESTRO:
         return { ...state, detail: action.payload };
 
        case GET_ALL_VEHICULOS:
