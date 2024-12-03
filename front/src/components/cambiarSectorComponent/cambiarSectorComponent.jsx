@@ -1,8 +1,38 @@
 
 
-function CambiarSectorComponent() {
+function CambiarSectorComponent({ onClose }) {
   return (
-    <div className="w-[1440px] h-[1024px] relative bg-[#687073]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="w-[20rem] bg-white p-6 rounded-lg shadow-lg">
+      <div className="text-2xl font-bold mb-4 text-center">Cambiar Sector</div>
+      <div className="mb-4">
+        {/* Contenido del formulario */}
+        <label className="block text-sm font-medium text-gray-700 mb-2">Sector</label>
+        <select className="w-full p-2 border rounded">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+      </div>
+      <div className="flex flex-col justify-center gap-4">
+        <button className="px-4 py-2 bg-blue-600 text-white rounded w-full">Guardar</button>
+        <button
+          onClick={onClose} // Cierra el modal
+          className="px-4 py-2 bg-gray-300 rounded w-full"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+    
+
+  );
+}
+
+export default CambiarSectorComponent;
+
+{/* <div className="w-[1440px] h-[1024px] relative bg-[#687073]">
 <div className="w-[1440px] h-[1024px] left-0 top-0 absolute bg-[#635c5c]/90" />
 <div className="h-[316px] px-5 py-8 left-[534px] top-[354px] absolute bg-white rounded-xl flex-col justify-start items-center gap-6 inline-flex">
 <div className="self-stretch text-center text-[#3d4245] text-2xl font-bold font-['Inter']">Cambiar sector</div>
@@ -24,8 +54,4 @@ function CambiarSectorComponent() {
 </div>
 </div>
 </div>
-</div>
-  );
-}
-
-export default CambiarSectorComponent;
+</div> */}
