@@ -9,16 +9,21 @@ function CambiarSectorComponent({ onClose }) {
         {/* Contenido del formulario */}
         <label className="block text-sm font-medium text-gray-700 mb-2">Sector</label>
         <select className="w-full p-2 border rounded">
-          <option>A</option>
-          <option>B</option>
-          <option>C</option>
+          {Array.from({ length: 26 }, (_, i) => {
+            const letter = String.fromCharCode(65 + i); // 65 es el código ASCII de 'A'
+            return (
+              <option key={letter} value={letter}>
+                {letter}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div className="flex flex-col justify-center gap-4">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded w-full">Guardar</button>
+        <button className="px-4 py-2 bg-[#0477AD] text-white rounded w-full font-inter">Guardar</button>
         <button
           onClick={onClose} // Cierra el modal
-          className="px-4 py-2 bg-gray-300 rounded w-full"
+          className="px-4 py-2 bg-white border border-[#0477AD] text-[#0477AD] font-inter rounded w-full"
         >
           Cancelar
         </button>

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from '../../components/navbar/navbarComponent'
 import { getDetailSecuestro } from '../../redux/actions';
 import CambiarSectorComponent from '../../components/cambiarSectorComponent/cambiarSectorComponent';
+import EgresarVehiculoComponent from '../../components/egresarVehiculoComponent/egresarVehiculoComponent';
 
 
 function DetailComponent() {
@@ -41,19 +42,26 @@ function DetailComponent() {
 
 
 
-  // Estado para controlar el modal
+  // Estado para controlar los modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEgresoOpen, setIsModalEgresoOpen] = useState(false);
   // Abrir y cerrar modal
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const openModalEgreso = () => setIsModalEgresoOpen(true);
+  const closeModalEgreso = () => setIsModalEgresoOpen(false);
+
+  
+
   return (
     <div>
       <Navbar></Navbar>
+    
 
       {/* Render condicional del modal */}
       {isModalOpen && <CambiarSectorComponent onClose={closeModal} />}
-
+      {isModalEgresoOpen && <EgresarVehiculoComponent onCloseEgresar={closeModalEgreso} />}
 
       <div className=" flex flex-col items-center justify-center bg-[#F5FAFF]">
 
@@ -94,7 +102,7 @@ function DetailComponent() {
         </button>
       
       
-      <button class="flex w-full h-[45px] px-[4px] py-[6px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center text-[#0477AD] text-[16px] font-inter font-semibold flex gap-[4px]">
+      <button onClick={openModalEgreso} class="flex w-full h-[45px] px-[4px] py-[6px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center text-[#0477AD] text-[16px] font-inter font-semibold flex gap-[4px]">
       
           Egreso
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -241,8 +249,8 @@ function DetailComponent() {
   </div>
   </div>
 
-  
   </div>
+  
   )
 }
 
