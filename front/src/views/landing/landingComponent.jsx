@@ -65,7 +65,7 @@ function Landing() {
 
 
   return (
-    <div className="w-full h-screen  flex flex-col justify-start items-center gap-[10rem]">
+    <div className="w-full h-screen  flex flex-col justify-start items-center gap-[6rem]">
     {/* Encabezado */}
     <div className="w-full h-[5rem]  py-[1rem] bg-[#0477ad] shadow flex items-center">
       <div className="relative w-full h-full justify-start items-center flex">
@@ -80,51 +80,73 @@ function Landing() {
     <img src={snFondo} alt="" className="absolute w-full h-full object-cover top-0 left-0 -z-10"/>
 
     {/* Contenedor principal */}
-    <div className="w-full max-w-md px-8 py-10 bg-white rounded-lg shadow flex flex-col justify-center items-center gap-1">
-      <div className="h-[317px] flex flex-col justify-center items-start gap-10">
+    <div className="sm:w-full max-w-[22rem] mx-5 sm:px-6 px-8 py-3 bg-white rounded-lg shadow flex flex-col justify-center items-center ">
+      <div className="py-5 flex flex-col justify-center items-center gap-7 sm:w-[18rem]">
         {/* Título */}
-        <div className="text-[#3d4245] text-2xl font-bold font-inter">
+        <div className="text-[#3d4245] text-xl font-bold font-inter text start w-full">
           Inicio de sesión
         </div>
 
         {/* Formulario */}
-        <div className="flex flex-col justify-start items-start gap-6">
+        <form  onSubmit={handleSubmit}>
+        <div className="flex flex-col justify-start items-start gap-5">
           {/* Campo DNI */}
-          <div className="h-[75px] flex flex-col justify-start items-start gap-2">
+          <div className=" flex flex-col justify-start items-start gap-1">
             <label className="text-[#3d4245] text-sm font-normal font-inter">
               DNI
             </label>
-            <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] flex items-center gap-1">
+            {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] flex items-center gap-1"> */}
+              
               <input
                 type="text"
                 placeholder="0000000000000"
-                className="w-full text-[#a3b8c1] text-sm font-normal font-inter outline-none"
+                className="sm:w-[18rem] w-[14rem] text-[#a3b8c1] text-sm font-normal font-inter outline-none rounded-md"
               />
-            </div>
+              
+            {/* </div> */}
           </div>
 
           {/* Campo Contraseña */}
-          <div className="h-[75px] flex flex-col justify-start items-start gap-2">
+          <div className=" flex flex-col justify-start items-start gap-1">
             <label className="text-[#3d4245] text-sm font-normal font-inter">
               Contraseña
             </label>
-            <div className="self-stretch h-[50px] pl-2 pr-3 py-2 rounded-md border border-[#687073] flex justify-between items-center">
-              <input
-                type="password"
-                placeholder="Contraseña"
-                className="w-full text-[#a3b8c1] text-sm font-normal font-inter outline-none"
-              />
-              <div className="w-5 h-5" />
-            </div>
+           {/*  <div className="self-stretch h-[50px] pl-2 pr-3 py-2 rounded-md border border-[#687073] flex justify-between items-center"> */}
+           <div className="relative sm:w-[18rem] w-[14rem] ">
+  <input
+    type="password"
+    placeholder="Contraseña"
+    className="w-full text-[#a3b8c1] text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 "
+  />
+  <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-5 h-5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+      />
+    </svg>
+  </button>
+</div>
+              {/* <div className="w-5 h-5" /> */}
+           {/*  </div> */}
           </div>
 
           {/* Botón */}
-          <button className="w-full h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg flex justify-center items-center gap-1">
-            <span className="text-[#f6f5f5] text-base font-semibold font-inter">
+          <button type="submit" className="w-full mt-1 py-[9px] bg-[#0477ad] rounded-lg flex justify-center items-center ">
+            <span className="text-[#f6f5f5] text-sm font-semibold font-inter">
               Iniciar sesión
             </span>
           </button>
         </div>
+        </form>
       </div>
     </div>
   </div>
