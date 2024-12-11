@@ -9,6 +9,7 @@ import IngresoComponent from "./views/ingreso/ingresoComponent";
 import VehiculosComponent from "./views/vehiculos/vehiculosComponent";
 import UsuariosComponent from "./views/usuarios/usuariosComponent";
 import CambiarSectorComponent from "./components/cambiarSectorComponent/cambiarSectorComponent";
+import DetallesComponent from "./views/ingreso/detallesComponent";
 
 
 function App() {
@@ -18,8 +19,9 @@ function App() {
         <Route path='/salir' element={<Landing/>}/>
         <Route path='/' element={<Landing/>}/>
         <Route path='/inicio' element={<Home/>}/>
-        <Route path='/detail/:id' element={<DetailComponent/>}/>
+        <Route path='/detail/:id' element={<DetailComponent/>}/> {/* Ruta con los detalles de un vehículo secuestrado */}
         <Route path='/ingreso' element={<IngresoComponent/>}/>
+        <Route path='/ingreso_detalles' element={<DetallesComponent/>}/> {/* Ruta para insertar detalles de un vehiculo a ingresar */}
         <Route path='/vehiculos' element={<VehiculosComponent/>}/>
         <Route path='/usuarios' element={<UsuariosComponent/>}/>
         <Route path='/cambiar_sector' element={<CambiarSectorComponent/>}/>
