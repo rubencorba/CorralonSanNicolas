@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 
 
@@ -59,9 +60,11 @@ function DetallesComponent() {
       <div className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex">
         <div className="text-[#0477ad] text-base font-semibold font-inter">Volver atrás</div>
       </div>
-      <div className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
+      <Link to={`/ingreso_foto`} className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
+      
         <div className="text-[#f6f5f5] text-base font-semibold font-inter">Siguiente</div>
-      </div>
+      
+      </Link>
     </div>
   </div>
 

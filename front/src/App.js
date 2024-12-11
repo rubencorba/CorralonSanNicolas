@@ -10,6 +10,7 @@ import VehiculosComponent from "./views/vehiculos/vehiculosComponent";
 import UsuariosComponent from "./views/usuarios/usuariosComponent";
 import CambiarSectorComponent from "./components/cambiarSectorComponent/cambiarSectorComponent";
 import DetallesComponent from "./views/ingreso/detallesComponent";
+import FotoComponent from "./views/ingreso/fotoComponent";
 
 
 function App() {
@@ -22,15 +23,12 @@ function App() {
         <Route path='/detail/:id' element={<DetailComponent/>}/> {/* Ruta con los detalles de un vehículo secuestrado */}
         <Route path='/ingreso' element={<IngresoComponent/>}/>
         <Route path='/ingreso_detalles' element={<DetallesComponent/>}/> {/* Ruta para insertar detalles de un vehiculo a ingresar */}
+        <Route path='/ingreso_foto' element={<FotoComponent/>}/>
         <Route path='/vehiculos' element={<VehiculosComponent/>}/>
         <Route path='/usuarios' element={<UsuariosComponent/>}/>
         <Route path='/cambiar_sector' element={<CambiarSectorComponent/>}/>
         
-        {/* <Route path='/create' element={<Create/>}/>
-        <Route path='/allTramites' element={<AllTramites/>}/>
-        <Route path='/allTramitesAprobados' element={<AllTramitesAprobados/>}/>
-        <Route path='/allTramitesRechazados' element={<AllTramitesRechazados/>}/>
-        <Route path='/allMyTramites' element={<AllMyTramites/>}/> */}
+        
       </Routes>
       
       
