@@ -46,7 +46,7 @@ function IngresoComponent() {
   </div>
   <div class="w-[118px] h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
     <Link to={`/ingreso_detalles`}>
-    <div class="text-[#f6f5f5] text-base font-semibold font-['Inter']">Buscar</div>
+    <div class="text-[#f6f5f5] text-base font-semibold font-inter">Buscar</div>
     </Link>
   </div>
 </div>
