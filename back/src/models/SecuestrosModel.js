@@ -42,10 +42,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     }, */
-    acta_mysql: {
+    /* acta_mysql: {
       type: DataTypes.INTEGER,
       allowNull: true,
-    },
+    }, */
     foto:{
       type:DataTypes.TEXT,
       allowNull:true,
