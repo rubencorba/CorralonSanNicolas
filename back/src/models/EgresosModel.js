@@ -4,13 +4,13 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Egresos', {
-    id_mysql:{
+    id:{
       type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
       autoIncrement:true
     },
-    inspector_mysql:{
+    inspector:{
       type:DataTypes.INTEGER,
       allowNull:true,
     },
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:true,
     },
-    apynom:{
+    nombreCompleto:{
       type:DataTypes.TEXT,
       allowNull:true,
       
@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:true
     },
-    fechaHora:{
+    fecha_hora:{
       type:DataTypes.DOUBLE,
       allowNull:true
     },

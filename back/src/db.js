@@ -43,14 +43,21 @@ const { Secuestros_infracciones } = conn.models;
 /* Secuestros.belongsToMany(Infracciones, {through: 'secuestros_infracciones'});
 Infracciones.belongsToMany(Secuestros, {through: 'secuestros_infracciones'}); */
 
-Actas.hasOne(Secuestros, { foreignKey: 'acta_mysql' });
-Secuestros.belongsTo(Actas, { foreignKey: 'acta_mysql' });
+Actas.hasOne(Secuestros, { foreignKey: 'acta' });
+Secuestros.belongsTo(Actas, { foreignKey: 'acta' });
 
-Vehiculos.hasOne(Secuestros, { foreignKey: 'vehiculo_mysql' });
-Secuestros.belongsTo(Vehiculos, { foreignKey: 'vehiculo_mysql' });
+Vehiculos.hasOne(Secuestros, { foreignKey: 'vehiculo' });
+Secuestros.belongsTo(Vehiculos, { foreignKey: 'vehiculo' });
 
-Infractores.hasOne(Secuestros, { foreignKey: 'infractor_mysql' });
-Secuestros.belongsTo(Infractores, { foreignKey: 'infractor_mysql' });
+Infractores.hasOne(Secuestros, { foreignKey: 'infractor' });
+Secuestros.belongsTo(Infractores, { foreignKey: 'infractor' });
+
+Compactados.hasOne(Secuestros, { foreignKey: 'compactado' });
+Secuestros.belongsTo(Compactados, { foreignKey: 'compactado' });
+
+Egresos.hasOne(Secuestros, { foreignKey: 'egreso' });
+Secuestros.belongsTo(Egresos, { foreignKey: 'egreso' });
+
 
 Secuestros.hasOne(Secuestros_infracciones, { foreignKey: 'secuestro_id' });
 Secuestros_infracciones.belongsTo(Secuestros, { foreignKey: 'secuestro_id' });

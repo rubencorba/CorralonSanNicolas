@@ -4,17 +4,17 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Compactados', {
-    id_mysql:{
+    id:{
       type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
       autoIncrement:true
     },
-    fechaHora: {
+    fecha_hora: {
       type: DataTypes.DOUBLE,
       allowNull: true,
     },
-    inspector_mysql:{
+    inspector:{
       type:DataTypes.INTEGER,
       allowNull:true,
     },

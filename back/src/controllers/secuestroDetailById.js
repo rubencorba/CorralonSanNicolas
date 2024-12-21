@@ -1,7 +1,7 @@
 const {Secuestros,Actas,Vehiculos,Infractores}= require('../db.js');
 
 const secuestroDetailById = async (id) => {
-    return await Secuestros.findOne({where:{id_mysql:id},
+    return await Secuestros.findOne({where:{id:id},
       include: [
         {
           model: Actas,
@@ -16,7 +16,7 @@ const secuestroDetailById = async (id) => {
         {
           model: Infractores,
           
-          attributes: ['apynom','dni','sexo','cuil'], 
+          attributes: ['nombreCompleto','dni','sexo','cuil'], 
         },
       ],
     });

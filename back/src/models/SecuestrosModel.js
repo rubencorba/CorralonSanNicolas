@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Secuestros', {
-    id_mysql:{
+    id:{
       type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
@@ -50,10 +50,10 @@ module.exports = (sequelize) => {
       type:DataTypes.TEXT,
       allowNull:true,
     },
-    vehiculo_mysql:{
+    /* vehiculo_mysql:{
       type:DataTypes.INTEGER,
       allowNull:true
-    },
+    }, */
     sector:{
       type:DataTypes.TEXT,
       allowNull:true
@@ -70,18 +70,18 @@ module.exports = (sequelize) => {
       type:DataTypes.DOUBLE,
       allowNull:true
     },
-    egreso_mysql: {
+    /* egreso_mysql: {
         type: DataTypes.INTEGER,
         allowNull: true,
-    },
-    infractor_mysql:{
+    }, */
+    /* infractor_mysql:{
       type:DataTypes.INTEGER,
       allowNull:true
-    },
-    compactado_mysql:{
+    }, */
+    /* compactado_mysql:{
       type:DataTypes.INTEGER,
       allowNull:true
-    },
+    }, */
     
   },
   {timestamps:false});

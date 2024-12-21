@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Infractores', {
-    id_mysql:{
+    id:{
       type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,
@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: true,
       
     },
-    apynom:{
+    nombreCompleto:{
       type:DataTypes.TEXT,
       allowNull:true,
       

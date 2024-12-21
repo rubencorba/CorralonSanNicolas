@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Infracciones', {
-    id_mysql:{
+    id:{
       type:DataTypes.INTEGER,
       allowNull: false,
       primaryKey:true,

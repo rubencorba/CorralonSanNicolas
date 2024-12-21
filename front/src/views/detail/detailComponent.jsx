@@ -266,7 +266,7 @@ function DetailComponent() {
                   Apellido y Nombres
                 </dt>
                 <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
-                  {detail.Infractore?.apynom}
+                  {detail.Infractore?.nombreCompleto}
                 </dd>
               </div>
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
