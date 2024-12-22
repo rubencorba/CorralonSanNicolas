@@ -21,14 +21,15 @@ function LeerQRComponent () {
 
   return (
     <div >
+      <div className="hidden lg:block">
       <Navbar />
-
+      </div>
 
 
 
       <button
             onClick={handleBackClick}
-            className="absolute mt-[2.5rem] ml-[13rem] flex items-center justify-center p-2 rounded-full hover:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] transition ease-in-out duration-200"
+            className="z-50 absolute sm:mt-[2.5rem] mt-[4rem] sm:ml-[5rem] lg:ml-[13rem] ml-[5rem] flex items-center justify-center p-2 rounded-full hover:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] transition ease-in-out duration-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,10 +53,11 @@ function LeerQRComponent () {
               />
             </svg>
           </button>
-      <div className="flex min-h-screen flex-col  items-center bg-[#F5FAFF]">
 
-        
-      
+
+
+      <div className="flex flex-col  items-center bg-[#F5FAFF]">
+
         {/* {imagen? (
           <div className="flex flex-col  items-center">
             <img src={imagen} alt="Captura" className="rotate-90 mt-[6rem] rounded-lg overflow-hidden"/>
@@ -73,13 +75,15 @@ function LeerQRComponent () {
         </div>
         ):( */}
         <div className="flex flex-col  items-center">
-          <div className="rotate-90 mt-[8rem] rounded-lg overflow-hidden">
+          <div className="rotate-90 sm:mt-[8rem] mt-[5rem] rounded-lg overflow-hidden">
             <Webcam
               audio={false}
           
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               width={500}
+
+              className="sm:w-[500px] h-auto w-full h-screen"
             />
           </div>
           {/* <button onClick={capturarFoto} className="flex flex-col justify-center items-center"> */}
