@@ -2,7 +2,8 @@ const { Router } = require("express");
 
 const vehiculosRouter = Router();
 
-const {getAllVehiculosHandler}=require ('../handlers/vehiculosHandler'); 
+
+const { getAllVehiculosHandler } = require("../controllers/vehiculosController");
 
 
 vehiculosRouter.get('/',getAllVehiculosHandler)

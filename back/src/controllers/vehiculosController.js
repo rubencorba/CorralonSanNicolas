@@ -1,4 +1,4 @@
-const {getAllVehiculos}=require('../controllers/getAllVehiculos')
+const {getAllVehiculos}=require('../handlerss/getAllVehiculos')
 
 const getAllVehiculosHandler= async (req,res)=>{
     const response=await getAllVehiculos();

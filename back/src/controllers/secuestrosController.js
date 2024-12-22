@@ -1,8 +1,8 @@
-const {getAllSecuestros}=require('../controllers/getAllSecuestros');
-const { infraccionesBySecuestroId } = require('../controllers/infraccionesBySecuestroId');
-const { secuestroDetailById } = require('../controllers/secuestroDetailById');
+const {getAllSecuestros}=require('../handlerss/getAllSecuestros');
+const { infraccionesBySecuestroId } = require('../handlerss/infraccionesBySecuestroId');
+const { secuestroDetailById } = require('../handlerss/secuestroDetailById');
 
-const getAllSecuestrosHandler= async (req,res)=>{
+const getAllSecuestrosController= async (req,res)=>{
     const {page = 1} =req.query
 
     const options={
@@ -13,7 +13,7 @@ const getAllSecuestrosHandler= async (req,res)=>{
     const response=await getAllSecuestros(options);
     res.status(200).json(response);
 }
-const getDetailSecuestroHandler= async (req,res)=>{
+const getDetailSecuestroController= async (req,res)=>{
     const {id}=req.params;
 
     try {
@@ -30,6 +30,6 @@ const getDetailSecuestroHandler= async (req,res)=>{
 }
 
 module.exports={
-    getAllSecuestrosHandler,
-    getDetailSecuestroHandler
+    getAllSecuestrosController,
+    getDetailSecuestroController
     };

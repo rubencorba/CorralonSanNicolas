@@ -2,12 +2,12 @@ const { Router } = require("express");
 
 const secuestrosRouter = Router();
 
-const {getAllSecuestrosHandler}=require ('../handlers/secuestrosHandler'); 
-const {getDetailSecuestroHandler}=require ('../handlers/secuestrosHandler'); 
+
+const { getAllSecuestrosController, getDetailSecuestroController } = require("../controllers/secuestrosController");
 
 
-secuestrosRouter.get('/',getAllSecuestrosHandler)
-secuestrosRouter.get('/:id',getDetailSecuestroHandler)
+secuestrosRouter.get('/',getAllSecuestrosController)
+secuestrosRouter.get('/:id',getDetailSecuestroController)
 /* tramitesRouter.post('/',postTramiteHandler)
 tramitesRouter.put('/',putTramiteHandler) */
 

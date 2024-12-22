@@ -13,6 +13,7 @@ import DetallesComponent from "./views/ingreso/detallesComponent";
 import FotoComponent from "./views/ingreso/fotoComponent";
 import ConfirmarDatos from "./views/ingreso/confirmarDatosComponent";
 import IngresoPolicialComponent from "./views/ingreso/ingresoPolicialComponent";
+import LeerQRComponent from "./components/leerQRcomponent/leerQR";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/ingreso_detalles' element={<DetallesComponent/>}/> {/* Ruta para insertar detalles de un vehiculo a ingresar */}
         <Route path='/ingreso_foto' element={<FotoComponent/>}/>
         <Route path='/ingreso_confirmacion' element={<ConfirmarDatos/>}/>
+        <Route path='/leerQR' element={<LeerQRComponent/>}/>
         <Route path='/vehiculos' element={<VehiculosComponent/>}/>
         <Route path='/usuarios' element={<UsuariosComponent/>}/>
         <Route path='/cambiar_sector' element={<CambiarSectorComponent/>}/>
