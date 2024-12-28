@@ -15,7 +15,7 @@ function UsuariosComponent() {
 
         <div className="sm:w-[40rem]  flex-col justify-start items-start gap-3 inline-flex sm:mx-[1rem] mb-[4rem]">
           <Link
-            to="/ingreso"
+            to="/nuevo_usuario"
             className="self-stretch px-4 py-7 bg-white rounded-lg border border-[#c5dfff] justify-start items-center gap-2.5 inline-flex"
           >
             <div className="w-[49px] h-[49px] relative">

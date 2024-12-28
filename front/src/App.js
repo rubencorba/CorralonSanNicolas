@@ -15,6 +15,7 @@ import ConfirmarDatos from "./views/ingreso/confirmarDatosComponent";
 import IngresoPolicialComponent from "./views/ingreso/ingresoPolicialComponent";
 import LeerQRComponent from "./components/leerQRcomponent/leerQR";
 import BuscarVehiculoComponent from "./components/buscarVehiculoComponent/buscarVehiculoComponent";
+import NuevoUsuarioComponent from "./components/nuevoUsuarioComponent/nuevoUsuarioComponent";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path='/leerQR' element={<LeerQRComponent/>}/>
         <Route path='/buscar' element={<BuscarVehiculoComponent/>}/>
         <Route path='/usuarios' element={<UsuariosComponent/>}/>
+        <Route path='/nuevo_usuario' element={<NuevoUsuarioComponent/>}/>
         <Route path='/cambiar_sector' element={<CambiarSectorComponent/>}/>
         
         
