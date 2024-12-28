@@ -14,6 +14,7 @@ export const UPDATE_PAGE="UPDATE_PAGE"
 export const GET_DETAIL_SECUESTRO="GET_DETAIL_SECUESTRO"
 export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
 export const GET_ALL_SECUESTROS="GET_ALL_SECUESTROS"
+export const GET_ALL_INFRACCIONES="GET_ALL_INFRACCIONES"
 
 /* export const getAllUsers=()=>{
     try {
@@ -217,6 +218,23 @@ export const getAllSecuestros=()=>{
             return dispatch({
                 
                 type:GET_ALL_SECUESTROS,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const getAllInfracciones=()=>{
+    try {
+        const endpoint='http://localhost:3001/infracciones';
+        return async (dispatch)=>{
+            const {data}= await axios.get(endpoint);
+            return dispatch({
+                
+                type:GET_ALL_INFRACCIONES,
                 payload:data
             })
            

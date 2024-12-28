@@ -1,7 +1,33 @@
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllInfracciones } from "../../redux/actions";
+import { useEffect } from "react";
 
 function IngresoPolicialComponent() {
+
+
+  const dispatch = useDispatch()
+
+  const infracciones= useSelector((state)=>state.infracciones);
+
+
+  useEffect(() => {
+      
+      dispatch(getAllInfracciones())
+      
+    }, []);
+
+
+    /* console.log(infracciones) */
+
+
+
+
+
+
+
+
   return (
     <div>
       <Navbar />
@@ -47,21 +73,34 @@ function IngresoPolicialComponent() {
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Patente
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
+
+
+                  {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
                     <div className="text-[#a3b8c1] text-sm font-normal font-inter">
                       00000
                     </div>
-                  </div>
+                  </div> */}
+
+{/* <div className="relative w-[20rem] sm:w-[32rem]"> */}
+  <input
+    
+    placeholder="00000"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
+  
+{/* </div> */}
+
+
                 </div>
                 <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Tipo
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      Tipo
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="Tipo"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
               </div>
               <div className="self-stretch justify-start items-start gap-2 inline-flex">
@@ -69,21 +108,21 @@ function IngresoPolicialComponent() {
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Modelo
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      Modelo
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="Modelo"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
                 <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Marca
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      Marca
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="Marca"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
               </div>
             </div>
@@ -98,21 +137,21 @@ function IngresoPolicialComponent() {
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Nombre y apellido
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      Nombre y apellido
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="Nombre y apellido"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
                 <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     DNI
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      000000000
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="000000000"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
               </div>
               <div className="self-stretch justify-start items-start gap-3 inline-flex">
@@ -120,22 +159,33 @@ function IngresoPolicialComponent() {
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     CUIL
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      000000000000
-                    </div>
-                  </div>
+                  <input
+    
+    placeholder="000000000000"
+    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  />
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Sexo
                   </div>
-                  <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
+                  {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
                     <div className="text-[#3d4245] text-sm font-normal font-inter">
                       Seleccionar sexo
                     </div>
-                    <div className="w-6 h-6 relative" />
-                  </div>
+                    
+                  </div> */}
+                  <select
+  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  defaultValue=""
+>
+  <option value="" disabled>
+    Seleccionar sexo
+  </option>
+  <option value="M">Masculino</option>
+  <option value="F">Femenino</option>
+  <option value="X">No Binario</option>
+</select>
                 </div>
               </div>
             </div>
@@ -148,12 +198,25 @@ function IngresoPolicialComponent() {
               <div className="text-[#3d4245] text-sm font-normal font-inter">
                 Infracción
               </div>
-              <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
+              {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   Seleccionar infracción de transito
                 </div>
-                <div className="w-6 h-6 relative" />
-              </div>
+                
+              </div> */}
+              <select
+  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+  defaultValue=""
+>
+  <option value="" disabled>
+  Seleccionar infracción de transito
+  </option>
+  {infracciones.map((infraccion) => (
+
+  <option /* value="M" */>{infraccion.descrip}</option>
+  
+  ))}
+</select>
             </div>
           </div>
           <Link to={`/ingreso_detalles`} className="self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex  mb-[3rem]">
