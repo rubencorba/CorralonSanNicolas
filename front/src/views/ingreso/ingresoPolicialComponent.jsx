@@ -2,31 +2,30 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllInfracciones } from "../../redux/actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function IngresoPolicialComponent() {
+  const dispatch = useDispatch();
 
-
-  const dispatch = useDispatch()
-
-  const infracciones= useSelector((state)=>state.infracciones);
-
+  const infracciones = useSelector((state) => state.infracciones);
 
   useEffect(() => {
-      
-      dispatch(getAllInfracciones())
-      
-    }, []);
+    dispatch(getAllInfracciones());
+  }, []);
 
+  const [infraccionesSelected, setInfraccionesSelected] = useState([]);
 
-    /* console.log(infracciones) */
+  const handleChange = (event) => {
+    if (!infraccionesSelected.includes(event.target.value)) {
+      setInfraccionesSelected([...infraccionesSelected, event.target.value]);
+    }
+  };
 
-
-
-
-
-
-
+  const handleRemove = (infraccionToRemove) => {
+    setInfraccionesSelected((prev) =>
+      prev.filter((infraccion) => infraccion !== infraccionToRemove)
+    );
+  };
 
   return (
     <div>
@@ -63,163 +62,162 @@ function IngresoPolicialComponent() {
         </div>
 
         <div className="w-[20rem] sm:w-[32rem]  flex-col justify-start items-start gap-6 inline-flex">
-          <div className="self-stretch h-[189px] flex-col justify-start items-start gap-2 flex">
+          <div className="self-stretch  flex-col justify-start items-start gap-2 flex">
             <div className="text-[#0a5477] text-base font-bold font-inter uppercase">
               Vehículo
             </div>
             <div className="self-stretch h-[162px] flex-col justify-start items-start gap-3 flex">
               <div className="self-stretch justify-start items-start gap-2 inline-flex">
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Patente
                   </div>
 
+                  <input
+                    placeholder="00000"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
 
-                  {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                    <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                      00000
-                    </div>
-                  </div> */}
-
-{/* <div className="relative w-[20rem] sm:w-[32rem]"> */}
-  <input
-    
-    placeholder="00000"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
-  
-{/* </div> */}
-
-
+                
                 </div>
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Tipo
                   </div>
                   <input
-    
-    placeholder="Tipo"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="Tipo"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
               </div>
               <div className="self-stretch justify-start items-start gap-2 inline-flex">
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Modelo
                   </div>
                   <input
-    
-    placeholder="Modelo"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="Modelo"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Marca
                   </div>
                   <input
-    
-    placeholder="Marca"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="Marca"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="self-stretch h-[189px] flex-col justify-start items-start gap-2 flex">
+          <div className="self-stretch flex-col justify-start items-start gap-2 flex">
             <div className="text-[#0a5477] text-base font-bold font-inter uppercase">
               Infractor
             </div>
-            <div className="self-stretch h-[162px] flex-col justify-start items-start gap-3 flex">
+            <div className="self-stretch  flex-col justify-start items-start gap-3 flex">
               <div className="self-stretch justify-start items-start gap-3 inline-flex">
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Nombre y apellido
                   </div>
                   <input
-    
-    placeholder="Nombre y apellido"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="Nombre y apellido"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     DNI
                   </div>
                   <input
-    
-    placeholder="000000000"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="000000000"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
               </div>
               <div className="self-stretch justify-start items-start gap-3 inline-flex">
-                <div className="grow shrink basis-0 h-[75px] flex-col justify-start items-start gap-2 inline-flex">
+                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     CUIL
                   </div>
                   <input
-    
-    placeholder="000000000000"
-    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  />
+                    placeholder="000000000000"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  />
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
                   <div className="text-[#3d4245] text-sm font-normal font-inter">
                     Sexo
                   </div>
-                  {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
-                    <div className="text-[#3d4245] text-sm font-normal font-inter">
-                      Seleccionar sexo
-                    </div>
-                    
-                  </div> */}
+                  
                   <select
-  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  defaultValue=""
->
-  <option value="" disabled>
-    Seleccionar sexo
-  </option>
-  <option value="M">Masculino</option>
-  <option value="F">Femenino</option>
-  <option value="X">No Binario</option>
-</select>
+                    className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Seleccionar sexo
+                    </option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="X">No Binario</option>
+                  </select>
                 </div>
               </div>
             </div>
           </div>
-          <div className="self-stretch h-[102px] flex-col justify-start items-start gap-2 flex">
+          <div className="self-stretch flex-col justify-start items-start gap-2 flex">
             <div className="text-[#0a5477] text-base font-bold font-inter uppercase">
               Infracción
             </div>
-            <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch flex-col justify-start items-start gap-2 flex">
               <div className="text-[#3d4245] text-sm font-normal font-inter">
                 Infracción
               </div>
-              {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
-                <div className="text-[#3d4245] text-sm font-normal font-inter">
-                  Seleccionar infracción de transito
-                </div>
-                
-              </div> */}
+              
               <select
-  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-  defaultValue=""
->
-  <option value="" disabled>
-  Seleccionar infracción de transito
-  </option>
-  {infracciones.map((infraccion) => (
-
-  <option /* value="M" */>{infraccion.descrip}</option>
-  
-  ))}
-</select>
+                className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                defaultValue=""
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Seleccionar infracción de transito
+                </option>
+                {infracciones.map((infraccion, index) => (
+                  <option key={index} value={infraccion.descrip}>
+                    {infraccion.descrip}
+                  </option>
+                ))}
+              </select>
+              <div className="w-full">
+        {infraccionesSelected.length > 0 ? (
+          <ul className="space-y-2 w-full">
+            {infraccionesSelected.map((infraccion, index) => (
+              <li
+                key={index}
+                className="bg-white p-2 rounded-md shadow-sm text-sm font-medium flex justify-between "
+              >
+                <span>{infraccion}</span>
+                <button
+                  onClick={() => handleRemove(infraccion)}
+                  className="text-red-500 hover:text-red-700 font-bold"
+                >
+                  X
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          ""
+        )}
+      </div>
             </div>
           </div>
-          <Link to={`/ingreso_detalles`} className="self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex  mb-[3rem]">
+          <Link
+            to={`/ingreso_detalles`}
+            className=" self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex  mb-[3rem]"
+          >
             <div className="text-[#f6f5f5] text-base font-semibold font-inter">
               Siguiente
             </div>
