@@ -9,23 +9,42 @@ function IngresoPolicialComponent() {
 
   const infracciones = useSelector((state) => state.infracciones);
 
+  const [input, setInput] = useState({})
+
   useEffect(() => {
     dispatch(getAllInfracciones());
   }, []);
 
   const [infraccionesSelected, setInfraccionesSelected] = useState([]);
 
-  const handleChange = (event) => {
+  /* const handleChange = (event) => {
+    console.log(infraccionesSelected)
     if (!infraccionesSelected.includes(event.target.value)) {
       setInfraccionesSelected([...infraccionesSelected, event.target.value]);
+      console.log(infraccionesSelected)
+      setInput({ ...input, infracciones: infraccionesSelected })
     }
-  };
+  }; */
 
   const handleRemove = (infraccionToRemove) => {
     setInfraccionesSelected((prev) =>
       prev.filter((infraccion) => infraccion !== infraccionToRemove)
     );
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Evita el comportamiento por defecto
+    /* dispatch(postTramite(input)) */
+    
+    console.log(input)
+    
+  };
+
+  useEffect(() => {
+    setInput({ 
+      ...input,
+      infracciones: infraccionesSelected })
+  }, [infraccionesSelected]);
 
   return (
     <div>
@@ -61,6 +80,7 @@ function IngresoPolicialComponent() {
           </div>
         </div>
 
+        <form onSubmit={handleSubmit}>
         <div className="w-[20rem] sm:w-[32rem]  flex-col justify-start items-start gap-6 inline-flex">
           <div className="self-stretch  flex-col justify-start items-start gap-2 flex">
             <div className="text-[#0a5477] text-base font-bold font-inter uppercase">
@@ -76,6 +96,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="00000"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, dominio: e.target.value })
+                    }}
                   />
 
                 
@@ -87,6 +110,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="Tipo"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, tipovh: e.target.value })
+                    }}
                   />
                 </div>
               </div>
@@ -98,6 +124,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="Modelo"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, modelovh: e.target.value })
+                    }}
                   />
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
@@ -107,6 +136,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="Marca"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, marcavh: e.target.value })
+                    }}
                   />
                 </div>
               </div>
@@ -125,6 +157,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="Nombre y apellido"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, nombreCompleto: e.target.value })
+                    }}
                   />
                 </div>
                 <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
@@ -134,6 +169,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="000000000"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, dni: e.target.value })
+                    }}
                   />
                 </div>
               </div>
@@ -145,6 +183,9 @@ function IngresoPolicialComponent() {
                   <input
                     placeholder="000000000000"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput({ ...input, cuil: e.target.value })
+                    }}
                   />
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
@@ -155,6 +196,9 @@ function IngresoPolicialComponent() {
                   <select
                     className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                     defaultValue=""
+                    onChange={(e) => {
+                      setInput({ ...input, sexo: e.target.value })
+                    }}
                   >
                     <option value="" disabled>
                       Seleccionar sexo
@@ -179,7 +223,12 @@ function IngresoPolicialComponent() {
               <select
                 className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                 defaultValue=""
-                onChange={handleChange}
+                /* onChange={handleChange} */
+                onChange={(e) => {
+                  if (!infraccionesSelected.includes(e.target.value)) {
+                    setInfraccionesSelected([...infraccionesSelected, e.target.value]);
+                  }
+                }}
               >
                 <option value="" disabled>
                   Seleccionar infracción de transito
@@ -214,15 +263,17 @@ function IngresoPolicialComponent() {
       </div>
             </div>
           </div>
-          <Link
-            to={`/ingreso_detalles`}
+          <button
+            type="submit"
+            /* to={`/ingreso_detalles`} */
             className=" self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex  mb-[3rem]"
           >
-            <div className="text-[#f6f5f5] text-base font-semibold font-inter">
+            <span  className="text-[#f6f5f5] text-base font-semibold font-inter">
               Siguiente
-            </div>
-          </Link>
+            </span>
+          </button>
         </div>
+        </form>
       </div>
     </div>
   );
