@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllInfracciones } from "../../redux/actions";
 import { useEffect, useState } from "react";
 
 function IngresoPolicialComponent() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const infracciones = useSelector((state) => state.infracciones);
@@ -37,7 +38,7 @@ function IngresoPolicialComponent() {
     /* dispatch(postTramite(input)) */
     
     console.log(input)
-    
+    navigate('/ingreso_detalles')
   };
 
   useEffect(() => {
@@ -265,7 +266,7 @@ function IngresoPolicialComponent() {
           </div>
           <button
             type="submit"
-            /* to={`/ingreso_detalles`} */
+            
             className=" self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex  mb-[3rem]"
           >
             <span  className="text-[#f6f5f5] text-base font-semibold font-inter">

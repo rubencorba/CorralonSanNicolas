@@ -21,19 +21,7 @@ function Landing() {
 
 
   const login= async (userData)=> {
-    /* const { usuario, contraseña } = userData;
-    if (usuario==="usuario" && contraseña==="123asd"){
-        dispatch(updateCurrentUser(1))
-        navigate('/home')
-    }else if (usuario==="usuario2" && contraseña==="123asd"){
-      dispatch(updateCurrentUser(2))
-      navigate('/home')
-    }else if (usuario==="admin" && contraseña==="123asd"){
-      dispatch(updateCurrentUser(0))
-      navigate('/allTramites')
-    }else{
-        throw Error("Usuario o contraseña incorrectos")
-    } */
+    
         navigate('/inicio')
   }
 
