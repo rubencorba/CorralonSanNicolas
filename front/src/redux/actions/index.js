@@ -1,20 +1,14 @@
 import axios from 'axios';
 import vehiculosSecuestrados from "../../utils/vehiculos";
 
-/* export const GET_ALL_USERS="GET_ALL_USERS"
-export const POST_TRAMITE="POST_TRAMITE"
-export const UPDATE_CURRENT_USER="UPDATE_CURRENT_USER"
-export const GET_ALL_TRAMITES="GET_ALL_TRAMITES"
-export const APROBAR_TRAMITE="APROBAR_TRAMITE"
-export const RECHAZAR_TRAMITE="RECHAZAR_TRAMITE"
-export const POST_USERS="POST_USERS" */
-
-
 export const UPDATE_PAGE="UPDATE_PAGE"
 export const GET_DETAIL_SECUESTRO="GET_DETAIL_SECUESTRO"
 export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
 export const GET_ALL_SECUESTROS="GET_ALL_SECUESTROS"
 export const GET_ALL_INFRACCIONES="GET_ALL_INFRACCIONES"
+export const OFICIO_POLICIAL="OFICIO_POLICIAL"
+export const INGRESO_DETALLES="INGRESO_DETALLES"
+export const INGRESO_FOTO="INGRESO_FOTO"
 
 /* export const getAllUsers=()=>{
     try {
@@ -239,6 +233,54 @@ export const getAllInfracciones=()=>{
             })
            
         }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const ingresoOficioPolicial=(data)=>{
+    try {
+        
+            
+            return ({
+                
+                type:OFICIO_POLICIAL,
+                payload:data
+            })
+           
+       
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const ingresoDetalles=(data)=>{
+    try {
+        
+            
+            return ({
+                
+                type:INGRESO_DETALLES,
+                payload:data
+            })
+           
+       
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const ingresoFoto=(data)=>{
+    try {
+        
+            
+            return ({
+                
+                type:INGRESO_FOTO,
+                payload:data
+            })
+           
+       
     } catch (error) {
         console.log(error);
     }

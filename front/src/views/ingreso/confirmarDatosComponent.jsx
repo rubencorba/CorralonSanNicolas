@@ -1,6 +1,18 @@
+import { useSelector } from "react-redux";
 import Navbar from "../../components/navbar/navbarComponent";
 
 function ConfirmarDatos() {
+
+  const oficioPolicial = useSelector((state) => state.oficioPolicial);
+  const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
+  const ingresoFoto = useSelector((state) => state.ingresoFoto);
+  console.log(oficioPolicial)
+  console.log(ingresoDetalles)
+  console.log(ingresoFoto)
+
+
+
+
   return (
     <div>
       <Navbar />

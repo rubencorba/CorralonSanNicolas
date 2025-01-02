@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import Navbar from "../../components/navbar/navbarComponent";
 import Webcam from "react-webcam";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { ingresoFoto } from "../../redux/actions";
 
 function FotoComponent () {
   const webcamRef = useRef(null);
@@ -12,6 +14,18 @@ function FotoComponent () {
     setImagen(captura);
     console.log(captura);
   };
+
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleConfirmar = (/* event */) => {
+      /* event.preventDefault(); */ // Evita el comportamiento por defecto
+      dispatch(ingresoFoto(imagen))
+      
+      /* console.log(input) */
+      navigate('/ingreso_confirmacion')
+    };
 
   return (
     <div >
@@ -30,9 +44,10 @@ function FotoComponent () {
             <button onClick={()=>setImagen(null)} className="w-full h-[50px] px-[10px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center  flex">
               <div className="text-[#0477ad] text-base font-semibold font-inter">Volver atrás</div>
             </button>
-            <Link to={`/ingreso_confirmacion`} className="w-full  h-[50px] px-[10px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center  flex">
+            <button
+            onClick={()=>handleConfirmar()} className="w-full  h-[50px] px-[10px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center  flex">
               <div className="text-[#f6f5f5] text-base font-semibold font-inter">Confirmar foto</div>      
-            </Link>
+            </button>
           </div>
         </div>
         </div>

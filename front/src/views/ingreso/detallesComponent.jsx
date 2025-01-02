@@ -1,14 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
+import { useState } from "react";
+import { ingresoDetalles } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 function DetallesComponent() {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleback =()=>{
     navigate(-1)
     }
 
+  const [input, setInput] = useState({})
+
+  const handleSubmit = (event) => {
+      event.preventDefault(); // Evita el comportamiento por defecto
+      dispatch(ingresoDetalles(input))
+      
+      console.log(input)
+      navigate('/ingreso_foto')
+    };
 
 
   return (
@@ -47,6 +59,7 @@ function DetallesComponent() {
           </div>
         </div>
 
+        <form onSubmit={handleSubmit}>
         <div className="h-[319px] w-[20rem] sm:w-[23rem] flex-col justify-start items-start gap-5 inline-flex">
           <div className="self-stretch h-[249px] flex-col justify-start items-start gap-3 flex">
             <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
@@ -60,9 +73,9 @@ function DetallesComponent() {
               <select
                 className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                 defaultValue=""
-                /* onChange={(e) => {
-                      setInput({ ...input, sexo: e.target.value })
-                    }} */
+                onChange={(e) => {
+                      setInput({ ...input, sector: e.target.value })
+                    }}
               >
                 {Array.from({ length: 26 }, (_, i) => {
                   const letter = String.fromCharCode(65 + i); // 65 es el código ASCII de 'A'
@@ -86,9 +99,9 @@ function DetallesComponent() {
               <input
                     placeholder="0"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                    /* onChange={(e) => {
-                      setInput({ ...input, cuil: e.target.value })
-                    }} */
+                    onChange={(e) => {
+                      setInput({ ...input, inventario: e.target.value })
+                    }}
                   />
             </div>
             <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
@@ -105,9 +118,9 @@ function DetallesComponent() {
                     placeholder="0"
                     type="datetime-local"
                     className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4  py-2 h-[50px]"
-                    /* onChange={(e) => {
-                      setInput({ ...input, cuil: e.target.value })
-                    }} */
+                    onChange={(e) => {
+                      setInput({ ...input, fecha_hora: e.target.value })
+                    }}
                   />
             </div>
           </div>
@@ -118,16 +131,17 @@ function DetallesComponent() {
                 Volver atrás
               </div>
             </button>
-            <Link
-              to={`/ingreso_foto`}
+            <button
+            type="submit"
               className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
             >
               <div className="text-[#f6f5f5] text-base font-semibold font-inter">
                 Siguiente
               </div>
-            </Link>
+            </button>
           </div>
         </div>
+        </form>
       </div>
     </div>
   );

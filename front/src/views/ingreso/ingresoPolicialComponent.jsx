@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllInfracciones } from "../../redux/actions";
+import { getAllInfracciones, ingresoOficioPolicial } from "../../redux/actions";
 import { useEffect, useState } from "react";
 
 function IngresoPolicialComponent() {
@@ -35,9 +35,9 @@ function IngresoPolicialComponent() {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Evita el comportamiento por defecto
-    /* dispatch(postTramite(input)) */
+    dispatch(ingresoOficioPolicial(input))
     
-    console.log(input)
+    /* console.log(input) */
     navigate('/ingreso_detalles')
   };
 
