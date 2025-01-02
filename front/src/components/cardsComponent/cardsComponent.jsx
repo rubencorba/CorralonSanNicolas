@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CardComponent from "../cardComponent/cardComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSecuestros, getAllVehiculos } from "../../redux/actions";
+import { getAllSecuestros } from "../../redux/actions";
 
 
 
@@ -38,12 +38,12 @@ function CardsComponent() {
        {secuestros.map(({id, Vehiculo, egreso, Acta, fecha_hora, foto}) => {
           return  <CardComponent
           key={id}
-          tipo={Vehiculo.tipovh}
-          dominio={Vehiculo.dominio}
+          tipo={Vehiculo?.tipovh}
+          dominio={Vehiculo?.dominio}
           egreso={egreso}
-          numeroActa={Acta.nro}
-          lugar={Acta.lugar}
-          origin={origin}
+          numeroActa={Acta?.nro}
+          lugar={Acta?.lugar}
+          /* origin={origin} */
           fecha_hora={fecha_hora}
           foto={foto}
           id ={id}

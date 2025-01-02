@@ -11,7 +11,12 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
 
     const estado = egreso ? "Egresado" : "Ingresado";
 
-    foto = foto.replace(".png", ".jpg");
+    const isBase64 = foto.startsWith('data:image/'); // Verifica si es Base64
+
+// Si no es Base64, realiza las conversiones necesarias
+if (!isBase64) {
+  foto = foto.replace(".png", ".jpg"); // Cambia .png por .jpg si es necesario
+}
 
     
     return (
@@ -19,7 +24,7 @@ function CardComponent({id, tipo, dominio, egreso, numeroActa, lugar, fecha_hora
 
     <Link to={`/detail/${id}`} class="flex overflow-hidden border-[0.5px] items-center bg-white border border-[#C5E0FF] gap-1 pr-1 rounded-lg shadow-[1px_2px_8px_1px_rgba(219,219,219,0.45)] flex-row md:max-w-xl">
     <div class="w-full md:w-1/2 h-full">
-        <img class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg" src={`https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
+        <img class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg" src={isBase64 ? foto : `https://corralon.movisn.com/api${foto}`} alt="vehiculo"/>
     </div>
     <div className="flex flex-col justify-between px-2 leading-normal gap-1.5">
         <div className="mb-1 text-[18px] font-inter font-bold break-words  text-[#3E4345] ">{tipo}, {dominio}</div>

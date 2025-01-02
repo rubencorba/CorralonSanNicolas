@@ -1,5 +1,6 @@
 const {getAllSecuestros}=require('../handlerss/getAllSecuestros');
 const { infraccionesBySecuestroId } = require('../handlerss/infraccionesBySecuestroId');
+const { postSecuestro } = require('../handlerss/postSecuestro');
 const { secuestroDetailById } = require('../handlerss/secuestroDetailById');
 
 const getAllSecuestrosController= async (req,res)=>{
@@ -28,8 +29,20 @@ const getDetailSecuestroController= async (req,res)=>{
         res.status(400).json({error:error.message});
     }
 }
+const postSecuestroController= async (req,res)=>{
+    const {cuil,dni,dominio,marcavh,modelovh,nombreCompleto,sexo,tipovh,fecha_hora,inventario,sector}=req.body;
+    /* infracciones, */
+    try {
+        const response= await postSecuestro(cuil,dni,dominio,marcavh,modelovh,nombreCompleto,sexo,tipovh,fecha_hora,inventario,sector);
+        /* infracciones, */
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({error:error.message});
+    }
+}
 
 module.exports={
     getAllSecuestrosController,
-    getDetailSecuestroController
+    getDetailSecuestroController,
+    postSecuestroController
     };

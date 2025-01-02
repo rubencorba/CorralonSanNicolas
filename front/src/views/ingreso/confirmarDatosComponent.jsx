@@ -73,7 +73,7 @@ function ConfirmarDatos() {
                       Nombre:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      Aranda José maria
+                      {oficioPolicial.nombreCompleto}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -81,7 +81,7 @@ function ConfirmarDatos() {
                       DNI:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      32279263
+                    {oficioPolicial.dni}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -89,7 +89,7 @@ function ConfirmarDatos() {
                       CUIL:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      20322792631
+                    {oficioPolicial.cuil}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -97,7 +97,7 @@ function ConfirmarDatos() {
                       Sexo:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      Masculino
+                    {oficioPolicial.sexo}
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ function ConfirmarDatos() {
                     Dominio:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                    123213123
+                  {oficioPolicial.dominio}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -121,7 +121,7 @@ function ConfirmarDatos() {
                     Tipo de vehículo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                    Automóvil
+                  {oficioPolicial.tipovh}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -129,7 +129,7 @@ function ConfirmarDatos() {
                     Marca:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                    Fiat
+                  {oficioPolicial.marcavh}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -137,7 +137,7 @@ function ConfirmarDatos() {
                     Modelo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                    600
+                  {oficioPolicial.modelovh}
                   </div>
                 </div>
               </div>
@@ -147,7 +147,12 @@ function ConfirmarDatos() {
                 Infracción
               </div>
               <div className="text-[#687073] text-base font-medium font-inter">
-                Art. 25 Inc. C.- Por estacionar en lugar prohibido
+              {oficioPolicial.infracciones?.map((infr) => (
+                  <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
+                    {infr.digesto}
+                    {infr.descrip}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

@@ -28,8 +28,9 @@ function IngresoPolicialComponent() {
   }; */
 
   const handleRemove = (infraccionToRemove) => {
+    /* event.preventDefault(); */
     setInfraccionesSelected((prev) =>
-      prev.filter((infraccion) => infraccion !== infraccionToRemove)
+      prev.filter((infraccion) => infraccion.descrip !== infraccionToRemove.descrip)
     );
   };
 
@@ -204,9 +205,9 @@ function IngresoPolicialComponent() {
                     <option value="" disabled>
                       Seleccionar sexo
                     </option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                    <option value="X">No Binario</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="NoBinario">No Binario</option>
                   </select>
                 </div>
               </div>
@@ -226,9 +227,21 @@ function IngresoPolicialComponent() {
                 defaultValue=""
                 /* onChange={handleChange} */
                 onChange={(e) => {
-                  if (!infraccionesSelected.includes(e.target.value)) {
+                  /* if (!infraccionesSelected.includes(e.target.value)) {
                     setInfraccionesSelected([...infraccionesSelected, e.target.value]);
-                  }
+                    console.log(infraccionesSelected)
+                  } */
+                    const selectedInfraccion = infracciones.find(
+                      (infraccion) => infraccion.descrip === e.target.value
+                    );
+                
+                    // Verifica que no esté ya seleccionada antes de agregarla
+                    if (
+                      selectedInfraccion &&
+                      !infraccionesSelected.some((i) => i.descrip === selectedInfraccion.descrip)
+                    ) {
+                      setInfraccionesSelected([...infraccionesSelected, selectedInfraccion]);
+                    }
                 }}
               >
                 <option value="" disabled>
@@ -248,8 +261,9 @@ function IngresoPolicialComponent() {
                 key={index}
                 className="bg-white p-2 rounded-md shadow-sm text-sm font-medium flex justify-between "
               >
-                <span>{infraccion}</span>
+                <span>{infraccion.descrip}</span>
                 <button
+                  type="button"
                   onClick={() => handleRemove(infraccion)}
                   className="text-red-500 hover:text-red-700 font-bold"
                 >

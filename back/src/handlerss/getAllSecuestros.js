@@ -5,6 +5,7 @@ const getAllSecuestros = async ({ limit, offset }) => {
       const secuestros = await Secuestros.findAll({
           limit,
           offset,
+          order: [['id', 'DESC']], // Orden descendente por el campo 'id'
           include: [
               {
                   model: Actas,
