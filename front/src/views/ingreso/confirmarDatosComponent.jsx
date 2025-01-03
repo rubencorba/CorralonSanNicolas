@@ -1,7 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../components/navbar/navbarComponent";
+import { useEffect, useState } from "react";
+import { postSecuestro } from "../../redux/actions";
 
 function ConfirmarDatos() {
+
+  const dispatch = useDispatch();
 
   const oficioPolicial = useSelector((state) => state.oficioPolicial);
   const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
@@ -10,7 +14,23 @@ function ConfirmarDatos() {
   console.log(ingresoDetalles)
   console.log(ingresoFoto)
 
+  const [data, setData] = useState({})
 
+  useEffect(() => {
+    setData({
+      ...oficioPolicial,
+      ...ingresoDetalles,
+      foto: ingresoFoto,
+    });
+  }, [oficioPolicial, ingresoDetalles, ingresoFoto]);
+
+  const handleConfirm = (event) => {
+      /* event.preventDefault(); */ // Evita el comportamiento por defecto
+      dispatch(postSecuestro(data))
+      
+      console.log(data)
+      /* navigate('/ingreso_detalles') */
+    };
 
 
   return (
@@ -162,11 +182,11 @@ function ConfirmarDatos() {
                 Volver atrás
               </div>
             </div>
-            <div className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
+            <button onClick={()=>handleConfirm()} className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
               <div className="text-[#f6f5f5] text-center font-semibold font-inter">
                 Guardar e imprimir código
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </div>

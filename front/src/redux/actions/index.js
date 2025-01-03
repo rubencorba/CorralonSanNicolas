@@ -9,6 +9,7 @@ export const GET_ALL_INFRACCIONES="GET_ALL_INFRACCIONES"
 export const OFICIO_POLICIAL="OFICIO_POLICIAL"
 export const INGRESO_DETALLES="INGRESO_DETALLES"
 export const INGRESO_FOTO="INGRESO_FOTO"
+export const POST_SECUESTRO="POST_SECUESTRO"
 
 /* export const getAllUsers=()=>{
     try {
@@ -281,6 +282,23 @@ export const ingresoFoto=(data)=>{
             })
            
        
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+export const postSecuestro=(info)=>{
+    try {
+        const endpoint='http://localhost:3001/secuestros';
+        return async (dispatch)=>{
+            const {data}= await axios.post(endpoint,info);
+            return dispatch({
+                
+                type:POST_SECUESTRO,
+                payload:data
+            })
+           
+        }
     } catch (error) {
         console.log(error);
     }
