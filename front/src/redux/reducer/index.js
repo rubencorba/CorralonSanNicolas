@@ -6,6 +6,7 @@ import {
   INGRESO_DETALLES,
   INGRESO_FOTO,
   OFICIO_POLICIAL,
+  SEARCH_ACTA,
   UPDATE_PAGE,
 } from "../actions";
 
@@ -18,6 +19,7 @@ const initialState = {
   oficioPolicial:{},
   ingresoDetalles:{},
   ingresoFoto:'',
+  acta:{},
 };
 
 export const reducer = (state = initialState, action) => {
@@ -39,6 +41,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, ingresoDetalles: action.payload };
     case INGRESO_FOTO:
       return { ...state, ingresoFoto: action.payload };
+    case SEARCH_ACTA:
+      return { ...state, acta: action.payload };
 
     default:
       return { ...state };

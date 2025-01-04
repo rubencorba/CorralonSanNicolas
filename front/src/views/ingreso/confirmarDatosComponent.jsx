@@ -10,9 +10,31 @@ function ConfirmarDatos() {
   const oficioPolicial = useSelector((state) => state.oficioPolicial);
   const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
   const ingresoFoto = useSelector((state) => state.ingresoFoto);
+  const acta = useSelector((state) => state.acta);
   console.log(oficioPolicial)
   console.log(ingresoDetalles)
   console.log(ingresoFoto)
+  console.log(acta)
+
+  /* --------------------Formateando fecha y hora de Acta----------------------------- */
+
+  const [formattedDate, setFormattedDate] = useState('');
+
+  // Declarar formatter fuera de useEffect para reutilizarlo
+  const formatter = new Intl.DateTimeFormat('es-AR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+    timeZone: 'America/Argentina/Buenos_Aires',
+  });
+
+  useEffect(() => {
+    if (acta?.fecha_hora) {
+      const date = new Date(acta.fecha_hora);
+      setFormattedDate(formatter.format(date));
+    }
+  }, [acta, formatter]);
+
+ /*  ------------------------------------------------------------------- */
 
   const [data, setData] = useState({})
 
@@ -54,7 +76,7 @@ function ConfirmarDatos() {
                       №:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      1
+                    {acta.nro}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -62,7 +84,7 @@ function ConfirmarDatos() {
                       Inspector:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      1
+                    {acta.inspector}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -70,7 +92,7 @@ function ConfirmarDatos() {
                       Lugar:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      0
+                    {acta.lugar}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -78,7 +100,7 @@ function ConfirmarDatos() {
                       Fecha / hora:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      02/04/2004
+                      {formattedDate}
                     </div>
                   </div>
                 </div>

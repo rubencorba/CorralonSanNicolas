@@ -10,6 +10,7 @@ export const OFICIO_POLICIAL="OFICIO_POLICIAL"
 export const INGRESO_DETALLES="INGRESO_DETALLES"
 export const INGRESO_FOTO="INGRESO_FOTO"
 export const POST_SECUESTRO="POST_SECUESTRO"
+export const SEARCH_ACTA="SEARCH_ACTA"
 
 /* export const getAllUsers=()=>{
     try {
@@ -295,6 +296,24 @@ export const postSecuestro=(info)=>{
             return dispatch({
                 
                 type:POST_SECUESTRO,
+                payload:data
+            })
+           
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+
+export const searchActa=(nroActa)=>{
+    try {
+        const endpoint=`http://localhost:3001/actas/${nroActa}`;
+        return async (dispatch)=>{
+            const {data}= await axios.get(endpoint);
+            return dispatch({
+                
+                type:SEARCH_ACTA,
                 payload:data
             })
            

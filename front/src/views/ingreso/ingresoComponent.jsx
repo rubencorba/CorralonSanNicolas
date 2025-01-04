@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
+import { searchActa } from "../../redux/actions";
 
 function IngresoComponent() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [input, setInput] = useState(0)
+
+  const acta = useSelector((state) => state.acta);
+
+  /* useEffect(() => {
+      console.log(acta)
+    }, [acta]); */
+
+  const handleSubmit = (event) => {
+      /* event.preventDefault(); */ // Evita el comportamiento por defecto
+      dispatch(searchActa(input))
+      
+      /* console.log(input) */
+      navigate('/ingreso_detalles')
+    };
+
   return (
     <div>
       <Navbar />
@@ -39,23 +59,32 @@ function IngresoComponent() {
           </div>
         </div>
 
+
+        
         <div class="w-[20rem] sm:w-[32rem] h-[75px] justify-start items-end gap-2 inline-flex">
           <div class="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
             <div class="text-[#3d4245] text-sm font-normal font-inter">
               N° acta
             </div>
-            <div class="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
+            {/* <div class="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
               <div class="text-[#a3b8c1] text-sm font-normal font-inter">0</div>
-            </div>
+            </div> */}
+            <input
+                    placeholder="0"
+                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                    onChange={(e) => {
+                      setInput( e.target.value )
+                    }}
+                  />
           </div>
-          <Link
-            to={`/ingreso_detalles`}
+          <button
+            onClick={()=>handleSubmit()}
             class="w-[118px] h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
           >
             <div class="text-[#f6f5f5] text-base font-semibold font-inter">
               Buscar
             </div>
-          </Link>
+          </button>
         </div>
       </div>
     </div>
