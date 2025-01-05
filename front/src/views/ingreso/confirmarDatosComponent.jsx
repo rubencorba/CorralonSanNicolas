@@ -7,15 +7,15 @@ function ConfirmarDatos() {
 
   const dispatch = useDispatch();
 
-  const oficioPolicial = useSelector((state) => state.oficioPolicial);
+  /* const oficioPolicial = useSelector((state) => state.oficioPolicial); */
   const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
   const ingresoFoto = useSelector((state) => state.ingresoFoto);
-  const acta = useSelector((state) => state.acta);
-  console.log(oficioPolicial)
+  const datosConfirmarIngreso = useSelector((state) => state.datosConfirmarIngreso);
+  /* console.log(oficioPolicial) */
   console.log(ingresoDetalles)
   console.log(ingresoFoto)
-  console.log(acta)
-
+  /* console.log(acta)
+ */
   /* --------------------Formateando fecha y hora de Acta----------------------------- */
 
   const [formattedDate, setFormattedDate] = useState('');
@@ -28,11 +28,11 @@ function ConfirmarDatos() {
   });
 
   useEffect(() => {
-    if (acta?.fecha_hora) {
-      const date = new Date(acta.fecha_hora);
+    if (datosConfirmarIngreso?.actaFecha_hora) {
+      const date = new Date(datosConfirmarIngreso.actaFecha_hora);
       setFormattedDate(formatter.format(date));
     }
-  }, [acta, formatter]);
+  }, [datosConfirmarIngreso, formatter]);
 
  /*  ------------------------------------------------------------------- */
 
@@ -40,11 +40,11 @@ function ConfirmarDatos() {
 
   useEffect(() => {
     setData({
-      ...oficioPolicial,
+      /* ...oficioPolicial, */ //Luego colocar ...datosConfirmarIngreso, para postear todos los datos
       ...ingresoDetalles,
       foto: ingresoFoto,
     });
-  }, [oficioPolicial, ingresoDetalles, ingresoFoto]);
+  }, [/* oficioPolicial, */ ingresoDetalles, ingresoFoto]);
 
   const handleConfirm = (event) => {
       /* event.preventDefault(); */ // Evita el comportamiento por defecto
@@ -76,7 +76,7 @@ function ConfirmarDatos() {
                       №:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {acta.nro}
+                    {datosConfirmarIngreso.actaNro}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -84,7 +84,7 @@ function ConfirmarDatos() {
                       Inspector:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {acta.inspector}
+                    {datosConfirmarIngreso.actaInspector}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -92,7 +92,7 @@ function ConfirmarDatos() {
                       Lugar:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {acta.lugar}
+                    {datosConfirmarIngreso.actaLugar}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -115,7 +115,7 @@ function ConfirmarDatos() {
                       Nombre:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                      {oficioPolicial.nombreCompleto}
+                    {datosConfirmarIngreso.infractorNombre}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -123,7 +123,7 @@ function ConfirmarDatos() {
                       DNI:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {oficioPolicial.dni}
+                    {datosConfirmarIngreso.infractorDni}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -131,7 +131,7 @@ function ConfirmarDatos() {
                       CUIL:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {oficioPolicial.cuil}
+                    {datosConfirmarIngreso.infractorCuil}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -139,7 +139,7 @@ function ConfirmarDatos() {
                       Sexo:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {oficioPolicial.sexo}
+                    {datosConfirmarIngreso.infractorSexo}
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ function ConfirmarDatos() {
                     Dominio:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {oficioPolicial.dominio}
+                  {datosConfirmarIngreso.vehiculoDominio}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -163,7 +163,7 @@ function ConfirmarDatos() {
                     Tipo de vehículo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {oficioPolicial.tipovh}
+                  {datosConfirmarIngreso.vehiculoTipo}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -171,7 +171,7 @@ function ConfirmarDatos() {
                     Marca:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {oficioPolicial.marcavh}
+                  {datosConfirmarIngreso.vehiculoMarca}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -179,17 +179,17 @@ function ConfirmarDatos() {
                     Modelo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {oficioPolicial.modelovh}
+                  {datosConfirmarIngreso.vehiculoModelo}
                   </div>
                 </div>
               </div>
             </div>
             <div className="self-stretch  p-4 bg-white rounded-lg border border-[#c5dfff] flex-col justify-start items-start gap-1 flex">
               <div className="text-[#0a5477] text-sm font-bold font-inter uppercase">
-                Infracción
+                Infracciones
               </div>
               <div className="text-[#687073] text-base font-medium font-inter">
-              {oficioPolicial.infracciones?.map((infr) => (
+              {datosConfirmarIngreso.infracciones?.map((infr) => (
                   <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
                     {infr.digesto}
                     {infr.descrip}

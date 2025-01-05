@@ -1,26 +1,34 @@
-const {/* Secuestros, */Actas/* ,Vehiculos,Infractores */}= require('../db.js');
+const { Secuestros, Actas, Vehiculos, Infractores } = require("../db.js");
+const { infraccionesBySecuestroId } = require("./infraccionesBySecuestroId.js");
 
 const getActabyNro = async (nro) => {
-    return await Actas.findOne({where:{nro:nro}/* ,
-      include: [
-        {
-          model: Actas,
-          
-          attributes: ['nro','lugar','inspector','fecha_hora'], 
-        },
-        {
-          model: Vehiculos,
-          
-          attributes: ['tipovh','dominio','marcavh','modelovh'], 
-        },
-        {
-          model: Infractores,
-          
-          attributes: ['nombreCompleto','dni','sexo','cuil'], 
-        },
-      ], */
+  try {
+    // Buscar el acta y el secuestro relacionado
+    const acta = await Actas.findOne({
+      where: { nro },
+      include: { model: Secuestros, as: "Secuestro" },
     });
-  };
 
+    if (!acta) {
+      return { error: "Acta no encontrada" };
+    }
 
-module.exports={getActabyNro}
+    // Obtener los ID del secuestro
+    const vehiculoId = acta.Secuestro.vehiculo;
+    const infractorId = acta.Secuestro.infractor;
+    const secuestroId = acta.Secuestro.id;
+
+    // Buscar los campos relacionados
+    const vehiculo = await Vehiculos.findOne({ where: { id: vehiculoId } });
+    const infractor = await Infractores.findOne({ where: { id: infractorId } });
+    const infracciones = await infraccionesBySecuestroId(secuestroId)
+
+    // Retornar un objeto que incluya todo
+    return { acta, vehiculo,infractor, infracciones };
+  } catch (error) {
+    console.error("Error al buscar el acta", error);
+    throw error;
+  }
+};
+
+module.exports = { getActabyNro };
