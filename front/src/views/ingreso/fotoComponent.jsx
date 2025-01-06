@@ -13,6 +13,7 @@ function FotoComponent () {
     const captura = webcamRef.current.getScreenshot();
     setImagen(captura);
     console.log(captura);
+
   };
 
 
@@ -26,6 +27,9 @@ function FotoComponent () {
       /* console.log(input) */
       navigate('/ingreso_confirmacion')
     };
+
+
+
 
   return (
     <div >

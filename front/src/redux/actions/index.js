@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 import vehiculosSecuestrados from "../../utils/vehiculos";
 
-export const UPDATE_PAGE="UPDATE_PAGE"
-export const GET_DETAIL_SECUESTRO="GET_DETAIL_SECUESTRO"
-export const GET_ALL_VEHICULOS="GET_ALL_VEHICULOS"
-export const GET_ALL_SECUESTROS="GET_ALL_SECUESTROS"
-export const GET_ALL_INFRACCIONES="GET_ALL_INFRACCIONES"
-export const OFICIO_POLICIAL="OFICIO_POLICIAL"
-export const INGRESO_DETALLES="INGRESO_DETALLES"
-export const INGRESO_FOTO="INGRESO_FOTO"
-export const POST_SECUESTRO="POST_SECUESTRO"
-export const SEARCH_ACTA="SEARCH_ACTA"
+export const UPDATE_PAGE = "UPDATE_PAGE";
+export const GET_DETAIL_SECUESTRO = "GET_DETAIL_SECUESTRO";
+export const GET_ALL_VEHICULOS = "GET_ALL_VEHICULOS";
+export const GET_ALL_SECUESTROS = "GET_ALL_SECUESTROS";
+export const GET_ALL_INFRACCIONES = "GET_ALL_INFRACCIONES";
+export const OFICIO_POLICIAL = "OFICIO_POLICIAL";
+export const INGRESO_DETALLES = "INGRESO_DETALLES";
+export const INGRESO_FOTO = "INGRESO_FOTO";
+export const POST_SECUESTRO = "POST_SECUESTRO";
+export const SEARCH_ACTA = "SEARCH_ACTA";
 
 /* export const getAllUsers=()=>{
     try {
@@ -154,172 +154,132 @@ export const postUsers=()=>{
         
 } */
 
-export const updatePage=(page)=>{
-    try {
-        const endpoint=`http://localhost:3001/secuestros/?page=${page}`;
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:UPDATE_PAGE,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
+export const updatePage = (page) => {
+  try {
+    const endpoint = `http://localhost:3001/secuestros/?page=${page}`;
+    return async (dispatch) => {
+      const { data } = await axios.get(endpoint);
+      return dispatch({
+        type: UPDATE_PAGE,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export const getDetailSecuestro=(id)=>{
-    try {
-        const endpoint=`http://localhost:3001/secuestros/${id}`;
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_DETAIL_SECUESTRO,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
+export const getDetailSecuestro = (id) => {
+  try {
+    const endpoint = `http://localhost:3001/secuestros/${id}`;
+    return async (dispatch) => {
+      const { data } = await axios.get(endpoint);
+      return dispatch({
+        type: GET_DETAIL_SECUESTRO,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export const getAllVehiculos=()=>{
-    try {
-        const endpoint='http://localhost:3001/vehiculos';
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_ALL_VEHICULOS,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const getAllSecuestros=()=>{
-    try {
-        const endpoint='http://localhost:3001/secuestros';
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_ALL_SECUESTROS,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const getAllInfracciones=()=>{
-    try {
-        const endpoint='http://localhost:3001/infracciones';
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_ALL_INFRACCIONES,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const ingresoOficioPolicial=(data)=>{
-    try {
-        
-            
-            return ({
-                
-                type:OFICIO_POLICIAL,
-                payload:data
-            })
-           
-       
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const ingresoDetalles=(data)=>{
-    try {
-        
-            
-            return ({
-                
-                type:INGRESO_DETALLES,
-                payload:data
-            })
-           
-       
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const ingresoFoto=(data)=>{
-    try {
-        
-            
-            return ({
-                
-                type:INGRESO_FOTO,
-                payload:data
-            })
-           
-       
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-export const postSecuestro=(info)=>{
-    try {
-        const endpoint='http://localhost:3001/secuestros';
-        return async (dispatch)=>{
-            const {data}= await axios.post(endpoint,info);
-            return dispatch({
-                
-                type:POST_SECUESTRO,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
+export const getAllVehiculos = () => {
+  try {
+    const endpoint = "http://localhost:3001/vehiculos";
+    return async (dispatch) => {
+      const { data } = await axios.get(endpoint);
+      return dispatch({
+        type: GET_ALL_VEHICULOS,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAllSecuestros = () => {
+  try {
+    const endpoint = "http://localhost:3001/secuestros";
+    return async (dispatch) => {
+      const { data } = await axios.get(endpoint);
+      return dispatch({
+        type: GET_ALL_SECUESTROS,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAllInfracciones = () => {
+  try {
+    const endpoint = "http://localhost:3001/infracciones";
+    return async (dispatch) => {
+      const { data } = await axios.get(endpoint);
+      return dispatch({
+        type: GET_ALL_INFRACCIONES,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const ingresoOficioPolicial = (data) => {
+  try {
+    return {
+      type: OFICIO_POLICIAL,
+      payload: data,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const ingresoDetalles = (data) => {
+  try {
+    return {
+      type: INGRESO_DETALLES,
+      payload: data,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const ingresoFoto = (data) => {
+  try {
+    return {
+      type: INGRESO_FOTO,
+      payload: data,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const postSecuestro = (info) => {
+  try {
+    const endpoint = "http://localhost:3001/secuestros";
+    return async (dispatch) => {
+      const { data } = await axios.post(endpoint, info);
+      return dispatch({
+        type: POST_SECUESTRO,
+        payload: data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export const searchActa=(nroActa)=>{
-    try {
-        const endpoint=`http://localhost:3001/actas/${nroActa}`;
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:SEARCH_ACTA,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
+export const searchActa = (nroActa) => {
+    return async (dispatch) => {
+      try {
+        const endpoint = `http://localhost:3001/actas/${nroActa}`;
+        const { data } = await axios.get(endpoint);
+        dispatch({ type: SEARCH_ACTA, payload: data });
+        return null; // No hay error
+      } catch (error) {
+        return error.response.data.message; // Devuelve el error
+      }
+    };
+  };

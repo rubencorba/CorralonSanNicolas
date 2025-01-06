@@ -24,9 +24,9 @@ function DetailComponent() {
   const options = { timeZone: "America/Argentina/Buenos_Aires", hour12: false };
 
   // Extraer el valor del campo "$numberInt"
-  const numeroInventario = detail.inventario
+  /* const numeroInventario = detail.inventario
     ? parseInt(JSON.parse(detail.inventario)["$numberInt"], 10)
-    : null;
+    : null; */
 
   const navigate = useNavigate();
 
@@ -175,7 +175,7 @@ function DetailComponent() {
                   Inventario
                 </dt>
                 <dd className=" text-sm/6 text-gray-700  sm:mt-0">
-                  {numeroInventario}
+                  {detail.inventario}
                 </dd>
               </div>
             </div>
