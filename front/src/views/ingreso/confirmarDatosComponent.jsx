@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../components/navbar/navbarComponent";
 import { useEffect, useState } from "react";
 import { postSecuestro } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 function ConfirmarDatos() {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   /* const oficioPolicial = useSelector((state) => state.oficioPolicial); */
@@ -53,6 +54,10 @@ function ConfirmarDatos() {
       console.log(data)
       /* navigate('/ingreso_detalles') */
     };
+
+    const handleback =()=>{
+      navigate(-1)
+      }
 
 
   return (
@@ -199,11 +204,12 @@ function ConfirmarDatos() {
             </div>
           </div>
           <div className="self-stretch mb-[2rem] items-center gap-2 inline-flex ">
-            <div className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex">
+          <button
+              onClick={()=>handleback()} className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex">
               <div className="text-[#0477ad] text-base font-semibold font-inter">
                 Volver atrás
               </div>
-            </div>
+            </button>
             <button onClick={()=>handleConfirm()} className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
               <div className="text-[#f6f5f5] text-center font-semibold font-inter">
                 Guardar e imprimir código
