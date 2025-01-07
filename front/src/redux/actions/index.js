@@ -274,9 +274,16 @@ export const postSecuestro = (info) => {
 export const searchActa = (nroActa) => {
     return async (dispatch) => {
       try {
-        const endpoint = `http://localhost:3001/actas/${nroActa}`;
+        /* const endpoint = `http://localhost:3001/actas/${nroActa}`; */
+        const endpoint = `https://actas.movisn.com/transito/actaByNro/${nroActa}`;
         const { data } = await axios.get(endpoint);
-        dispatch({ type: SEARCH_ACTA, payload: data });
+        const dataInfractor = await axios.get(`https://actas.movisn.com/transito/infractorById/${data[0].infractor}`)
+        const info = { 
+          acta: data[0], 
+          infractor: dataInfractor.data[0] 
+        };
+        dispatch({ type: SEARCH_ACTA, payload: info });
+        
         return null; // No hay error
       } catch (error) {
         return error.response.data.message; // Devuelve el error

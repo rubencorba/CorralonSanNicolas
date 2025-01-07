@@ -54,24 +54,26 @@ export const reducer = (state = initialState, action) => {
     case INGRESO_FOTO:
       return { ...state, ingresoFoto: action.payload };
     case SEARCH_ACTA:
+     
       return {
         ...state,
+        
         datosConfirmarIngreso: {
-          actaNro: action.payload.acta.nro,
+          actaNro: action.payload.acta.nroActa,
           actaInspector: action.payload.acta.inspector,
           actaLugar: action.payload.acta.lugar,
-          actaFecha_hora: action.payload.acta.fecha_hora,
-          vehiculoDominio: action.payload.vehiculo.dominio,
-          vehiculoTipo: action.payload.vehiculo.tipovh,
-          vehiculoMarca: action.payload.vehiculo.marcavh,
-          vehiculoModelo: action.payload.vehiculo.modelovh,
-          infractorNombre: action.payload.infractor.nombreCompleto,
-          infractorDni: action.payload.infractor.dni,
-          infractorCuil: action.payload.infractor.cuil,
+          actaFecha_hora: action.payload.acta.fecha,
+          vehiculoDominio: action.payload.acta.vh_dominio,
+          vehiculoTipo: action.payload.acta.vh_tipo,
+          vehiculoMarca: action.payload.acta.vh_marca,
+          vehiculoModelo: action.payload.acta.vh_modelo,
+          infractorNombre: action.payload.infractor.apelnmb,
+          infractorDni: action.payload.infractor.nrodoc,
+          infractorCuil: action.payload.infractor.cuilcuit,
           infractorSexo: action.payload.infractor.sexo,
-          infracciones: action.payload.infracciones.map((item) => ({
-            descrip: item.Infraccione.descrip,
-            digesto: item.Infraccione.digesto,
+          infracciones: action.payload.acta.infracciones_array.map((item) => ({
+            descrip: item/* .Infraccione */.des,
+            digesto: item/* .Infraccione */.diges,
           })),
         },
       };
