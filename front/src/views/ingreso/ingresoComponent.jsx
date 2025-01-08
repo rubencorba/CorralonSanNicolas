@@ -4,20 +4,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { searchActa } from "../../redux/actions";
+import { useForm } from "react-hook-form";
 
 function IngresoComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [input, setInput] = useState(0);
-  const [localError, setLocalError] = useState(null);
+  /* const [input, setInput] = useState(0); */
+  /* const [localError, setLocalError] = useState(null); */
 
-  const handleSubmit = async () => {
-    const error = await dispatch(searchActa(input));
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }, // Accede a los errores del formulario
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const error = await dispatch(searchActa(data.nroActa));
     if (!error) {
       navigate("/ingreso_detalles");
     } else {
-      setLocalError(error);
+      setError("nroActa", {
+        type: "server",
+        message: error.message || "Error desconocido", // Muestra el mensaje del servidor
+      });
     }
   };
 
@@ -55,29 +66,48 @@ function IngresoComponent() {
           </div>
         </div>
 
-        <div class="w-[20rem] sm:w-[32rem] h-[75px] justify-start items-end gap-2 inline-flex">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          /* action="" */ class="w-[20rem] sm:w-[32rem] h-[75px] justify-start items-end gap-2 inline-flex"
+        >
           <div class="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
             <div class="text-[#3d4245] text-sm font-normal font-inter">
               N° acta
             </div>
+
             <input
+              name="nroActa"
+              type="number"
+              className=" w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+              {...register("nroActa", {
+                required: "Ingrese un número de acta por favor",
+                validate: (value) => {
+                  if (isNaN(value)) return "Debe ser un número válido";
+                  if (!/^\d+$/.test(value)) return "Debe ser un número válido y entero";
+                  if (Number(value) <= 0) return "El número debe ser mayor a 0";
+                  if (value.length > 10) return "El número es demasiado largo para ser válido";
+                  return true; // Válido
+                },
+              })}
               placeholder="0"
-              className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-              onChange={(e) => {
+              /* onChange={(e) => {
                 setInput(e.target.value);
-              }}
+              }} */
             />
           </div>
           <button
-            onClick={() => handleSubmit()}
+            type="submit"
+            /* onClick={() => handleSubmit()} */
             class="w-[118px] h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
           >
             <div class="text-[#f6f5f5] text-base font-semibold font-inter">
               Buscar
             </div>
           </button>
-        </div>
-        {localError && <p className="text-red-500">{localError}</p>}
+        </form>
+        {errors.nroActa && (
+          <p className="text-red-500">{errors.nroActa.message}</p>
+        )}
       </div>
     </div>
   );
