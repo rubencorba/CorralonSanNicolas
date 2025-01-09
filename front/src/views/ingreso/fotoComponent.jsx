@@ -28,6 +28,10 @@ function FotoComponent () {
       navigate('/ingreso_confirmacion')
     };
 
+    const handleback =()=>{
+      navigate(-1)
+      }
+
 
 
 
@@ -74,9 +78,9 @@ function FotoComponent () {
 
           <div className=" mt-[5rem] justify-center items-center flex">
           <div className="w-[21.5rem] justify-center items-center gap-2 inline-flex">
-            <div className="w-full h-[50px] px-[10px] py-[13px] bg-[#d2d2d2] rounded-lg  justify-center items-center  flex">
+            <button onClick={()=>handleback()} className="w-full h-[50px] px-[10px] py-[13px] bg-[#d2d2d2] rounded-lg  justify-center items-center  flex">
               <div className="text-[#f6f5f5] text-base font-semibold font-inter">Volver atrás</div>
-            </div>
+            </button>
             <div className="w-full  h-[50px] px-[10px] py-[13px] bg-[#d2d2d2] rounded-lg justify-center items-center  flex">
               <div className="text-[#f6f5f5] text-base font-semibold font-inter">Confirmar foto</div>      
             </div>

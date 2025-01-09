@@ -2,14 +2,18 @@ const { Router } = require("express");
 
 const secuestrosRouter = Router();
 
+const {
+  getAllSecuestrosController,
+  getDetailSecuestroController,
+  postSecuestroController,
+  validateUniqueInventarioController,
+} = require("../controllers/secuestrosController");
 
-const { getAllSecuestrosController, getDetailSecuestroController, postSecuestroController } = require("../controllers/secuestrosController");
-
-
-secuestrosRouter.get('/',getAllSecuestrosController)
-secuestrosRouter.get('/:id',getDetailSecuestroController)
-secuestrosRouter.post('/',postSecuestroController)
+secuestrosRouter.get("/inventario/:nroInventario", validateUniqueInventarioController);
+secuestrosRouter.get("/:id", getDetailSecuestroController);
+secuestrosRouter.post("/", postSecuestroController);
+secuestrosRouter.get("/", getAllSecuestrosController);
 /* tramitesRouter.post('/',postTramiteHandler)
 tramitesRouter.put('/',putTramiteHandler) */
 
-module.exports= secuestrosRouter;
+module.exports = secuestrosRouter;

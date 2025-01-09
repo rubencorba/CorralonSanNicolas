@@ -2,6 +2,7 @@ const {getAllSecuestros}=require('../handlerss/getAllSecuestros');
 const { infraccionesBySecuestroId } = require('../handlerss/infraccionesBySecuestroId');
 const { postSecuestro } = require('../handlerss/postSecuestro');
 const { secuestroDetailById } = require('../handlerss/secuestroDetailById');
+const { validateUniqueInventario } = require('../handlerss/validateUniqueInventario');
 
 const getAllSecuestrosController= async (req,res)=>{
     const {page = 1} =req.query
@@ -40,9 +41,21 @@ const postSecuestroController= async (req,res)=>{
         res.status(400).json({error:error.message});
     }
 }
+const validateUniqueInventarioController= async (req,res)=>{
+    const {nroInventario}=req.params;
+
+    try {
+        const response= await validateUniqueInventario(nroInventario)
+
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({error:error.message});
+    }
+}
 
 module.exports={
     getAllSecuestrosController,
     getDetailSecuestroController,
-    postSecuestroController
+    postSecuestroController,
+    validateUniqueInventarioController
     };

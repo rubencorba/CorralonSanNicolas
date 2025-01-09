@@ -236,16 +236,22 @@ export const ingresoOficioPolicial = (data) => {
     console.log(error);
   }
 };
-export const ingresoDetalles = (data) => {
-  try {
-    return {
-      type: INGRESO_DETALLES,
-      payload: data,
-    };
-  } catch (error) {
-    console.log(error);
-  }
+
+export const ingresoDetalles = (info) => {
+  return async (dispatch) => {
+    try {
+      const endpoint = `http://localhost:3001/secuestros/inventario/${info.nroInventario}`;
+      const { data } = await axios.get(endpoint);
+      if (data.isUnique) dispatch({ type: INGRESO_DETALLES, payload: info,});
+        
+      return data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
 };
+
 export const ingresoFoto = (data) => {
   try {
     return {

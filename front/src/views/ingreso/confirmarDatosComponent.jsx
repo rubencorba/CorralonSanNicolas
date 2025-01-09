@@ -14,7 +14,7 @@ function ConfirmarDatos() {
   const datosConfirmarIngreso = useSelector((state) => state.datosConfirmarIngreso);
   /* console.log(oficioPolicial) */
   console.log(ingresoDetalles)
-  console.log(ingresoFoto)
+  /* console.log(ingresoFoto) */
   /* console.log(acta)
  */
   /* --------------------Formateando fecha y hora de Acta----------------------------- */

@@ -22,8 +22,16 @@ function DetallesComponent() {
 
 
   const onSubmit = async (data) => {
-    /* const error =  */ await dispatch(ingresoDetalles(data));
-    navigate("/ingreso_foto");
+    const resp =  await dispatch(ingresoDetalles(data));
+    
+    if (resp.isUnique) {
+      navigate("/ingreso_foto");
+    } else {
+      setError("nroInventario", {
+        type: "server",
+        message: resp.message || "Error desconocido", // Muestra el mensaje del servidor
+      });
+    }
   };
 
   return (
