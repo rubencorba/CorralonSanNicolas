@@ -41,7 +41,7 @@ function ConfirmarDatos() {
 
   useEffect(() => {
     setData({
-      /* ...oficioPolicial, */ //Luego colocar ...datosConfirmarIngreso, para postear todos los datos
+      ...datosConfirmarIngreso, //Luego colocar ...datosConfirmarIngreso, para postear todos los datos
       ...ingresoDetalles,
       foto: ingresoFoto,
     });
@@ -49,7 +49,7 @@ function ConfirmarDatos() {
 
   const handleConfirm = (event) => {
       /* event.preventDefault(); */ // Evita el comportamiento por defecto
-      dispatch(postSecuestro(data))
+      /* dispatch(postSecuestro(data)) */
       
       console.log(data)
       /* navigate('/ingreso_detalles') */

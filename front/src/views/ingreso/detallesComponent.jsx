@@ -3,25 +3,28 @@ import Navbar from "../../components/navbar/navbarComponent";
 import { useState } from "react";
 import { ingresoDetalles } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 
 function DetallesComponent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleback =()=>{
-    navigate(-1)
-    }
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }, // Accede a los errores del formulario
+  } = useForm();
 
-  const [input, setInput] = useState({})
+  const handleback = () => {
+    navigate(-1);
+  };
 
-  const handleSubmit = (event) => {
-      event.preventDefault(); // Evita el comportamiento por defecto
-      dispatch(ingresoDetalles(input))
-      
-      console.log(input)
-      navigate('/ingreso_foto')
-    };
 
+  const onSubmit = async (data) => {
+    /* const error =  */ await dispatch(ingresoDetalles(data));
+    navigate("/ingreso_foto");
+  };
 
   return (
     <div>
@@ -59,89 +62,129 @@ function DetallesComponent() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-        <div className="h-[319px] w-[20rem] sm:w-[23rem] flex-col justify-start items-start gap-5 inline-flex">
-          <div className="self-stretch h-[249px] flex-col justify-start items-start gap-3 flex">
-            <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
-              <div className="text-[#3d4245] text-sm font-normal font-inter">
-                Sector
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="h-[319px] w-[20rem] sm:w-[23rem] flex-col justify-start items-start gap-5 inline-flex">
+            <div className="self-stretch h-[249px] flex-col justify-start items-start gap-3 flex">
+              <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
+                <div className="text-[#3d4245] text-sm font-normal font-inter">
+                  Sector
+                </div>
+
+                <select
+                  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  defaultValue=""
+                  {...register("sector", {
+                    required: "Ingrese un sector por favor",
+                  })}
+                >
+                  {Array.from({ length: 26 }, (_, i) => {
+                    const letter = String.fromCharCode(65 + i); // 65 es el código ASCII de 'A'
+                    return (
+                      <option key={letter} value={letter}>
+                        {letter}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
-              {/* <div className="self-stretch h-[50px] p-2 bg-white rounded-md border border-[#687073] justify-between items-center inline-flex">
-          <div className="text-[#3d4245] text-sm font-normal font-inter">A</div>
-          
-        </div> */}
-              <select
-                className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                defaultValue=""
-                onChange={(e) => {
-                      setInput({ ...input, sector: e.target.value })
-                    }}
+              <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
+                <div className="text-[#3d4245] text-sm font-normal font-inter">
+                  N° Inventario (si corresponde)
+                </div>
+
+                <input
+                  name="nroInventario"
+                  type="number"
+                  {...register("nroInventario", {
+                    validate: (value) => {
+                      if (value === "" || value === undefined) {
+                        // Si el campo está vacío, no ejecutar más validaciones
+                        return true;
+                      }
+                      if (isNaN(value))
+                        return "El número de inventario debe ser válido";
+                      if (!/^\d+$/.test(value))
+                        return "El número de inventario debe ser válido y entero";
+                      if (Number(value) <= 0)
+                        return "El número de inventario debe ser mayor a 0";
+                      if (value.length > 10)
+                        return "El número de inventario no debe ser demasiado largo";
+                      return true; // Válido
+                    },
+                  })}
+                  placeholder="0"
+                  style={{
+                    MozAppearance: "textfield",
+                    WebkitAppearance: "none",
+                  }}
+                  className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                />
+              </div>
+              <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
+                <div className="text-[#3d4245] text-sm font-normal font-inter">
+                  Fecha y hora de ingreso
+                </div>
+
+                <input
+                  name="fecha_hora"
+                  placeholder="0"
+                  type="datetime-local"
+                  defaultValue={(() => {
+                    const now = new Date();
+                    // Convertimos a UTC-3 (Argentina)
+                    const offset = now.getTimezoneOffset(); // En minutos
+                    now.setMinutes(now.getMinutes() - offset /*  - 180 */); // Ajuste al huso horario de Argentina (UTC-3)
+                    return now.toISOString().slice(0, 16); // Formateamos la fecha
+                  })()}
+                  className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4  py-2 h-[50px]"
+                  {...register("fecha_hora", {
+                    required: "Por favor, ingrese la fecha y hora.",
+                    validate: (value) => {
+                      const selectedDate = new Date(value);
+                      const now = new Date();
+                      const threeYearsAgo = new Date();
+                      threeYearsAgo.setFullYear(now.getFullYear() - 3);
+
+                      if (selectedDate > now) {
+                        return "La fecha no puede ser superior a la actual";
+                      }
+                      if (selectedDate < threeYearsAgo) {
+                        return `El año no puede ser menor a ${
+                          threeYearsAgo.getFullYear() + 1
+                        }`;
+                      }
+                      return true; // La fecha es válida
+                    },
+                  })}
+                />
+              </div>
+            </div>
+            <div className="self-stretch justify-start items-center gap-2 inline-flex">
+              <button
+                onClick={() => handleback()}
+                className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex"
               >
-                {Array.from({ length: 26 }, (_, i) => {
-                  const letter = String.fromCharCode(65 + i); // 65 es el código ASCII de 'A'
-                  return (
-                    <option key={letter} value={letter}>
-                      {letter}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
-              <div className="text-[#3d4245] text-sm font-normal font-inter">
-                N° Inventario (si corresponde)
-              </div>
-              {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                  0
+                <div className="text-[#0477ad] text-base font-semibold font-inter">
+                  Volver atrás
                 </div>
-              </div> */}
-              <input
-                    placeholder="0"
-                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                    onChange={(e) => {
-                      setInput({ ...input, inventario: e.target.value })
-                    }}
-                  />
-            </div>
-            <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
-              <div className="text-[#3d4245] text-sm font-normal font-inter">
-                Fecha y hora de ingreso
-              </div>
-              {/* <div className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-between items-center inline-flex">
-                <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                  00/00/0000
+              </button>
+              <button
+                type="submit"
+                className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
+              >
+                <div className="text-[#f6f5f5] text-base font-semibold font-inter">
+                  Siguiente
                 </div>
-                <div className="w-6 h-6 relative" />
-              </div> */}
-              <input
-                    placeholder="0"
-                    type="datetime-local"
-                    className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4  py-2 h-[50px]"
-                    onChange={(e) => {
-                      setInput({ ...input, fecha_hora: e.target.value })
-                    }}
-                  />
+              </button>
             </div>
           </div>
-          <div className="self-stretch justify-start items-center gap-2 inline-flex">
-            <button
-              onClick={()=>handleback()} className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex">
-              <div className="text-[#0477ad] text-base font-semibold font-inter">
-                Volver atrás
-              </div>
-            </button>
-            <button
-            type="submit"
-              className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
-            >
-              <div className="text-[#f6f5f5] text-base font-semibold font-inter">
-                Siguiente
-              </div>
-            </button>
-          </div>
-        </div>
         </form>
+
+        {Object.values(errors).map((error, index) => (
+          <p className="text-red-500" key={index}>
+            {error.message}
+          </p>
+        ))}
       </div>
     </div>
   );

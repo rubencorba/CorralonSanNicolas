@@ -10,9 +10,6 @@ function IngresoComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  /* const [input, setInput] = useState(0); */
-  /* const [localError, setLocalError] = useState(null); */
-
   const {
     register,
     handleSubmit,
@@ -83,21 +80,23 @@ function IngresoComponent() {
                 required: "Ingrese un número de acta por favor",
                 validate: (value) => {
                   if (isNaN(value)) return "Debe ser un número válido";
-                  if (!/^\d+$/.test(value)) return "Debe ser un número válido y entero";
+                  if (!/^\d+$/.test(value))
+                    return "Debe ser un número válido y entero";
                   if (Number(value) <= 0) return "El número debe ser mayor a 0";
-                  if (value.length > 10) return "El número es demasiado largo para ser válido";
+                  if (value.length > 10)
+                    return "El número es demasiado largo para ser válido";
                   return true; // Válido
                 },
               })}
               placeholder="0"
-              /* onChange={(e) => {
-                setInput(e.target.value);
-              }} */
+              style={{
+                MozAppearance: "textfield",
+                WebkitAppearance: "none",
+              }}
             />
           </div>
           <button
             type="submit"
-            /* onClick={() => handleSubmit()} */
             class="w-[118px] h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
           >
             <div class="text-[#f6f5f5] text-base font-semibold font-inter">
