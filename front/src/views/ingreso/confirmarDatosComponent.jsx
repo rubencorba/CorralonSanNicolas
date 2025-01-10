@@ -49,7 +49,7 @@ function ConfirmarDatos() {
 
   const handleConfirm = (event) => {
       /* event.preventDefault(); */ // Evita el comportamiento por defecto
-      /* dispatch(postSecuestro(data)) */
+      dispatch(postSecuestro(data))
       
       console.log(data)
       /* navigate('/ingreso_detalles') */

@@ -21,7 +21,7 @@ function IngresoComponent() {
 
   const onSubmit = async (data) => {
     const error = await dispatch(searchActa(data.nroActa));
-    console.log(error)
+    
     if (!error) {
       navigate("/ingreso_detalles");
     } else if (typeof error === "number" ){

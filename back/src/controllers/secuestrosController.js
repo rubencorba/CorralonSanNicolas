@@ -31,10 +31,10 @@ const getDetailSecuestroController= async (req,res)=>{
     }
 }
 const postSecuestroController= async (req,res)=>{
-    const {cuil,dni,dominio,marcavh,modelovh,nombreCompleto,sexo,tipovh,fecha_hora,inventario,sector,foto}=req.body;
+    const {infractorCuil,infractorDni,vehiculoDominio,vehiculoMarca,vehiculoModelo,infractorNombre,infractorSexo,vehiculoTipo,fecha_hora,nroInventario,sector,foto}=req.body;
     /* infracciones, */
     try {
-        const response= await postSecuestro(cuil,dni,dominio,marcavh,modelovh,nombreCompleto,sexo,tipovh,fecha_hora,inventario,sector,foto);
+        const response= await postSecuestro(infractorCuil,infractorDni,vehiculoDominio,vehiculoMarca,vehiculoModelo,infractorNombre,infractorSexo,vehiculoTipo,fecha_hora,nroInventario,sector,foto);
         /* infracciones, */
         res.status(200).json(response);
     } catch (error) {
