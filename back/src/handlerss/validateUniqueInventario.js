@@ -13,7 +13,7 @@ const validateUniqueInventario = async (nroInventario) => {
           };
         }
     
-        return { isUnique: false, message: "El número de inventario ya existe" };
+        return { isUnique: false, message: "Ya hay un ingreso con ese número de inventario",secuestroId: result.id };
       } catch (error) {
         return {
           isUnique: false,

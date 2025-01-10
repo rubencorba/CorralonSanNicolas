@@ -10,21 +10,21 @@ const getActabyNro = async (nro) => {
     });
 
     if (!acta) {
-      return { error: "Acta no encontrada" };
+      return/*  { error: "Acta no encontrada" } */;
     }
 
     // Obtener los ID del secuestro
-    const vehiculoId = acta.Secuestro.vehiculo;
-    const infractorId = acta.Secuestro.infractor;
+    /* const vehiculoId = acta.Secuestro.vehiculo;
+    const infractorId = acta.Secuestro.infractor; */
     const secuestroId = acta.Secuestro.id;
 
     // Buscar los campos relacionados
-    const vehiculo = await Vehiculos.findOne({ where: { id: vehiculoId } });
+    /* const vehiculo = await Vehiculos.findOne({ where: { id: vehiculoId } });
     const infractor = await Infractores.findOne({ where: { id: infractorId } });
-    const infracciones = await infraccionesBySecuestroId(secuestroId)
+    const infracciones = await infraccionesBySecuestroId(secuestroId) */
 
     // Retornar un objeto que incluya todo
-    return { acta, vehiculo,infractor, infracciones };
+    return secuestroId/* { acta, vehiculo,infractor, infracciones } */;
   } catch (error) {
     console.error("Error al buscar el acta", error);
     throw error;

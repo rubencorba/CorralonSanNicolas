@@ -240,8 +240,13 @@ export const ingresoOficioPolicial = (data) => {
 export const ingresoDetalles = (info) => {
   return async (dispatch) => {
     try {
+      if (info.nroInventario == '') {
+        dispatch({ type: INGRESO_DETALLES, payload: info,});
+        return
+      }
       const endpoint = `http://localhost:3001/secuestros/inventario/${info.nroInventario}`;
       const { data } = await axios.get(endpoint);
+      
       if (data.isUnique) dispatch({ type: INGRESO_DETALLES, payload: info,});
         
       return data
@@ -280,10 +285,15 @@ export const postSecuestro = (info) => {
 export const searchActa = (nroActa) => {
   return async (dispatch) => {
     try {
-      /* const endpoint = `http://localhost:3001/actas/${nroActa}`; */
+      //Busco el acta en juzgado
       const endpoint = `https://actas.movisn.com/transito/actaByNro/${nroActa}`;
       const { data } = await axios.get(endpoint);
+      //Si no se encuentra el acta
       if (!data.length) throw new Error("Ese número de acta no existe");
+      //Verifico si el acta no fue ingresada al corralón 
+      const ingresada = await axios.get(`http://localhost:3001/actas/${nroActa}`);
+      if (ingresada.data !== '') return ingresada.data
+      //Busco los datos del infractor en caso de tenerlo
       if (data[0].infractor && data[0].infractor !== "-1") {
         const dataInfractor = await axios.get(
           `https://actas.movisn.com/transito/infractorById/${data[0].infractor}`

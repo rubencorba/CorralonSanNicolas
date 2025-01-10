@@ -6,10 +6,10 @@ const getActabyNroController = async (req, res) => {
       const { nro } = req.params;
       const response = await getActabyNro(nro);
   
-      if (response.error) {
+      /* if (response.error) {
         
         return res.status(404).json({ message: response.error });
-      }
+      } */
   
       res.status(200).json(response);
     } catch (error) {

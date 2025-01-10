@@ -17,16 +17,29 @@ function IngresoComponent() {
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
+  const [secuestroId, setSecuestroId] = useState("");
+
   const onSubmit = async (data) => {
     const error = await dispatch(searchActa(data.nroActa));
+    console.log(error)
     if (!error) {
       navigate("/ingreso_detalles");
+    } else if (typeof error === "number" ){
+      setError("nroActa", {
+        type: "server",
+        message: "Este número de acta ya fue ingresado al corralón", // Muestra el mensaje del servidor
+      });
+      setSecuestroId(error);
     } else {
       setError("nroActa", {
         type: "server",
         message: error.message || "Error desconocido", // Muestra el mensaje del servidor
       });
     }
+  };
+
+  const handleVerIngreso = async () => {
+    navigate(`/detail/${secuestroId}`);
   };
 
   return (
@@ -107,6 +120,15 @@ function IngresoComponent() {
         {errors.nroActa && (
           <p className="text-red-500">{errors.nroActa.message}</p>
         )}
+        {errors.nroActa?.message ==
+            "Este número de acta ya fue ingresado al corralón" && (
+            <button
+              onClick={handleVerIngreso}
+              className="text-blue-500 justify-center items-center text-center"
+            >
+              Ver ingreso
+            </button>
+          )}
       </div>
     </div>
   );

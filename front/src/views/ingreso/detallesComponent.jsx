@@ -16,22 +16,29 @@ function DetallesComponent() {
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
-  const handleback = () => {
+  const handleback = (e) => {
+    e.preventDefault();
     navigate(-1);
   };
 
+  const [secuestroId, setSecuestroId] = useState("");
 
   const onSubmit = async (data) => {
-    const resp =  await dispatch(ingresoDetalles(data));
-    
-    if (resp.isUnique) {
+    const resp = await dispatch(ingresoDetalles(data)); //Recibimos un objeto con 3 propiedades (isUnique,message,secuestroId)
+
+    if (data.nroInventario=="" || resp.isUnique) {
       navigate("/ingreso_foto");
     } else {
       setError("nroInventario", {
         type: "server",
         message: resp.message || "Error desconocido", // Muestra el mensaje del servidor
       });
+      setSecuestroId(resp.secuestroId);
     }
+  };
+
+  const handleVerIngreso = async () => {
+    navigate(`/detail/${secuestroId}`);
   };
 
   return (
@@ -169,7 +176,7 @@ function DetallesComponent() {
             </div>
             <div className="self-stretch justify-start items-center gap-2 inline-flex">
               <button
-                onClick={() => handleback()}
+                onClick={handleback}
                 className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex"
               >
                 <div className="text-[#0477ad] text-base font-semibold font-inter">
@@ -187,12 +194,22 @@ function DetallesComponent() {
             </div>
           </div>
         </form>
-
-        {Object.values(errors).map((error, index) => (
-          <p className="text-red-500" key={index}>
-            {error.message}
-          </p>
-        ))}
+        <div className=" justify-center items-center text-center">
+          {Object.values(errors).map((error, index) => (
+            <p className="text-red-500" key={index}>
+              {error.message}
+            </p>
+          ))}
+          {errors.nroInventario?.message ==
+            "Ya hay un ingreso con ese número de inventario" && (
+            <button
+              onClick={handleVerIngreso}
+              className="text-blue-500 justify-center items-center text-center"
+            >
+              Ver ingreso
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
