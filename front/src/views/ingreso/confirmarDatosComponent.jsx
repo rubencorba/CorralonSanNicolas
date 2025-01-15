@@ -12,11 +12,10 @@ function ConfirmarDatos() {
   const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
   const ingresoFoto = useSelector((state) => state.ingresoFoto);
   const datosConfirmarIngreso = useSelector((state) => state.datosConfirmarIngreso);
-  /* console.log(oficioPolicial) */
+
   console.log(ingresoDetalles)
   /* console.log(ingresoFoto) */
-  /* console.log(acta)
- */
+
   /* --------------------Formateando fecha y hora de Acta----------------------------- */
 
   const [formattedDate, setFormattedDate] = useState('');
@@ -41,14 +40,14 @@ function ConfirmarDatos() {
 
   useEffect(() => {
     setData({
-      ...datosConfirmarIngreso, //Luego colocar ...datosConfirmarIngreso, para postear todos los datos
+      ...datosConfirmarIngreso, 
       ...ingresoDetalles,
       foto: ingresoFoto,
     });
-  }, [/* oficioPolicial, */ ingresoDetalles, ingresoFoto]);
+  }, [ingresoDetalles, ingresoFoto]);
 
-  const handleConfirm = (event) => {
-      /* event.preventDefault(); */ // Evita el comportamiento por defecto
+  const handleConfirm = () => {
+      
       dispatch(postSecuestro(data))
       
       console.log(data)

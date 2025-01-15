@@ -9,13 +9,14 @@ import IngresoComponent from "./views/ingreso/ingresoComponent";
 import VehiculosComponent from "./views/vehiculos/vehiculosComponent";
 import UsuariosComponent from "./views/usuarios/usuariosComponent";
 import CambiarSectorComponent from "./components/cambiarSectorComponent/cambiarSectorComponent";
-import DetallesComponent from "./views/ingreso/detallesComponent";
+import DetallesComponent from "./views/ingreso/ingresoDetallesComponent";
 import FotoComponent from "./views/ingreso/fotoComponent";
 import ConfirmarDatos from "./views/ingreso/confirmarDatosComponent";
 import IngresoPolicialComponent from "./views/ingreso/ingresoPolicialComponent";
 import LeerQRComponent from "./components/leerQRcomponent/leerQR";
 import BuscarVehiculoComponent from "./components/buscarVehiculoComponent/buscarVehiculoComponent";
 import NuevoUsuarioComponent from "./components/nuevoUsuarioComponent/nuevoUsuarioComponent";
+import IngresoDetallesComponent from "./views/ingreso/ingresoDetallesComponent";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Route path='/detail/:id' element={<DetailComponent/>}/> {/* Ruta con los detalles de un vehículo secuestrado */}
         <Route path='/ingreso' element={<IngresoComponent/>}/>
         <Route path='/ingreso_policial' element={<IngresoPolicialComponent/>}/>
-        <Route path='/ingreso_detalles' element={<DetallesComponent/>}/> {/* Ruta para insertar detalles de un vehiculo a ingresar */}
+        <Route path='/ingreso_detalles' element={<IngresoDetallesComponent/>}/> {/* Ruta para insertar detalles de un vehiculo a ingresar */}
         <Route path='/ingreso_foto' element={<FotoComponent/>}/>
         <Route path='/ingreso_confirmacion' element={<ConfirmarDatos/>}/>
         <Route path='/vehiculos' element={<VehiculosComponent/>}/>

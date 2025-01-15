@@ -5,7 +5,7 @@ import { ingresoDetalles } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
-function DetallesComponent() {
+function IngresoDetallesComponent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -215,4 +215,4 @@ function DetallesComponent() {
   );
 }
 
-export default DetallesComponent;
+export default IngresoDetallesComponent;
