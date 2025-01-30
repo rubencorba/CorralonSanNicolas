@@ -1,14 +1,13 @@
 const { Router } = require("express");
+const verificarToken = require("../../authMiddleware");
 
 const actasRouter = Router();
 
-
 const { getActabyNroController } = require("../controllers/actasController");
 
+// Aplica verificarToken a todas las rutas de actasRouter
+actasRouter.use(verificarToken);
 
-actasRouter.get('/:nro',getActabyNroController)
-/* infraccionesRouter.get('/:id',getDetailSecuestroController) */
-/* tramitesRouter.post('/',postTramiteHandler)
-tramitesRouter.put('/',putTramiteHandler) */
+actasRouter.get("/:nro", getActabyNroController);
 
-module.exports= actasRouter;
+module.exports = actasRouter;

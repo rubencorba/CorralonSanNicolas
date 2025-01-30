@@ -1,28 +1,31 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import {useDispatch,useSelector} from "react-redux"
-import { updatePage } from '../../redux/actions';
+/* import { updatePage } from '../../redux/actions'; */
 import { useState } from 'react';
+import { getSecuestros } from '../../redux/actions';
 
 function PaginationComponent() {
 
   const dispatch= useDispatch();
 
-  /* const currentPagina= useSelector((state)=>state.pagina); */
-  const [currentPagina, setCurrentPagina]= useState(1);
+  const filter= useSelector((state)=>state.selectedFilter);
+  const currentPagina= useSelector((state)=>state.currentPage);
+  /* const [currentPagina, setCurrentPagina]= useState(1); */
 
-  const handlePage =(p)=>{
-    dispatch(updatePage(p))
-    setCurrentPagina(p)
+  const handlePage =(page)=>{
+    dispatch(getSecuestros(page,filter))
+    /* setCurrentPagina(page) */
   }
   const handlePrev =()=>{
-    if (currentPagina==1) return
-    dispatch(updatePage(currentPagina-1))
-    setCurrentPagina(currentPagina-1)
+    if (currentPagina===1) return
+    const page=currentPagina-1
+    dispatch(getSecuestros(page,filter))
+    /* setCurrentPagina(currentPagina-1) */
   }
   const handleNext =()=>{
-    
-    dispatch(updatePage(currentPagina+1))
-    setCurrentPagina(currentPagina+1)
+    const page=currentPagina+1
+    dispatch(getSecuestros(page,filter))
+    /* setCurrentPagina(currentPagina+1) */
   }
 
   

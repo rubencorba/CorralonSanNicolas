@@ -1,33 +1,44 @@
 import {
+  FETCH_SECUESTROS,
+  FILTER_SECUESTRO,
   GET_ALL_INFRACCIONES,
   GET_ALL_SECUESTROS,
   GET_ALL_VEHICULOS,
   GET_DETAIL_SECUESTRO,
   INGRESO_DETALLES,
   INGRESO_FOTO,
+  LOGIN,
   OFICIO_POLICIAL,
   SEARCH_ACTA,
+  SET_AUTHENTICATED,
   UPDATE_PAGE,
 } from "../actions";
 
 const initialState = {
   secuestros: [],
   vehiculos: [],
-  pagina: 1,
+  currentPage: 1,
   detail: {},
   infracciones: [],
   ingresoDetalles: {},
   ingresoFoto: "",
   datosConfirmarIngreso: {},
+  currentUserId: 0,
+  tipoCurrentUser: 0,
+  isAuthenticated: false,
+  selectedFilter: "todos"
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_PAGE:
+    case FETCH_SECUESTROS:
       return { ...state, secuestros: action.payload };
+    case UPDATE_PAGE:
+      return { ...state, currentPage: action.payload };
+    case FILTER_SECUESTRO:
+      return { ...state, selectedFilter: action.payload };
     case GET_DETAIL_SECUESTRO:
       return { ...state, detail: action.payload };
-
     case GET_ALL_VEHICULOS:
       return { ...state, vehiculos: action.payload };
     case GET_ALL_SECUESTROS:
@@ -54,10 +65,9 @@ export const reducer = (state = initialState, action) => {
     case INGRESO_FOTO:
       return { ...state, ingresoFoto: action.payload };
     case SEARCH_ACTA:
-     
       return {
         ...state,
-        
+
         datosConfirmarIngreso: {
           actaNro: action.payload.acta.nroActa,
           actaInspector: action.payload.acta.inspector,
@@ -77,7 +87,17 @@ export const reducer = (state = initialState, action) => {
           })),
         },
       };
-
+    case LOGIN:
+      return {
+        ...state,
+        currentUserId: action.payload.userId,
+        tipoCurrentUser: action.payload.tipo,
+      };
+    case SET_AUTHENTICATED:
+      return {
+        ...state,
+        isAuthenticated: action.payload, // Actualiza el estado de autenticación
+      };
     default:
       return { ...state };
   }

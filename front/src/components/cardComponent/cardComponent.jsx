@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import imagen from "./vehiculoCorralon.png";
 
 function CardComponent({
   id,

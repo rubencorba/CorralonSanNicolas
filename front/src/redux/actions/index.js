@@ -1,5 +1,5 @@
 import axios from "axios";
-import vehiculosSecuestrados from "../../utils/vehiculos";
+import axiosInstance from "./axiosInstance";
 
 export const UPDATE_PAGE = "UPDATE_PAGE";
 export const GET_DETAIL_SECUESTRO = "GET_DETAIL_SECUESTRO";
@@ -11,194 +11,120 @@ export const INGRESO_DETALLES = "INGRESO_DETALLES";
 export const INGRESO_FOTO = "INGRESO_FOTO";
 export const POST_SECUESTRO = "POST_SECUESTRO";
 export const SEARCH_ACTA = "SEARCH_ACTA";
+export const POST_USER = "POST_USER";
+export const LOGIN = "LOGIN";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const UPDATE_CONTRASENA = "UPDATE_CONTRASENA";
+export const GET_SECUESTRO_BY_DOMINIO = "GET_SECUESTRO_BY_DOMINIO";
+export const GET_SECUESTRO_BY_NRO_ACTA = "GET_SECUESTRO_BY_NRO_ACTA";
+export const GET_SECUESTRO_BY_NRO_INVENTARIO = "GET_SECUESTRO_BY_NRO_INVENTARIO";
+export const UPDATE_SECTOR = "UPDATE_SECTOR";
+export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
+export const FILTER_SECUESTRO = "FILTER_SECUESTRO";
+export const FETCH_SECUESTROS = "FETCH_SECUESTROS";
 
-/* export const getAllUsers=()=>{
+export const getSecuestros = (page = 1, filter = "todos") => {
+  return async (dispatch) => {
     try {
-        const endpoint='http://localhost:3001/user';
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_ALL_USERS,
-                payload:data
-            })
-           
-        }
+      const { data } = await axiosInstance.get(
+        `/secuestros/?page=${page}&filter=${filter}`
+      );
+      dispatch({
+        type: FETCH_SECUESTROS,
+        payload: data,
+      });
+      dispatch({
+        type: FILTER_SECUESTRO,
+        payload: filter,
+      });
+      dispatch({
+        type: UPDATE_PAGE,
+        payload: page,
+      });
+      return;
     } catch (error) {
-        console.log(error);
+      console.error(
+        "Error al obtener los secuestros:",
+        error.response?.data || error.message
+      );
     }
-    
-}
-export const getAllTramites=()=>{
+  };
+};
+
+/* export const updatePage = (page) => {
+  return async (dispatch) => {
     try {
-        const endpoint='http://localhost:3001/tramite';
-        return async (dispatch)=>{
-            const {data}= await axios.get(endpoint);
-            return dispatch({
-                
-                type:GET_ALL_TRAMITES,
-                payload:data
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    
-}
-
-export const postTramite=(info)=>{
-        info.estado= "pendiente";
-        info.comentario='';
-        info.domicilio= info.domicilio + ' ' + info.numero + ' ' + '(' + info.dptoPiso + ')' 
-        try {
-            const endpoint='http://localhost:3001/tramite';
-            return async (dispatch)=>{
-                const {data}= await axios.post(endpoint,info);
-                
-                return dispatch({
-                    
-                    type:POST_TRAMITE,
-                    payload:data
-                })
-               
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        
-}
-
-export const updateTramiteAprobado=(comentario,id)=>{
-        const info={
-            comentario:comentario,
-            estado:'aprobado',
-            id:id
-        }
-        
-        try {
-            const endpoint='http://localhost:3001/tramite';
-            return async (dispatch)=>{
-                const {data}= await axios.put(endpoint,info);
-                
-                return dispatch({
-                    
-                    type:APROBAR_TRAMITE,
-                    payload:data
-                })
-               
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        
-}
-
-export const updateTramiteRechazado=(comentario,id)=>{
-        const info={
-            comentario:comentario,
-            estado:'rechazado',
-            id:id
-        }
-        try {
-            const endpoint='http://localhost:3001/tramite';
-            return async (dispatch)=>{
-                const {data}= await axios.put(endpoint,info);
-                
-                return dispatch({
-                    
-                    type:RECHAZAR_TRAMITE,
-                    payload:data
-                })
-               
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        
-}
-
-export const updateCurrentUser=(currentUser)=>{
-        
-        return ({
-                type:UPDATE_CURRENT_USER,
-                payload:currentUser
-        })
-        
-}
-export const postUsers=()=>{
-    const infoUser1={
-        name: 'usuario',
-        password: '123asd'
-    }
-    const infoUser2={
-        name: 'usuario2',
-        password: '123asd'
-    }
-    try {
-        const endpoint='http://localhost:3001/user';
-        return async (dispatch)=>{
-             await axios.post(endpoint,infoUser1);
-             await axios.post(endpoint,infoUser2);
-            
-            return dispatch({
-                
-                type:POST_USERS,
-                
-            })
-           
-        }
-    } catch (error) {
-        console.log(error);
-    }
-        
-} */
-
-export const updatePage = (page) => {
-  try {
-    const endpoint = `http://localhost:3001/secuestros/?page=${page}`;
-    return async (dispatch) => {
-      const { data } = await axios.get(endpoint);
+      const { data } = await axiosInstance.get(`/secuestros/?page=${page}`);
       return dispatch({
         type: UPDATE_PAGE,
         payload: data,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.error("Error al actualizar la página:", error.response?.data || error.message);
+    }
+  };
 };
+export const filterSecuestros = (filter) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/secuestros/?filter=${filter}`);
+      return dispatch({
+        type: FILTER_SECUESTRO,
+        payload: data,
+      });
+    } catch (error) {
+      console.error("Error al filtrar los secuestros:", error.response?.data || error.message);
+    }
+  };
+}; */
 
 export const getDetailSecuestro = (id) => {
-  try {
-    const endpoint = `http://localhost:3001/secuestros/${id}`;
-    return async (dispatch) => {
-      const { data } = await axios.get(endpoint);
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/secuestros/${id}`);
       return dispatch({
         type: GET_DETAIL_SECUESTRO,
         payload: data,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.error(
+        "Error al obtener los detalles del secuestro:",
+        error.response?.data || error.message
+      );
+    }
+  };
 };
 
 export const getAllVehiculos = () => {
-  try {
-    const endpoint = "http://localhost:3001/vehiculos";
-    return async (dispatch) => {
-      const { data } = await axios.get(endpoint);
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get("/vehiculos");
       return dispatch({
         type: GET_ALL_VEHICULOS,
         payload: data,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.error(
+        "Error al obtener los vehiculos:",
+        error.response?.data || error.message
+      );
+    }
+  };
 };
-export const getAllSecuestros = () => {
+/* export const getAllSecuestros = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get("/secuestros"); // No necesitas agregar headers manualmente
+      return dispatch({
+        type: GET_ALL_SECUESTROS,
+        payload: data,
+      });
+    } catch (error) {
+      console.error("Error al obtener los secuestros:", error.response?.data || error.message);
+    }
+  };
+}; */
+/* export const getAllSecuestros = () => {
   try {
     const endpoint = "http://localhost:3001/secuestros";
     return async (dispatch) => {
@@ -207,25 +133,29 @@ export const getAllSecuestros = () => {
         type: GET_ALL_SECUESTROS,
         payload: data,
       });
+      
     };
   } catch (error) {
     console.log(error);
   }
-};
+}; */
 export const getAllInfracciones = () => {
-  try {
-    const endpoint = "http://localhost:3001/infracciones";
-    return async (dispatch) => {
-      const { data } = await axios.get(endpoint);
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get("/infracciones");
       return dispatch({
         type: GET_ALL_INFRACCIONES,
         payload: data,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.error(
+        "Error al obtener las infracciones:",
+        error.response?.data || error.message
+      );
+    }
+  };
 };
+
 export const ingresoOficioPolicial = (data) => {
   try {
     return {
@@ -240,19 +170,28 @@ export const ingresoOficioPolicial = (data) => {
 export const ingresoDetalles = (info) => {
   return async (dispatch) => {
     try {
-      if (info.nroInventario == '') {
-        dispatch({ type: INGRESO_DETALLES, payload: info,});
-        return
+      // Si no se proporciona un nroInventario, solo hace el dispatch
+      if (info.nroInventario === "") {
+        dispatch({ type: INGRESO_DETALLES, payload: info });
+        return;
       }
-      const endpoint = `http://localhost:3001/secuestros/inventario/${info.nroInventario}`;
-      const { data } = await axios.get(endpoint);
-      
-      if (data.isUnique) dispatch({ type: INGRESO_DETALLES, payload: info,});
-        
-      return data
-      
+
+      // Llama al backend para validar el nroInventario
+      const { data } = await axiosInstance.get(
+        `/secuestros/inventario/${info.nroInventario}`
+      );
+
+      // Si el número de inventario es único, realiza el dispatch
+      if (data.isUnique) {
+        dispatch({ type: INGRESO_DETALLES, payload: info });
+      }
+
+      return data; // Devuelve la respuesta del backend
     } catch (error) {
-      console.log(error)
+      console.error(
+        "Error al validar el nroInventario:",
+        error.response?.data || error.message
+      );
     }
   };
 };
@@ -268,18 +207,20 @@ export const ingresoFoto = (data) => {
   }
 };
 export const postSecuestro = (info) => {
-  try {
-    const endpoint = "http://localhost:3001/secuestros";
-    return async (dispatch) => {
-      const { data } = await axios.post(endpoint, info);
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.post("/secuestros", info);
       return dispatch({
         type: POST_SECUESTRO,
         payload: data,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.error(
+        "Error al registrar el secuestro:",
+        error.response?.data || error.message
+      );
+    }
+  };
 };
 
 export const searchActa = (nroActa) => {
@@ -290,9 +231,9 @@ export const searchActa = (nroActa) => {
       const { data } = await axios.get(endpoint);
       //Si no se encuentra el acta
       if (!data.length) throw new Error("Ese número de acta no existe");
-      //Verifico si el acta no fue ingresada al corralón 
-      const ingresada = await axios.get(`http://localhost:3001/actas/${nroActa}`);
-      if (ingresada.data !== '') return ingresada.data
+      //Verifico si el acta no fue ingresada al corralón
+      const ingresada = await axiosInstance.get(`/actas/${nroActa}`);
+      if (ingresada.data !== "") return ingresada.data;
       //Busco los datos del infractor en caso de tenerlo
       if (data[0].infractor && data[0].infractor !== "-1") {
         const dataInfractor = await axios.get(
@@ -316,6 +257,174 @@ export const searchActa = (nroActa) => {
     } catch (error) {
       console.log(error.message /* || error */);
       return error; /* .message */ // Devuelve el error
+    }
+  };
+};
+
+export const postNewUser = (info) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.post("/users", info);
+
+      if (data.error) return data; // Devuelve el error si el backend lo envía
+
+      return dispatch({
+        type: POST_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(
+        "Error al registrar un nuevo usuario:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const login = (info) => {
+  return async (dispatch) => {
+    try {
+      // En el caso de login, usamos axios sin instancia personalizada
+      const { data } = await axios.post(
+        "http://localhost:3001/users/login",
+        info
+      );
+
+      console.log("data:", data);
+
+      // Guardar el token en localStorage
+      localStorage.setItem("token", data.token);
+
+      dispatch({
+        type: LOGIN,
+        payload: {
+          userId: data.userId,
+          tipo: data.tipo,
+        },
+      });
+
+      // Despachar una acción para marcar que el usuario está autenticado
+      dispatch({
+        type: SET_AUTHENTICATED,
+        payload: true, // El usuario está autenticado
+      });
+
+      return data; // Devolvemos los datos por si el flujo requiere validaciones adicionales
+    } catch (error) {
+      console.error(
+        "Error al iniciar sesión:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getAllUsers = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get("/users");
+      dispatch({
+        type: GET_ALL_USERS,
+        payload: data,
+      });
+      return data; // Devuelve los datos si son necesarios
+    } catch (error) {
+      console.error(
+        "Error al obtener los usuarios:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const updateContrasena = (info) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.put("/users", info);
+      dispatch({
+        type: UPDATE_CONTRASENA,
+        payload: data,
+      });
+      return data; // Devuelve los datos por si se necesita mostrar algo en el frontend
+    } catch (error) {
+      console.error(
+        "Error al actualizar la contraseña:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getSecuestroByDominio = (dominio) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/vehiculos/${dominio}`);
+      dispatch({
+        type: GET_SECUESTRO_BY_DOMINIO,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      console.error(
+        "Error al obtener secuestro por dominio:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getSecuestroByNroActa = (nroActa) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/actas/${nroActa}`);
+      dispatch({
+        type: GET_SECUESTRO_BY_NRO_ACTA,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      console.error(
+        "Error al obtener secuestro por número de acta:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getSecuestroByNroInventario = (nroInventario) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/secuestros/inventario/${nroInventario}`
+      );
+      dispatch({
+        type: GET_SECUESTRO_BY_NRO_INVENTARIO,
+        payload: data,
+      });
+      return data; // Devuelve los datos en caso de ser necesarios
+    } catch (error) {
+      console.error(
+        "Error al obtener secuestro por número de inventario:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const updateSector = (info) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.put("/secuestros", info);
+      dispatch({
+        type: UPDATE_SECTOR,
+        payload: data,
+      });
+      return data; // Devuelve los datos para luego avisar si hubo éxito
+    } catch (error) {
+      console.error(
+        "Error al actualizar el sector:",
+        error.response?.data || error.message
+      );
     }
   };
 };

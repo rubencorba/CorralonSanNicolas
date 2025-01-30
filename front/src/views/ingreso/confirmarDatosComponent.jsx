@@ -8,23 +8,22 @@ function ConfirmarDatos() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  /* const oficioPolicial = useSelector((state) => state.oficioPolicial); */
   const ingresoDetalles = useSelector((state) => state.ingresoDetalles);
   const ingresoFoto = useSelector((state) => state.ingresoFoto);
   const datosConfirmarIngreso = useSelector((state) => state.datosConfirmarIngreso);
+  const userId = useSelector((state) => state.currentUserId);
 
-  console.log(ingresoDetalles)
-  /* console.log(ingresoFoto) */
+  console.log(userId);
 
   /* --------------------Formateando fecha y hora de Acta----------------------------- */
 
-  const [formattedDate, setFormattedDate] = useState('');
+  const [formattedDate, setFormattedDate] = useState("");
 
   // Declarar formatter fuera de useEffect para reutilizarlo
-  const formatter = new Intl.DateTimeFormat('es-AR', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-    timeZone: 'America/Argentina/Buenos_Aires',
+  const formatter = new Intl.DateTimeFormat("es-AR", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "America/Argentina/Buenos_Aires",
   });
 
   useEffect(() => {
@@ -34,30 +33,28 @@ function ConfirmarDatos() {
     }
   }, [datosConfirmarIngreso, formatter]);
 
- /*  ------------------------------------------------------------------- */
+  /*  ------------------------------------------------------------------- */
 
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
 
   useEffect(() => {
     setData({
-      ...datosConfirmarIngreso, 
+      ...datosConfirmarIngreso,
       ...ingresoDetalles,
+      userId,
       foto: ingresoFoto,
     });
-  }, [ingresoDetalles, ingresoFoto]);
+  }, [ingresoDetalles, ingresoFoto, userId]);
 
   const handleConfirm = () => {
-      
-      dispatch(postSecuestro(data))
-      
-      console.log(data)
-      /* navigate('/ingreso_detalles') */
-    };
+    dispatch(postSecuestro(data));
 
-    const handleback =()=>{
-      navigate(-1)
-      }
+    console.log(data);
+  };
 
+  const handleback = () => {
+    navigate(-1);
+  };
 
   return (
     <div>
@@ -80,7 +77,7 @@ function ConfirmarDatos() {
                       №:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.actaNro}
+                      {datosConfirmarIngreso.actaNro}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -88,7 +85,7 @@ function ConfirmarDatos() {
                       Inspector:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.actaInspector}
+                      {datosConfirmarIngreso.actaInspector}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -96,7 +93,7 @@ function ConfirmarDatos() {
                       Lugar:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.actaLugar}
+                      {datosConfirmarIngreso.actaLugar}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -119,7 +116,7 @@ function ConfirmarDatos() {
                       Nombre:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.infractorNombre}
+                      {datosConfirmarIngreso.infractorNombre}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -127,7 +124,7 @@ function ConfirmarDatos() {
                       DNI:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.infractorDni}
+                      {datosConfirmarIngreso.infractorDni}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -135,7 +132,7 @@ function ConfirmarDatos() {
                       CUIL:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.infractorCuil}
+                      {datosConfirmarIngreso.infractorCuil}
                     </div>
                   </div>
                   <div className="justify-start items-center gap-1 inline-flex">
@@ -143,7 +140,7 @@ function ConfirmarDatos() {
                       Sexo:
                     </div>
                     <div className="text-[#687073] text-base font-medium font-inter">
-                    {datosConfirmarIngreso.infractorSexo}
+                      {datosConfirmarIngreso.infractorSexo}
                     </div>
                   </div>
                 </div>
@@ -159,7 +156,7 @@ function ConfirmarDatos() {
                     Dominio:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {datosConfirmarIngreso.vehiculoDominio}
+                    {datosConfirmarIngreso.vehiculoDominio}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -167,7 +164,7 @@ function ConfirmarDatos() {
                     Tipo de vehículo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {datosConfirmarIngreso.vehiculoTipo}
+                    {datosConfirmarIngreso.vehiculoTipo}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -175,7 +172,7 @@ function ConfirmarDatos() {
                     Marca:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {datosConfirmarIngreso.vehiculoMarca}
+                    {datosConfirmarIngreso.vehiculoMarca}
                   </div>
                 </div>
                 <div className="justify-start items-center gap-1 inline-flex">
@@ -183,7 +180,7 @@ function ConfirmarDatos() {
                     Modelo:
                   </div>
                   <div className="text-[#687073] text-base font-medium font-inter">
-                  {datosConfirmarIngreso.vehiculoModelo}
+                    {datosConfirmarIngreso.vehiculoModelo}
                   </div>
                 </div>
               </div>
@@ -193,7 +190,7 @@ function ConfirmarDatos() {
                 Infracciones
               </div>
               <div className="text-[#687073] text-base font-medium font-inter">
-              {datosConfirmarIngreso.infracciones?.map((infr) => (
+                {datosConfirmarIngreso.infracciones?.map((infr) => (
                   <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
                     {infr.digesto}
                     {infr.descrip}
@@ -203,13 +200,18 @@ function ConfirmarDatos() {
             </div>
           </div>
           <div className="self-stretch mb-[2rem] items-center gap-2 inline-flex ">
-          <button
-              onClick={()=>handleback()} className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex">
+            <button
+              onClick={() => handleback()}
+              className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex"
+            >
               <div className="text-[#0477ad] text-base font-semibold font-inter">
                 Volver atrás
               </div>
             </button>
-            <button onClick={()=>handleConfirm()} className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex">
+            <button
+              onClick={() => handleConfirm()}
+              className="grow  basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex"
+            >
               <div className="text-[#f6f5f5] text-center font-semibold font-inter">
                 Guardar e imprimir código
               </div>

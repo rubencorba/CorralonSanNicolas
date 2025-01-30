@@ -58,7 +58,16 @@ Secuestros.belongsTo(Compactados, { foreignKey: 'compactado' });
 Egresos.hasOne(Secuestros, { foreignKey: 'egreso' });
 Secuestros.belongsTo(Egresos, { foreignKey: 'egreso' });
 
+Users.hasMany(Secuestros, { foreignKey: 'user' }); //Un usuario puede ingresar muchos
+Secuestros.belongsTo(Users, { foreignKey: 'user' });
 
+Users.hasMany(Compactados, { foreignKey: 'user' }); //Un usuario puede compactar muchos
+Compactados.belongsTo(Users, { foreignKey: 'user' });
+
+Users.hasMany(Egresos, { foreignKey: 'user' }); //Un usuario puede egresar muchos
+Egresos.belongsTo(Users, { foreignKey: 'user' });
+
+//******Tabla intermedia Secuestros_infracciones***********
 Secuestros.hasOne(Secuestros_infracciones, { foreignKey: 'secuestro_id' });
 Secuestros_infracciones.belongsTo(Secuestros, { foreignKey: 'secuestro_id' });
 

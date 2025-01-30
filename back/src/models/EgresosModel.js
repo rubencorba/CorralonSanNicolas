@@ -10,10 +10,10 @@ module.exports = (sequelize) => {
       primaryKey:true,
       autoIncrement:true
     },
-    inspector:{
+    /* inspector:{
       type:DataTypes.INTEGER,
       allowNull:true,
-    },
+    }, */
     dni:{
       type:DataTypes.INTEGER,
       allowNull:true,

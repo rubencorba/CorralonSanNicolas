@@ -32,7 +32,7 @@ function Navbar() {
                 index !== array.length - 1 ? 'border-r border-white' : ''
               }`}
            >
-            <div class="text-white text-[1.5rem] font-inter font-bold break-words">
+            <div class="text-white sm:text-[1.5rem] text-[1rem] font-inter font-bold break-words">
               {path.charAt(0).toUpperCase() + path.slice(1)}
             </div>
           </div>

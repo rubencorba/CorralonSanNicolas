@@ -1,57 +1,57 @@
 import { useEffect, useState } from "react";
 import CardComponent from "../cardComponent/cardComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSecuestros } from "../../redux/actions";
-
-
-
+import { getSecuestros } from "../../redux/actions";
+import FilterSecuestrosComponent from "../filterSecuestrosComponent/filterSecuestrosComponent";
 
 function CardsComponent() {
+  const dispatch = useDispatch();
 
-  const dispatch=useDispatch()
+  const secuestros = useSelector((state) => state.secuestros);
 
-  const currentPagina= useSelector((state)=>state.pagina);
-  const secuestros= useSelector((state)=>state.secuestros);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    
-    dispatch(getAllSecuestros())
-    
+    const fetchSecuestros = async () => {
+      try {
+        await dispatch(getSecuestros()); // Actualiza el estado global
+      } catch (error) {
+        console.error("Error al cargar los secuestros:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSecuestros();
   }, [dispatch]);
 
-  const [secuestrosAmostrar, setSecuestrosAmostrar]= useState([]);
+  return (
+    <div>
+      <FilterSecuestrosComponent />
 
-  //Recorto los 9 primeros secuestros del total, en cuanto se monta el componente
-  /* useEffect(() => {
-    
-    const elementoInicial= (currentPagina-1)*9
-    const elementoFinal= elementoInicial+3
-    setSecuestrosAmostrar([...secuestros].splice(elementoInicial, 9));
-    
-  }, [currentPagina]); */
-
-    
-    return (
       <div className="grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2 gap-4 p-4">
-       
-       {secuestros.map(({id, Vehiculo, egreso, Acta, fecha_hora, foto}) => {
-          return  <CardComponent
-          key={id}
-          tipo={Vehiculo?.tipovh}
-          dominio={Vehiculo?.dominio}
-          egreso={egreso}
-          numeroActa={Acta?.nro}
-          lugar={Acta?.lugar}
-          /* origin={origin} */
-          fecha_hora={fecha_hora}
-          foto={foto}
-          id ={id}
-          />
-       })
-      }
+        {loading ? (
+          <div>Cargando secuestros...</div>
+        ) : (
+          secuestros.map(({ id, Vehiculo, egreso, Acta, fecha_hora, foto }) => {
+            return (
+              <CardComponent
+                key={id}
+                tipo={Vehiculo?.tipovh}
+                dominio={Vehiculo?.dominio}
+                egreso={egreso}
+                numeroActa={Acta?.nro}
+                lugar={Acta?.lugar}
+                fecha_hora={fecha_hora}
+                foto={foto}
+                id={id}
+              />
+            );
+          })
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  export default CardsComponent;
+export default CardsComponent;

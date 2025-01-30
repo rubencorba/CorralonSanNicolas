@@ -14,10 +14,10 @@ module.exports = (sequelize) => {
       type: DataTypes.DOUBLE,
       allowNull: true,
     },
-    inspector:{
+    /* inspector:{
       type:DataTypes.INTEGER,
       allowNull:true,
-    },
+    }, */
     
   },
   {timestamps:false});

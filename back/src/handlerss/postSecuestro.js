@@ -5,6 +5,7 @@ const {
   Actas,
   Infracciones,
   Secuestros_infracciones,
+  Users
 } = require("../db.js");
 
 const postSecuestro = async (
@@ -24,7 +25,8 @@ const postSecuestro = async (
   actaInspector,
   actaLugar,
   actaFecha_hora,
-  infracciones
+  infracciones,
+  userId
 ) => {
   const ingreso = "2345"; // Luego cambiar esto por el correcto manejo de "ingreso"
 
@@ -57,6 +59,8 @@ const postSecuestro = async (
       cuil: infractorCuil,
     });
 
+    const user =await Users.findOne({where:{id:userId}})
+
     // Si los datos del acta están presentes, crear el acta y vincularla
     if (actaNro || actaInspector || actaLugar || actaDate) {
       const newActa = await Actas.create({
@@ -72,6 +76,7 @@ const postSecuestro = async (
 
     await newSecuestro.setVehiculo(newVehiculo);
     await newSecuestro.setInfractore(newInfractor);
+    await newSecuestro.setUser(user);
 
     //Esta función se creó para los casos en los que la infracción ingresada desde juzgado
     //no coincide 100% con la de la db de corralón en cuanto a la textualidad.
@@ -98,7 +103,8 @@ const postSecuestro = async (
     for (const infraccion of infracciones) {
       let infraccionId;
 
-      // Verificar si el objeto infracción ya tiene un ID (Ingreso policial)
+      // Verificar si el objeto infracción ya tiene un ID 
+      // (Caso Ingreso policial, por ingreso de acta no traen id)
       if (infraccion.id) {
         infraccionId = infraccion.id;
       } else {

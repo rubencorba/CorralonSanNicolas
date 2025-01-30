@@ -11,57 +11,55 @@ function IngresoPolicialComponent() {
 
   const {
     register,
+    setValue,
     handleSubmit,
     setError,
+    getValues,
+    clearErrors,
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
   const infracciones = useSelector((state) => state.infracciones);
 
-  /* const [input, setInput] = useState({}) */
+  const [infraccionesSelected, setInfraccionesSelected] = useState([]);
 
   useEffect(() => {
     dispatch(getAllInfracciones());
   }, []);
 
-  const [infraccionesSelected, setInfraccionesSelected] = useState([]);
-
-  /* const handleChange = (event) => {
-    console.log(infraccionesSelected)
-    if (!infraccionesSelected.includes(event.target.value)) {
-      setInfraccionesSelected([...infraccionesSelected, event.target.value]);
-      console.log(infraccionesSelected)
-      setInput({ ...input, infracciones: infraccionesSelected })
-    }
-  }; */
-
   const handleRemove = (infraccionToRemove) => {
-    /* event.preventDefault(); */
-    setInfraccionesSelected((prev) =>
-      prev.filter(
-        (infraccion) => infraccion.descrip !== infraccionToRemove.descrip
-      )
+    const currentInfracciones = getValues("infracciones") || [];
+
+    // Filtrar la infracción que se desea eliminar
+    const updatedInfracciones = currentInfracciones.filter(
+      (infraccion) => infraccion.descrip !== infraccionToRemove.descrip
     );
+
+    // Actualizar el valor del campo 'infracciones' con las infracciones restantes
+    setValue("infracciones", updatedInfracciones);
+
+    // También actualizar el estado local de infracciones seleccionadas
+    setInfraccionesSelected(updatedInfracciones);
   };
 
   const onSubmit = (data, event) => {
     event.preventDefault(); // Evita el comportamiento por defecto
+    if (!data.infracciones || data.infracciones.length === 0) {
+      return setError("infracciones", {
+        type: "manual",
+        message: "Debe seleccionar al menos una infracción",
+      });
+    }
     // Reemplazar patente vacía por "sin patente"
-  const processedData = {
-    ...data,
-    dominio: data.dominio || "sin patente", // Si está vacío, asigna "sin patente"
-  };
-    /* dispatch(ingresoOficioPolicial(input)) */
+    const processedData = {
+      ...data,
+      dominio: data.dominio || "sin patente", // Si está vacío, asigna "sin patente"
+    };
+    dispatch(ingresoOficioPolicial(processedData))
 
     console.log(processedData);
-    /* navigate('/ingreso_detalles') */
+    navigate('/ingreso_detalles')
   };
-
-  /* useEffect(() => {
-    setInput({ 
-      ...input,
-      infracciones: infraccionesSelected })
-  }, [infraccionesSelected]); */
 
   return (
     <div>
@@ -111,12 +109,9 @@ function IngresoPolicialComponent() {
                     </div>
 
                     <input
-                    name="dominio"
+                      name="dominio"
                       placeholder="Sin patente"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, dominio: e.target.value })
-                    }} */
                       {...register("dominio", {
                         validate: (value) => {
                           // Validar si el campo está vacío, null o undefined
@@ -151,13 +146,13 @@ function IngresoPolicialComponent() {
                     }}
                     /> */}
                     <select
-                  className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                  defaultValue=""
-                  {...register("tipovh", {
-                    required: "Ingrese un tipo de vehículo por favor",
-                  })}
-                >
-                  <option value="" disabled>
+                      className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                      defaultValue=""
+                      {...register("tipovh", {
+                        required: "Ingrese un tipo de vehículo por favor",
+                      })}
+                    >
+                      <option value="" disabled>
                         Seleccionar tipo de vehículo
                       </option>
                       <option value="Automovil">Automovil</option>
@@ -170,7 +165,7 @@ function IngresoPolicialComponent() {
                       <option value="Combi">Combi</option>
                       <option value="Cuatriciclo">Cuatriciclo</option>
                       <option value="Vehiculo desconocido">Otro</option>
-                </select>
+                    </select>
                   </div>
                 </div>
                 <div className="self-stretch justify-start items-start gap-2 inline-flex">
@@ -179,11 +174,35 @@ function IngresoPolicialComponent() {
                       Modelo
                     </div>
                     <input
+                      name="modelovh"
                       placeholder="Modelo"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, modelovh: e.target.value })
-                    }} */
+                      {...register("modelovh", {
+                        validate: (value) => {
+                          if (!value) {
+                            return true; // Campo opcional
+                          }
+
+                          // Validar caracteres permitidos
+                          const regex = /^[a-zA-Z0-9\s\-_/.,]+$/;
+                          if (!regex.test(value)) {
+                            return "El modelo solo puede contener letras, números y caracteres válidos como - _ / . ,";
+                          }
+
+                          // Validar longitud
+                          if (value.length > 20) {
+                            return "El modelo no debe tener más de 20 caracteres";
+                          }
+
+                          // Validar espacios consecutivos
+                          if (/\s{2,}/.test(value)) {
+                            return "El modelo no debe contener espacios consecutivos";
+                          }
+
+                          return true; // Válido
+                        },
+                        setValueAs: (value) => value?.trim(), // Eliminar espacios innecesarios
+                      })}
                     />
                   </div>
                   <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
@@ -191,11 +210,35 @@ function IngresoPolicialComponent() {
                       Marca
                     </div>
                     <input
+                      name="marcavh"
                       placeholder="Marca"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, marcavh: e.target.value })
-                    }} */
+                      {...register("marcavh", {
+                        validate: (value) => {
+                          if (!value) {
+                            return true; // Campo opcional
+                          }
+
+                          // Validar caracteres permitidos (solo letras, números, espacios y guiones)
+                          const regex = /^[a-zA-Z0-9\s\-']+$/;
+                          if (!regex.test(value)) {
+                            return "La marca solo puede contener letras, números, espacios, guiones y apóstrofos.";
+                          }
+
+                          // Validar longitud
+                          if (value.length > 15) {
+                            return "La marca no debe tener más de 15 caracteres.";
+                          }
+
+                          // Validar espacios consecutivos
+                          if (/\s{2,}/.test(value)) {
+                            return "La marca no debe contener espacios consecutivos.";
+                          }
+
+                          return true; // Válido
+                        },
+                        setValueAs: (value) => value?.trim(), // Eliminar espacios al inicio o final
+                      })}
                     />
                   </div>
                 </div>
@@ -214,9 +257,43 @@ function IngresoPolicialComponent() {
                     <input
                       placeholder="Nombre y apellido"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, nombreCompleto: e.target.value })
-                    }} */
+                      name="nombreCompleto"
+                      {...register("nombreCompleto", {
+                        validate: (value) => {
+                          // Permitir valores vacíos
+                          if (!value) {
+                            return true; // Campo válido si está vacío
+                          }
+
+                          // Validar caracteres permitidos
+                          const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-'´]+$/;
+                          if (!regex.test(value)) {
+                            return "El nombre solo puede contener letras, espacios, apóstrofos y guiones.";
+                          }
+
+                          // Validar longitud mínima
+                          if (value.length < 2) {
+                            return "El nombre debe tener al menos 2 caracteres.";
+                          }
+
+                          // Validar longitud máxima
+                          if (value.length > 50) {
+                            return "El nombre no debe superar los 50 caracteres.";
+                          }
+
+                          // Validar espacios consecutivos
+                          if (/\s{2,}/.test(value)) {
+                            return "El nombre no debe contener espacios consecutivos.";
+                          }
+
+                          return true; // Válido
+                        },
+                        setValueAs: (value) =>
+                          value
+                            ?.trim() // Eliminar espacios innecesarios
+                            .toLowerCase()
+                            .replace(/\b\w/g, (char) => char.toUpperCase()), // Capitalizar nombres
+                      })}
                     />
                   </div>
                   <div className="grow shrink basis-0  flex-col justify-start items-start gap-2 inline-flex">
@@ -226,9 +303,29 @@ function IngresoPolicialComponent() {
                     <input
                       placeholder="000000000"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, dni: e.target.value })
-                    }} */
+                      type="number"
+                      name="dni"
+                      {...register("dni", {
+                        validate: (value) => {
+                          // Permitir valores vacíos
+                          if (!value) {
+                            return true; // Campo válido si está vacío
+                          }
+
+                          // Validar que solo contenga números
+                          if (!/^\d+$/.test(value)) {
+                            return "El DNI solo puede contener números.";
+                          }
+
+                          // Validar longitud permitida (7 u 8 dígitos)
+                          if (value.length < 6 || value.length > 9) {
+                            return "El DNI debe tener entre 6 y 9 dígitos.";
+                          }
+
+                          return true; // Válido
+                        },
+                        setValueAs: (value) => value?.trim(), // Eliminar espacios innecesarios
+                      })}
                     />
                   </div>
                 </div>
@@ -238,11 +335,43 @@ function IngresoPolicialComponent() {
                       CUIL
                     </div>
                     <input
-                      placeholder="000000000000"
+                      placeholder="00000000000"
                       className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
-                      /* onChange={(e) => {
-                      setInput({ ...input, cuil: e.target.value })
-                    }} */
+                      type="number"
+                      name="cuil"
+                      {...register("cuil", {
+                        validate: (value) => {
+                          // Permitir valores vacíos
+                          if (!value) {
+                            return true; // Campo válido si está vacío
+                          }
+
+                          // Limpiar el valor para validarlo (sin guiones ni espacios)
+                          const cleanedValue = value.replace(/\D/g, "");
+
+                          // Validar si tiene exactamente 11 dígitos después de limpiar
+                          if (cleanedValue.length !== 11) {
+                            return "El CUIL debe tener exactamente 11 dígitos.";
+                          }
+
+                          return true; // Si pasa la validación
+                        },
+                        setValueAs: (value) => {
+                          if (!value) return value; // Si el valor es null o vacío, no lo modifica
+                          const cleanedValue = value.replace(/\D/g, ""); // Elimina todos los caracteres no numéricos
+                          if (cleanedValue.length === 11) {
+                            // Formatear el CUIL con guiones
+                            return `${cleanedValue.slice(
+                              0,
+                              2
+                            )}-${cleanedValue.slice(
+                              2,
+                              10
+                            )}-${cleanedValue.slice(10)}`;
+                          }
+                          return cleanedValue; // Si no tiene exactamente 11 dígitos, lo devuelve sin cambios
+                        },
+                      })}
                     />
                   </div>
                   <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
@@ -253,9 +382,7 @@ function IngresoPolicialComponent() {
                     <select
                       className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                       defaultValue=""
-                      /* onChange={(e) => {
-                      setInput({ ...input, sexo: e.target.value })
-                    }} */
+                      {...register("sexo")}
                     >
                       <option value="" disabled>
                         Seleccionar sexo
@@ -280,32 +407,40 @@ function IngresoPolicialComponent() {
                 <select
                   className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                   defaultValue=""
-                  /* onChange={handleChange} */
                   onChange={(e) => {
-                    /* if (!infraccionesSelected.includes(e.target.value)) {
-                    setInfraccionesSelected([...infraccionesSelected, e.target.value]);
-                    console.log(infraccionesSelected)
-                  } */
+                    const selectedValue = e.target.value;
+
+                    // Encuentra la infracción seleccionada por su descripción para tener el id
                     const selectedInfraccion = infracciones.find(
-                      (infraccion) => infraccion.descrip === e.target.value
+                      (infraccion) => infraccion.descrip === selectedValue
                     );
 
-                    // Verifica que no esté ya seleccionada antes de agregarla
+                    const currentInfracciones = getValues("infracciones") || [];
+
+                    // Verifica si la infracción ya está seleccionada
                     if (
                       selectedInfraccion &&
-                      !infraccionesSelected.some(
+                      !currentInfracciones.some(
                         (i) => i.descrip === selectedInfraccion.descrip
                       )
                     ) {
+                      // Si no está seleccionada, agregamos la infracción al array
                       setInfraccionesSelected([
-                        ...infraccionesSelected,
+                        ...currentInfracciones,
+                        selectedInfraccion,
+                      ]);
+                      setValue("infracciones", [
+                        ...currentInfracciones,
                         selectedInfraccion,
                       ]);
                     }
+
+                    // Limpiar el error de infracciones si se ha seleccionado alguna
+                    clearErrors("infracciones");
                   }}
                 >
                   <option value="" disabled>
-                    Seleccionar infracción de transito
+                    Seleccionar infracción de tránsito
                   </option>
                   {infracciones.map((infraccion, index) => (
                     <option key={index} value={infraccion.descrip}>
