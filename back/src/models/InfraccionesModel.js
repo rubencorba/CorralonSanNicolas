@@ -21,6 +21,9 @@ module.exports = (sequelize) => {
       type:DataTypes.DOUBLE,
       allowNull:true,
     },
+  }, {
+    tableName: "infracciones",
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };

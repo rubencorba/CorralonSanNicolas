@@ -47,7 +47,13 @@ module.exports = (sequelize) => {
       type:DataTypes.TEXT,
       allowNull:true
     },
-    
+    firma:{
+      type:DataTypes.TEXT,
+      allowNull:true
+    },
+  }, {
+    tableName: "egresos",
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };

@@ -8,6 +8,13 @@ import { Link, useLocation } from 'react-router-dom';
 function Navbar() {
 
   let location=useLocation();
+
+  const tipoCurrentUser = useSelector((state) => state.tipoCurrentUser);
+
+  const navBarAdmin= ['inicio', 'vehiculos', 'usuarios', 'licencias', 'salir']
+  const navBarUser= ['inicio', 'vehiculos', 'licencias', 'salir']
+
+  const elementosNavBar= tipoCurrentUser === '1'? navBarAdmin : navBarUser
     
 
   return (
@@ -19,7 +26,7 @@ function Navbar() {
         display: 'flex',
         
         }}>      
-        {['inicio', 'vehiculos', 'usuarios', 'salir'].map((path, index, array) => {
+        {elementosNavBar.map((path, index, array) => {
         // Determina si la ruta actual coincide con el enlace
         const isActive = location.pathname === `/${path}`;
         

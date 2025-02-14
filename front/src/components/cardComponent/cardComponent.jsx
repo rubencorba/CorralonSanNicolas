@@ -30,11 +30,16 @@ function CardComponent({
       class="flex overflow-hidden border-[0.5px] items-center bg-white border border-[#C5E0FF] gap-1 pr-1 rounded-lg shadow-[1px_2px_8px_1px_rgba(219,219,219,0.45)] flex-row md:max-w-xl"
     >
       <div class="w-full md:w-1/2 h-full">
+      {foto?(
+
         <img
           class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg"
           src={isBase64 ? foto : `https://corralon.movisn.com/api${foto}`}
           alt="vehiculo"
         />
+      ):(
+        <div className="text-[#3d4245] text-[3rem] font-bold font-inter justify-center flex text-center items-center border w-auto h-full">Sin foto</div>
+      )}
       </div>
       <div className="flex flex-col justify-between px-2 leading-normal gap-1.5">
         <div className="mb-1 text-[18px] font-inter font-bold break-words  text-[#3E4345] ">

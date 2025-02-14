@@ -27,7 +27,7 @@ function IngresoDetallesComponent() {
     const resp = await dispatch(ingresoDetalles(data)); //Recibimos un objeto con 3 propiedades (isUnique,message,secuestroId)
 
     if (data.nroInventario=="" || resp.isUnique) {
-      navigate("/ingreso_foto");
+      navigate("/opciones_ingreso_foto");
     } else {
       setError("nroInventario", {
         type: "server",

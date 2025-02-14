@@ -17,11 +17,16 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const UPDATE_CONTRASENA = "UPDATE_CONTRASENA";
 export const GET_SECUESTRO_BY_DOMINIO = "GET_SECUESTRO_BY_DOMINIO";
 export const GET_SECUESTRO_BY_NRO_ACTA = "GET_SECUESTRO_BY_NRO_ACTA";
-export const GET_SECUESTRO_BY_NRO_INVENTARIO = "GET_SECUESTRO_BY_NRO_INVENTARIO";
+export const GET_SECUESTRO_BY_NRO_INVENTARIO =
+  "GET_SECUESTRO_BY_NRO_INVENTARIO";
 export const UPDATE_SECTOR = "UPDATE_SECTOR";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const FILTER_SECUESTRO = "FILTER_SECUESTRO";
 export const FETCH_SECUESTROS = "FETCH_SECUESTROS";
+export const GET_REGISTRO = "GET_REGISTRO";
+export const UPDATE_FOTO = "UPDATE_FOTO";
+export const POST_EGRESO = "POST_EGRESO";
+export const GET_EGRESO = "GET_EGRESO";
 
 export const getSecuestros = (page = 1, filter = "todos") => {
   return async (dispatch) => {
@@ -133,7 +138,7 @@ export const getAllVehiculos = () => {
         type: GET_ALL_SECUESTROS,
         payload: data,
       });
-      
+
     };
   } catch (error) {
     console.log(error);
@@ -210,10 +215,11 @@ export const postSecuestro = (info) => {
   return async (dispatch) => {
     try {
       const { data } = await axiosInstance.post("/secuestros", info);
-      return dispatch({
+      dispatch({
         type: POST_SECUESTRO,
         payload: data,
       });
+      return data
     } catch (error) {
       console.error(
         "Error al registrar el secuestro:",
@@ -286,7 +292,8 @@ export const login = (info) => {
     try {
       // En el caso de login, usamos axios sin instancia personalizada
       const { data } = await axios.post(
-        "http://localhost:3001/users/login",
+        // "http://localhost:3001/users/login",
+        "https://testing.sannicolas.gob.ar/corralon/users/login",
         info
       );
 
@@ -423,6 +430,83 @@ export const updateSector = (info) => {
     } catch (error) {
       console.error(
         "Error al actualizar el sector:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+export const actualizarFoto = (info) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.put("/secuestros/foto", info);
+      return dispatch({
+        type: UPDATE_FOTO,
+        payload: data,
+      });
+       // Devuelve los datos para luego avisar si hubo éxito
+    } catch (error) {
+      console.error(
+        "Error al actualizar la foto:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getRegistro = (info) => {
+  return async (dispatch) => {
+    try {
+
+      console.log(info)
+
+      const { data } = await axiosInstance.get("/secuestros/registro",{params :info});
+
+      dispatch({
+        type: GET_REGISTRO,
+        payload: data,
+      });
+      return data
+
+    } catch (error) {
+      console.error(
+        "Error al obtener los registros:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+
+export const postEgreso = (info) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.post("/egresos", info);
+      dispatch({
+        type: POST_EGRESO,
+        payload: data,
+      });
+      return data
+    } catch (error) {
+      console.error(
+        "Error al registrar el egreso:",
+        error.response?.data || error.message
+      );
+    }
+  };
+};
+
+export const getEgreso = (idSecuestro) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/egresos/${idSecuestro}`);
+      dispatch({
+        type: GET_EGRESO,
+        payload: data,
+      });
+      return data
+    } catch (error) {
+      console.error(
+        "Error al obtener los detalles del egreso:",
         error.response?.data || error.message
       );
     }

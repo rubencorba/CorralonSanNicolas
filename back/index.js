@@ -4,7 +4,7 @@ const PORT = 3001;
 
 
 
-conn.sync(/* { alter: true } */).then(() => {      /* En alter true, para que no se pierdan los datos */
+conn.sync({/*  alter: true  */}).then(() => {      /* En alter true, para que no se pierdan los datos */
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 })

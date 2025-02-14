@@ -6,6 +6,7 @@ const secuestrosRouter = require("./secuestrosRouter");
 const infraccionesRouter = require("./infraccionesRouter");
 const actasRouter = require("./actasRouter");
 const usersRouter = require("./usersRouter");
+const egresosRouter = require("./egresosRouter");
 
 
 const router = Router();
@@ -15,6 +16,7 @@ router.use('/secuestros',secuestrosRouter)
 router.use('/infracciones',infraccionesRouter)
 router.use('/actas',actasRouter)
 router.use('/users',usersRouter)
+router.use('/egresos',egresosRouter)
 
 
 

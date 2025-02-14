@@ -34,7 +34,7 @@ function FilterSecuestrosComponent() {
             type
           )}`}
         >
-          <div className="text-base font-semibold font-inter sm:text-[1rem] text-[0.7rem] whitespace-nowrap">
+          <div className="font-semibold font-inter sm:text-[1rem] text-[0.7rem] whitespace-nowrap">
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </div>
         </button>

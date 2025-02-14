@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/navbarComponent";
 import { useEffect, useState } from "react";
 import { postSecuestro } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import QRCodeComponent from "../../components/qrCodeComponent/qrCodeComponent";
 
 function ConfirmarDatos() {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ function ConfirmarDatos() {
 
   const [formattedDate, setFormattedDate] = useState("");
 
-  // Declarar formatter fuera de useEffect para reutilizarlo
   const formatter = new Intl.DateTimeFormat("es-AR", {
     dateStyle: "short",
     timeStyle: "short",
@@ -46,20 +46,24 @@ function ConfirmarDatos() {
     });
   }, [ingresoDetalles, ingresoFoto, userId]);
 
-  const handleConfirm = () => {
-    dispatch(postSecuestro(data));
+  const [idSecuestro, setIdSecuestro] = useState(null);
 
-    console.log(data);
+  const handleConfirm = async () => {
+    const newSecuestro = await dispatch(postSecuestro(data));
+    
+    /* setIdSecuestro(123) */
+    setIdSecuestro(newSecuestro.id)
   };
 
   const handleback = () => {
     navigate(-1);
   };
 
+
   return (
     <div>
       <Navbar />
-
+    {!idSecuestro?(
       <div className="flex min-h-screen flex-col  items-center bg-[#F5FAFF] ">
         <div className="text-[#3d4245] text-[32px] font-bold font-inter my-[2rem]">
           Confirmar datos
@@ -217,10 +221,21 @@ function ConfirmarDatos() {
               </div>
             </button>
           </div>
+               
+
         </div>
-      </div>
+      </div>):(
+         /* Renderiza el QRCodeComponent solo si hay un idSecuestro */
+         <QRCodeComponent idSecuestro={idSecuestro} />
+      )}
     </div>
   );
 }
 
+  /* { idSecuestro && (
+<div className="mt-4 flex flex-col items-center">
+  <p className="text-lg font-bold">Código QR del secuestro</p>
+  <QRCodeCanvas value={`/detail/${idSecuestro}`} size={200} />
+</div>
+) } */
 export default ConfirmarDatos;

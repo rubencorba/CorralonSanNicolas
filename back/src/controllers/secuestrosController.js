@@ -1,13 +1,16 @@
 const { getAllSecuestros } = require("../handlerss/getAllSecuestros");
+const { getRegistro } = require("../handlerss/getRegistro");
 const {
   infraccionesBySecuestroId,
 } = require("../handlerss/infraccionesBySecuestroId");
 const { postSecuestro } = require("../handlerss/postSecuestro");
 const { secuestroDetailById } = require("../handlerss/secuestroDetailById");
+const { updateFoto } = require("../handlerss/updateFoto");
 const { updateSector } = require("../handlerss/updateSector");
 const {
   validateUniqueInventario,
 } = require("../handlerss/validateUniqueInventario");
+
 
 const getAllSecuestrosController = async (req, res) => {
   const { page = 1, filter = "todos" } = req.query;
@@ -18,8 +21,13 @@ const getAllSecuestrosController = async (req, res) => {
     filter,
   };
 
-  const response = await getAllSecuestros(options);
-  res.status(200).json(response);
+  try {
+    const response = await getAllSecuestros(options);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error en getAllSecuestrosController:", error.message);
+    res.status(500).json({ error: "Error al obtener los secuestros" });
+  }
 };
 
 const getDetailSecuestroController = async (req, res) => {
@@ -57,7 +65,7 @@ const postSecuestroController = async (req, res) => {
     actaLugar,
     actaFecha_hora,
     infracciones,
-    userId
+    userId,
   } = req.body;
 
   try {
@@ -111,10 +119,67 @@ const updateSectorController = async (req, res) => {
   }
 };
 
+const getRegistroController = async (req, res) => {
+
+  
+   
+  const {
+    compactados,
+    egresados,
+    ingresados,
+    sector,
+    user,
+    startDate,
+    endDate
+  } = req.query;
+
+  console.log(compactados,
+    egresados,
+    ingresados,
+    sector,
+    user,
+    startDate,
+    endDate);
+
+  
+
+  try {
+    const response = await getRegistro(
+      compactados,
+      egresados,
+      ingresados,
+      sector,
+      user,
+      startDate,
+      endDate
+    );
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error en getRegistroController:", error.message);
+    res.status(500).json({ error: "Error al obtener los registros" });
+  }
+};
+
+const updateFotoController = async (req, res) => {
+  const { foto,id } = req.body;
+
+  try {
+    
+    const response = await updateFoto(foto, id);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error en updateFotoController:", error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllSecuestrosController,
   getDetailSecuestroController,
   postSecuestroController,
   validateUniqueInventarioController,
   updateSectorController,
+  getRegistroController,
+  updateFotoController
 };

@@ -29,6 +29,9 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     
+  }, {
+    tableName: "infractores",
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };

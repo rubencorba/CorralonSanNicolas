@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateSector } from "../../redux/actions";
 
 function CambiarSectorComponent({ onClose }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let { id } = useParams();
 
   const {
@@ -24,12 +25,20 @@ function CambiarSectorComponent({ onClose }) {
     console.log(finalData);
     const response = await dispatch(updateSector(finalData));
     //Luego falta sumar una animación que confirme la actualización,
-    //cierre el modal, y actualice la página del detail
+    navigate(0);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      onClick={onClose} /* Cierra al hacer clic fuera */
+    >
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onClick={(e) =>
+          e.stopPropagation()
+        } /* Evita que el clic dentro lo cierre */
+      >
         <div className="w-[20rem] bg-white p-6 rounded-lg shadow-lg">
           <div className="text-2xl font-bold mb-4 text-center">
             Cambiar Sector

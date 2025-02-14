@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
       
     },
     
+  }, {
+    tableName: "secuestros_infracciones",
+    timestamps:true
   },
-  {timestamps:true});
+  );
 };

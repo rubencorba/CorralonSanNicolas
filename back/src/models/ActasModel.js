@@ -18,10 +18,10 @@ module.exports = (sequelize) => {
       type: DataTypes.DOUBLE,
       allowNull: true,
     },
-    tipoDeCoordinada: {
+    /* tipoDeCoordinada: {
       type: DataTypes.TEXT,
       allowNull: true,
-    },
+    }, */
     nro:{
       type:DataTypes.INTEGER,
       allowNull:true,
@@ -39,6 +39,9 @@ module.exports = (sequelize) => {
       type:DataTypes.DOUBLE,
       allowNull:true
     },
+  }, {
+    tableName: "actas",  // Asegura que use minúsculas
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };

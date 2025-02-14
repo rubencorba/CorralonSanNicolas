@@ -59,7 +59,7 @@ function IngresoComponent() {
           <div class="self-stretch justify-start items-center inline-flex">
             <div class="w-[33.40px] h-[33.40px] p-[3.34px] bg-[#c5dfff] rounded-[33.40px] border-2 border-[#0477ad]"></div>
             <div class="grow shrink basis-0 h-[2.50px] bg-[#0477ad]"></div>
-            <div class="w-10 h-10 p-[3.34px] rounded-[33.40px] border-2 border-[#0477ad]"></div>
+            <div class="w-[33.40px] h-[33.40px] p-[3.34px] rounded-[33.40px] border-2 border-[#0477ad]"></div>
             <div class="grow shrink basis-0 h-[2.50px] bg-[#0477ad]"></div>
             <div class="w-[33.40px] h-[33.40px] p-[3.34px] rounded-[33.40px] border-2 border-[#0477ad]"></div>
           </div>

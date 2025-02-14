@@ -31,6 +31,9 @@ module.exports = (sequelize) => {
       
     },
     
+  }, {
+    tableName: "vehiculos",
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };

@@ -38,8 +38,10 @@ const updateContrasenaController = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   postUserController,
   getAllUsersController,
-  updateContrasenaController
+  updateContrasenaController,
 };

@@ -19,6 +19,9 @@ module.exports = (sequelize) => {
       allowNull:true,
     }, */
     
+  }, {
+    tableName: "compactados",  // Asegura que use minúsculas
+    timestamps:false
   },
-  {timestamps:false});
+  );
 };
