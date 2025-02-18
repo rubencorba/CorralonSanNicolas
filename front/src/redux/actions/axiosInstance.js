@@ -2,8 +2,8 @@ import axios from "axios";
 
 // Crear una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "https://testing.sannicolas.gob.ar/corralon", // Define la URL base de tu API
-  // baseURL: "http://localhost:3001", // Define la URL base de tu API
+  /* baseURL: "https://testing.sannicolas.gob.ar/corralon", */ // Define la URL base de tu API
+   baseURL: "http://localhost:3001", // Define la URL base de tu API
 });
 
 // Agregar un interceptor para incluir el token en cada solicitud

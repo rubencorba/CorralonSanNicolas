@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function CardComponent({
@@ -9,14 +10,28 @@ function CardComponent({
   lugar,
   fecha_hora,
   foto,
+  compactado
 }) {
   const date = new Date(fecha_hora); // Fecha en UTC
 
   // Ajustar a zona horaria de Argentina
   const options = { timeZone: "America/Argentina/Buenos_Aires", hour12: false };
 
-  const estado = egreso ? "Egresado" : "Ingresado";
+  // Estado
+  const [estado, setEstado] = useState("");
+  
+    useEffect(() => {
+      if (compactado !== null) {
+        setEstado("Compactado")
+      } else if (compactado === null && egreso !== null) {
+        setEstado("Egresado")
+      } else if (compactado === null && egreso === null) {
+        setEstado("Ingresado")
+      }
+    }, []);
 
+
+  // Foto
   const isBase64 = foto.startsWith("data:image/"); // Verifica si es Base64
 
   // Si no es Base64, realiza las conversiones necesarias

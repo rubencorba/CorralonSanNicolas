@@ -1,10 +1,9 @@
-import { useState } from "react";
-
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 
 function VehiculosComponent() {
+
+
   return (
     <div>
       <Navbar />
@@ -14,7 +13,7 @@ function VehiculosComponent() {
         Vehículos
       </div>
 
-      <div className="  flex-col justify-start items-start gap-3 inline-flex mx-[1rem]">
+      <div className=" mb-[3rem] flex-col justify-start items-start gap-3 inline-flex mx-[1rem]">
         <Link to='/ingreso' className="self-stretch px-4 py-7 bg-white rounded-lg border border-[#c5dfff] justify-start items-center gap-2.5 inline-flex">
           <div className="w-[49px] h-[49px] relative" >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-18 stroke-[#0477ad]">

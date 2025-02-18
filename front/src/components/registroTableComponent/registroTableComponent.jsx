@@ -4,6 +4,8 @@ import * as XLSX from "xlsx";
 function RegistroTableComponent({ registro }) {
   const [loading, setLoading] = useState(false);
 
+  console.log(registro)
+
   const formatDate = (timestamp) => {
     if (!timestamp) return "Sin fecha";
     const date = new Date(timestamp);
@@ -42,7 +44,7 @@ function RegistroTableComponent({ registro }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-        {registro.length > 0 ? (
+        {registro.length? (
       /* Botón de descarga */
       <button
         onClick={exportToExcel}
@@ -79,7 +81,7 @@ function RegistroTableComponent({ registro }) {
                     {item.sector || "Sin sector"}
                   </td>
                   <td className="px-4 py-2 border text-center">
-                    {item.user || "Sin usuario"}
+                    {item.User?.nombreCompleto || "Sin usuario"}
                   </td>
                   <td className="px-4 py-2 border text-center">
                     {item.Vehiculo?.dominio || "Sin dominio"}

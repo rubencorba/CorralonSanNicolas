@@ -1,18 +1,36 @@
 import { useDispatch } from "react-redux";
 import Navbar from "../navbar/navbarComponent";
 import { useForm } from "react-hook-form";
-import { getRegistro } from "../../redux/actions";
+import { getAllUsers, getRegistro } from "../../redux/actions";
 import RegistroTableComponent from "../registroTableComponent/registroTableComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function RegistrosComponent() {
   const dispatch = useDispatch();
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await dispatch(getAllUsers()); // Esperar la resolución de la promesa
+
+        setUsers(response);
+
+      } catch (error) {
+        console.error("Error al cargar los usuarios:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
 
   const {
     register,
     handleSubmit,
     setError,
     getValues,
+    reset,
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
@@ -23,6 +41,12 @@ function RegistrosComponent() {
     const response = await dispatch(getRegistro(data));
     setRegistro(response);
     setSubmit(true)
+  };
+
+  const handleResetFilters = () => {
+    reset(); // Restablece todos los campos del formulario
+    setRegistro([]); // Limpia los registros filtrados
+    setSubmit(false); // Indica que no se ha hecho un filtro aún
   };
 
   return (
@@ -83,11 +107,6 @@ function RegistrosComponent() {
                       <div className="text-[#3d4245] text-sm font-normal font-inter">
                         Desde
                       </div>
-                      {/* <div className="self-stretch p-2 bg-white rounded-md border border-[#687073] justify-between items-center inline-flex">
-                    <div className="text-[#3d4245] text-sm font-semibold font-inter">
-                      09/10/2024   sm:w-[50%]
-                    </div>
-                  </div> */}
 
                       <input
                         name="startDate"
@@ -148,11 +167,7 @@ function RegistrosComponent() {
                       <div className="text-[#3d4245] text-sm  font-inter">
                         Usuario
                       </div>
-                      {/* <div className="self-stretch p-2 bg-white rounded-md border border-[#687073] justify-between items-center inline-flex">
-                      <div className="text-[#3d4245] text-sm font-inter">
-                        Seleccionar
-                      </div>
-                    </div> */}
+
 
                       <select
                         className="self-stretch justify-between items-center inline-flex text-sm  font-inter rounded-md p-2 "
@@ -160,9 +175,9 @@ function RegistrosComponent() {
                         {...register("user")}
                       >
                         <option value="todos">Todos</option>
-                        {["cacho", "pablo", "pedro"].map((user, index) => (
-                          <option key={index} value={user}>
-                            {user}
+                        {users?.map((user, index) => (
+                          <option key={index} value={user.id}>
+                            {user.nombreCompleto}
                           </option>
                         ))}
                       </select>
@@ -203,32 +218,16 @@ function RegistrosComponent() {
                     Filtrar
                   </div>
                 </button>
-                <div className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex overflow-hidden">
+                <button
+                  type="button"
+                  onClick={handleResetFilters} className="grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex overflow-hidden">
                   <div className="text-[#0477ad] text-base font-semibold font-inter">
                     Limpiar filtros
                   </div>
-                </div>
+                </button>
               </div>
             </div>
 
-            {/* //Para compactar// */}
-
-            {/* <div className="self-stretch h-[143px] px-3 py-4 bg-[#f4f4f4] rounded-lg flex-col justify-center items-start gap-3 flex overflow-hidden">
-              <div className="self-stretch h-[49px] flex-col justify-start items-start gap-2 flex">
-                <div className="text-center text-[#3d4245] text-lg font-bold font-inter">
-                  Para compactar
-                </div>
-                <div className="self-stretch text-[#687073] text-base font-medium font-inter">
-                  Busca vehículos que han ingresado hace más de 6 meses y no
-                  fueron egresados
-                </div>
-              </div>
-              <div className="w-[351px] h-[50px] px-[18px] py-[13px] bg-[#a21414] rounded-lg justify-center items-center gap-1 inline-flex overflow-hidden">
-                <div className="text-[#f6f5f5] text-base font-semibold font-inter">
-                  Buscar vehículos para compactar
-                </div>
-              </div>
-            </div> */}
             {Object.values(errors).map((error, index) => (
               <p className="text-red-500 mt-4" key={index}>
                 {error.message}
@@ -236,10 +235,28 @@ function RegistrosComponent() {
             ))}
           </div>
         </form>
-        {submit? <RegistroTableComponent registro={registro} /> : ""}
+        {submit ? <RegistroTableComponent registro={registro} /> : ""}
       </div>
     </div>
   );
 }
 
 export default RegistrosComponent;
+
+{/* //Para compactar// */ }
+{/* <div className="self-stretch h-[143px] px-3 py-4 bg-[#f4f4f4] rounded-lg flex-col justify-center items-start gap-3 flex overflow-hidden">
+  <div className="self-stretch h-[49px] flex-col justify-start items-start gap-2 flex">
+    <div className="text-center text-[#3d4245] text-lg font-bold font-inter">
+      Para compactar
+    </div>
+    <div className="self-stretch text-[#687073] text-base font-medium font-inter">
+      Busca vehículos que han ingresado hace más de 6 meses y no
+      fueron egresados
+    </div>
+  </div>
+  <div className="w-[351px] h-[50px] px-[18px] py-[13px] bg-[#a21414] rounded-lg justify-center items-center gap-1 inline-flex overflow-hidden">
+    <div className="text-[#f6f5f5] text-base font-semibold font-inter">
+      Buscar vehículos para compactar
+    </div>
+  </div>
+</div> */}

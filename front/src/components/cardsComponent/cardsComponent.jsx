@@ -33,7 +33,7 @@ function CardsComponent() {
         {loading ? (
           <div>Cargando secuestros...</div>
         ) : (
-          secuestros.map(({ id, Vehiculo, egreso, Acta, fecha_hora, foto }) => {
+          secuestros.map(({ id, Vehiculo, egreso, Acta, fecha_hora, foto, compactado }) => {
             return (
               <CardComponent
                 key={id}
@@ -44,6 +44,7 @@ function CardsComponent() {
                 lugar={Acta?.lugar}
                 fecha_hora={fecha_hora}
                 foto={foto}
+                compactado={compactado}
                 id={id}
               />
             );

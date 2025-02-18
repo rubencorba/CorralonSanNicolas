@@ -27,22 +27,7 @@ function LicenciasComponent() {
     } else if (data.dni == "12345679") {
       setRespuesta("no entregar");
     }
-    /* const error = await dispatch(searchActa(data.nroActa));
-          
-          if (!error) {
-            navigate("/ingreso_detalles");
-          } else if (typeof error === "number" ){
-            setError("nroActa", {
-              type: "server",
-              message: "Este número de acta ya fue ingresado al corralón", // Muestra el mensaje del servidor
-            });
-            setSecuestroId(error);
-          } else {
-            setError("nroActa", {
-              type: "server",
-              message: error.message || "Error desconocido", // Muestra el mensaje del servidor
-            });
-          } */
+
   };
 
   const [respuesta, setRespuesta] = useState("");
@@ -91,7 +76,7 @@ function LicenciasComponent() {
                 },
                 setValueAs: (value) => value?.trim(), // Eliminar espacios innecesarios
               })}
-              onChange={()=>setRespuesta("")}
+              onChange={() => setRespuesta("")}
             />
           </div>
           <button

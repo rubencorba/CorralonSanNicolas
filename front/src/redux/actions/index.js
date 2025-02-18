@@ -292,8 +292,8 @@ export const login = (info) => {
     try {
       // En el caso de login, usamos axios sin instancia personalizada
       const { data } = await axios.post(
-        // "http://localhost:3001/users/login",
-        "https://testing.sannicolas.gob.ar/corralon/users/login",
+         "http://localhost:3001/users/login",
+        /* "https://testing.sannicolas.gob.ar/corralon/users/login", */
         info
       );
 
@@ -334,7 +334,7 @@ export const getAllUsers = () => {
         type: GET_ALL_USERS,
         payload: data,
       });
-      return data; // Devuelve los datos si son necesarios
+      return data; 
     } catch (error) {
       console.error(
         "Error al obtener los usuarios:",
