@@ -1,4 +1,4 @@
-const { login } = require("../handlerss/login");
+const { login } = require("../services/login");
 
 const loginController = async (req, res) => {
   const { contrasena, dni } = req.body;

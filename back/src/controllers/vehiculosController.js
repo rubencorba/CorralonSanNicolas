@@ -1,5 +1,4 @@
-const { getAllVehiculos } = require("../handlerss/getAllVehiculos");
-const { getVehiculoByDominio } = require("../handlerss/getVehiculoByDominio");
+const { getAllVehiculos, getVehiculoByDominio } = require("../services/vehiculosServices");
 
 const getAllVehiculosController = async (req, res) => { 
   const response = await getAllVehiculos();

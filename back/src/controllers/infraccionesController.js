@@ -1,4 +1,4 @@
-const { getAllInfracciones } = require("../handlerss/getAllInfracciones");
+const { getAllInfracciones } = require("../services/infraccionesServices");
 
 
 const getAllInfraccionesController= async (req,res)=>{

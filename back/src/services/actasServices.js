@@ -1,5 +1,4 @@
 const { Secuestros, Actas, Vehiculos, Infractores } = require("../db.js");
-const { infraccionesBySecuestroId } = require("./infraccionesBySecuestroId.js");
 
 const getActabyNro = async (nro) => {
   try {

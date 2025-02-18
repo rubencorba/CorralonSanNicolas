@@ -1,4 +1,4 @@
-const { getActabyNro } = require("../handlerss/getActaByNro");
+const { getActabyNro } = require("../services/actasServices");
 
 
 const getActabyNroController = async (req, res) => {

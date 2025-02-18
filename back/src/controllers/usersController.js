@@ -1,6 +1,4 @@
-const { getAllUsers } = require("../handlerss/getAllUsers");
-const { postNewUser } = require("../handlerss/postNewUser");
-const {updateContrasena} = require("../handlerss/updateContrasena");
+const { postNewUser, getAllUsers, updateContrasena } = require("../services/usersServices");
 
 const postUserController = async (req, res) => {
   const { nombreCompleto, contrasena, dni, tipo, fecha } = req.body;

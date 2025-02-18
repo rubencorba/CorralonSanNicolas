@@ -1,15 +1,5 @@
-const { getAllSecuestros } = require("../handlerss/getAllSecuestros");
-const { getRegistro } = require("../handlerss/getRegistro");
-const {
-  infraccionesBySecuestroId,
-} = require("../handlerss/infraccionesBySecuestroId");
-const { postSecuestro } = require("../handlerss/postSecuestro");
-const { secuestroDetailById } = require("../handlerss/secuestroDetailById");
-const { updateFoto } = require("../handlerss/updateFoto");
-const { updateSector } = require("../handlerss/updateSector");
-const {
-  validateUniqueInventario,
-} = require("../handlerss/validateUniqueInventario");
+const { getAllSecuestros, infraccionesBySecuestroId, secuestroDetailById, postSecuestro, validateUniqueInventario, updateSector, getRegistro, updateFoto } = require("../services/secuestrosServices");
+
 
 
 const getAllSecuestrosController = async (req, res) => {
@@ -121,8 +111,6 @@ const updateSectorController = async (req, res) => {
 
 const getRegistroController = async (req, res) => {
 
-  
-   
   const {
     compactados,
     egresados,
@@ -140,8 +128,6 @@ const getRegistroController = async (req, res) => {
     user,
     startDate,
     endDate);
-
-  
 
   try {
     const response = await getRegistro(

@@ -1,5 +1,4 @@
-const { getEgreso } = require("../handlerss/getEgreso");
-const { postEgreso } = require("../handlerss/postEgreso");
+const { postEgreso, getEgreso } = require("../services/egresosServices");
 
 const postEgresoController = async (req, res) => {
   const {
