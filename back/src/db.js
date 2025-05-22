@@ -34,15 +34,7 @@ conn.models = Object.fromEntries(capsEntries);
 
 //Relaciones
 
-const { Actas } = conn.models;
-const { Infracciones } = conn.models;
-const { Users } = conn.models;
-const { Vehiculos } = conn.models;
-const { Compactados } = conn.models;
-const { Egresos } = conn.models;
-const { Infractores } = conn.models;
-const { Secuestros } = conn.models;
-const { Secuestros_infracciones } = conn.models;
+const { Actas, Infracciones, Users, Vehiculos, Compactados, Egresos, Infractores, Secuestros, Secuestros_infracciones, Licencia, LicenciaEgresada } = conn.models;
 
 /* Secuestros.belongsToMany(Infracciones, {through: 'secuestros_infracciones'});
 Infracciones.belongsToMany(Secuestros, {through: 'secuestros_infracciones'}); */
@@ -77,6 +69,20 @@ Secuestros_infracciones.belongsTo(Secuestros, { foreignKey: 'secuestro_id' });
 
 Infracciones.hasOne(Secuestros_infracciones, { foreignKey: 'infraccion_id' });
 Secuestros_infracciones.belongsTo(Infracciones, { foreignKey: 'infraccion_id' });
+
+//---------Licencias---------//
+
+// Un usuario puede ingresar varias licencias
+Users.hasMany(Licencia, { foreignKey: "user" });
+Licencia.belongsTo(Users, { foreignKey: "user" });
+
+// Una licencia puede estar egresada con una LicenciaEgresada
+Licencia.hasOne(LicenciaEgresada, { foreignKey: "licencia_id", onDelete: "CASCADE" });
+LicenciaEgresada.belongsTo(Licencia, { foreignKey: "licencia_id" });
+
+// Un usuario es responsable de registrar la egresión de una licencia
+Users.hasMany(LicenciaEgresada, { foreignKey: "user" });
+LicenciaEgresada.belongsTo(Users, { foreignKey: "user" });
 
 
 module.exports = { 

@@ -1,14 +1,19 @@
-const { postNewUser, getAllUsers, updateContrasena } = require("../services/usersServices");
+const { postNewUser, getAllUsers, updateContrasena, updateTipo } = require("../services/usersServices");
 
 const postUserController = async (req, res) => {
   const { nombreCompleto, contrasena, dni, tipo, fecha } = req.body;
 
   try {
-    const token = await postNewUser(nombreCompleto, contrasena, dni, tipo, fecha);
-    res.status(201).json({ message: 'Usuario creado con éxito', token });
+    const result = await postNewUser(nombreCompleto, contrasena, dni, tipo, fecha);
+    
+    if (result.error) {
+      return res.status(400).json({ error: result.error }); // Ahora devuelve un error real
+    }
+
+    res.status(200).json({ message: "Usuario creado con éxito", token: result });
   } catch (error) {
     console.error("Error en postUserController:", error.message);
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Error en el servidor al crear el usuario." });
   }
 };
 
@@ -36,9 +41,23 @@ const updateContrasenaController = async (req, res) => {
   }
 };
 
+const updateTipoController = async (req, res) => {
+  const { tipo, id } = req.body;
+
+  try {
+    
+    const response = await updateTipo(tipo,id);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error en updateTipoController:", error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 
 module.exports = {
+  updateTipoController,
   postUserController,
   getAllUsersController,
   updateContrasenaController,

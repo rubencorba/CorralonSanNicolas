@@ -10,17 +10,21 @@ function CardComponent({
   lugar,
   fecha_hora,
   foto,
-  compactado
+  compactado,
+  estadoBd
 }) {
   const date = new Date(fecha_hora); // Fecha en UTC
 
   // Ajustar a zona horaria de Argentina
   const options = { timeZone: "America/Argentina/Buenos_Aires", hour12: false };
 
-  // Estado
+  //---------------Estado actual------------------------//
   const [estado, setEstado] = useState("");
-  
-    useEffect(() => {
+
+  useEffect(() => {
+    if (estadoBd !== null) {
+      setEstado(estadoBd)
+    } else {
       if (compactado !== null) {
         setEstado("Compactado")
       } else if (compactado === null && egreso !== null) {
@@ -28,16 +32,18 @@ function CardComponent({
       } else if (compactado === null && egreso === null) {
         setEstado("Ingresado")
       }
-    }, []);
+    }
+  }, [compactado,egreso,estadoBd]);
 
 
   // Foto
-  const isBase64 = foto.startsWith("data:image/"); // Verifica si es Base64
+    const env = process.env.REACT_APP_ENVIRONMENT || "development";  // Detectar el entorno (development, stage, production)
 
-  // Si no es Base64, realiza las conversiones necesarias
-  if (!isBase64) {
-    foto = foto.replace(".png", ".jpg"); // Cambia .png por .jpg si es necesario
-  }
+  // Directorios según el entorno
+  const remoteDir = env === "production" ? "images/corralon/production/fotos" : "images/corralon/stage/fotos";
+
+
+    const urlFoto = `https://staticcontent.sannicolasciudad.gob.ar/${remoteDir}/${foto}`;
 
   return (
     <Link
@@ -49,7 +55,7 @@ function CardComponent({
 
         <img
           class="object-cover w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg"
-          src={isBase64 ? foto : `https://corralon.movisn.com/api${foto}`}
+          src={urlFoto}
           alt="vehiculo"
         />
       ):(
@@ -58,7 +64,7 @@ function CardComponent({
       </div>
       <div className="flex flex-col justify-between px-2 leading-normal gap-1.5">
         <div className="mb-1 text-[18px] font-inter font-bold break-words  text-[#3E4345] ">
-          {tipo}, {dominio}
+          {tipo}, {dominio.toUpperCase()}
         </div>
         <div className="gap-1">
           <div class="self-stretch text-[#687073] text-[14px] font-inter font-medium break-words">
@@ -80,15 +86,3 @@ function CardComponent({
 }
 
 export default CardComponent;
-
-{
-  /* <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
-        <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-1/2 md:rounded-none md:rounded-s-lg" src={imagen} alt=""/>
-        <div class="flex flex-col justify-between px-2 leading-normal">
-            <h5 class="mb-1 text-l font-bold tracking-tight text-gray-900 dark:text-black leading-tight">{tipo}, {dominio}</h5>
-            <p class="mb-1 md:text-sm text-xl font-normal leading-tight text-gray-700 dark:text-gray-400">Estado: {estado} N° acta:{numeroActa}</p>
-            <p class="mb-1 md:text-sm text-xl font-normal leading-tight">{lugar}</p>
-            <p class="md:text-sm text-xl font-normal text-gray-700 dark:text-gray-400 leading-tight">{fecha}, {hora}</p>
-        </div>
-    </a> */
-}

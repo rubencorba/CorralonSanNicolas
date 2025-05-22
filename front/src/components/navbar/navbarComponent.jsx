@@ -1,7 +1,3 @@
-import { useState } from 'react';
-
-
-
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -11,10 +7,10 @@ function Navbar() {
 
   const tipoCurrentUser = useSelector((state) => state.tipoCurrentUser);
 
-  const navBarAdmin= ['inicio', 'vehiculos', 'usuarios', 'licencias', 'salir']
+  const navBarSuperAdmin= ['inicio', 'vehiculos', 'usuarios', 'licencias', 'salir']
   const navBarUser= ['inicio', 'vehiculos', 'licencias', 'salir']
 
-  const elementosNavBar= tipoCurrentUser === '1'? navBarAdmin : navBarUser
+  const elementosNavBar= tipoCurrentUser === 'super_admin'? navBarSuperAdmin : navBarUser
     
 
   return (

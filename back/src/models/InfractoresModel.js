@@ -11,14 +11,14 @@ module.exports = (sequelize) => {
       autoIncrement:true
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
-      
+
     },
     nombreCompleto:{
       type:DataTypes.TEXT,
       allowNull:true,
-      
+
     },
     sexo:{
       type:DataTypes.TEXT,
@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       type:DataTypes.TEXT,
       allowNull:true
     },
-    
+
   }, {
     tableName: "infractores",
     timestamps:false

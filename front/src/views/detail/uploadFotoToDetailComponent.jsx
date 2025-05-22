@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actualizarFoto } from "../../redux/actions";
 
@@ -8,13 +8,31 @@ function UploadFotoToDetailComponent({ id, imagen, closeUploadFoto }) {
   const dispatch = useDispatch();
 
   const handleConfirmar = async () => {
-    const info = {
-      foto: imagen,
-      id: id,
-    };
-    await dispatch(actualizarFoto(info));
+    try {
+      const formData = new FormData();
+      // Convertir la imagen de base64 a un archivo Blob
+      const blob = await fetch(imagen).then((res) => res.blob());
+      const file = new File([blob], `foto_${Date.now()}.jpeg`, {
+        type: "image/jpeg",
+      });
 
-    navigate(0); // Recarga la página completamente
+      formData.append("foto", file);
+      formData.append("id", id);
+
+      const response = await dispatch(actualizarFoto(formData));
+
+      if (response) {
+        alert("Foto subida con éxito.");
+      } else {
+        alert("Hubo un error al subir la foto.");
+      }
+
+      closeUploadFoto(); 
+      navigate(0);
+    } catch (error) {
+      console.error("Error al subir la foto:", error);
+      alert("Hubo un error al intentar subir la foto.");
+    }
   };
 
   return (

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {
   getSecuestroByDominio,
   getSecuestroByNroActa,
-  getSecuestroByNroInventario,
 } from "../../redux/actions";
 
 function BuscarVehiculoComponent() {
@@ -14,48 +13,41 @@ function BuscarVehiculoComponent() {
 
   const {
     register,
-    setValue,
     handleSubmit,
     setError,
-    getValues,
-    clearErrors,
-    formState: { errors }, // Accede a los errores del formulario
+    formState: { errors },
   } = useForm();
 
   const onSubmitDominio = async (data, event) => {
-    event.preventDefault();
+  event.preventDefault();
+  const response = await dispatch(getSecuestroByDominio(data.dominio));
 
-    console.log(data.dominio);
-    const response = await dispatch(getSecuestroByDominio(data.dominio));
-    if (response.message) {
-      setError("dominio", {
-        type: "server",
-        message: response.message || "Error desconocido",
-      });
-    } else {
-      navigate(`/detail/${response}`);
-    }
-  };
+  if (!response?.success) {
+    setError("dominio", {
+      type: "server",
+      message: response?.message || "Error desconocido",
+    });
+  } else {
+    navigate(`/detail/${response.data}`);
+  }
+};
   
   const onSubmitActa = async (data, event) => {
     event.preventDefault();
-
-    console.log(data.nroActa);
     const response = await dispatch(getSecuestroByNroActa(data.nroActa));
-    if (response == "") {
-      setError("nroActa", {
-        type: "server",
-        message: "No se encontró vehículo con ese número de acta",
-      });
-    } else {
-      navigate(`/detail/${response}`);
-    }
-  };
+    
+    if (!response.success) {
+    setError("nroActa", {
+      type: "server",
+      message: response.message || "No se encontró vehículo con ese número de acta",
+    });
+  } else {
+    navigate(`/detail/${response.data}`);
+  }
+};
 
-  const onSubmitInventario = async (data, event) => {
+/*   const onSubmitInventario = async (data, event) => {
     event.preventDefault();
-
-    console.log(data.nroInventario);
     const response = await dispatch(
       getSecuestroByNroInventario(data.nroInventario)
     );
@@ -67,7 +59,7 @@ function BuscarVehiculoComponent() {
     } else {
       navigate(`/detail/${response.secuestroId}`);
     }
-  };
+  }; */
 
   return (
     <div>
@@ -88,7 +80,6 @@ function BuscarVehiculoComponent() {
             onSubmit={handleSubmit(onSubmitDominio)}
             className="self-stretch  flex-col justify-end items-center gap-2 flex"
           >
-            {/* <div className="self-stretch  flex-col justify-end items-center gap-2 flex"> */}
             <div className="self-stretch  flex-col justify-start items-start gap-2 flex">
               <div className="text-[#3d4245] text-sm font-normal font-inter">
                 Patente
@@ -99,9 +90,8 @@ function BuscarVehiculoComponent() {
                 className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex"
                 {...register("dominio", {
                   validate: (value) => {
-                    // Validar si el campo está vacío, null o undefined
                     if (!value) {
-                      return true; // Campo opcional
+                      return true;
                     }
 
                     // Validar longitud máxima
@@ -119,7 +109,7 @@ function BuscarVehiculoComponent() {
                 })}
               />
             </div>
-            {/* Renderizar errores */}
+
             {errors.dominio && (
               <span className="text-red-500 text-sm">
                 {errors.dominio.message}
@@ -148,10 +138,8 @@ function BuscarVehiculoComponent() {
                 type="number"
                 className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex"
                 {...register("nroActa", {
-                  /* required: "Ingrese un número de acta por favor", */
                   validate: (value) => {
                     if (value === "" || value === undefined) {
-                      // Si el campo está vacío, no ejecutar más validaciones
                       return true;
                     }
                     if (isNaN(value)) return "Debe ser un número válido";
@@ -161,7 +149,7 @@ function BuscarVehiculoComponent() {
                       return "El número debe ser mayor a 0";
                     if (value.length > 10)
                       return "El número es demasiado largo para ser válido";
-                    return true; // Válido
+                    return true;
                   },
                 })}
                 placeholder="00000"
@@ -171,7 +159,6 @@ function BuscarVehiculoComponent() {
                 }}
               />
             </div>
-            {/* Renderizar errores */}
             {errors.nroActa && (
               <span className="text-red-500 text-sm">
                 {errors.nroActa.message}
@@ -187,7 +174,7 @@ function BuscarVehiculoComponent() {
             </button>
           </form>
 
-          <form
+          {/* <form
             onSubmit={handleSubmit(onSubmitInventario)}
             className="self-stretch flex-col justify-end items-center gap-2 flex"
           >
@@ -223,7 +210,6 @@ function BuscarVehiculoComponent() {
                 className="self-stretch h-[50px] p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex"
               />
             </div>
-            {/* Renderizar errores */}
             {errors.nroInventario && (
               <span className="text-red-500 text-sm">
                 {errors.nroInventario.message}
@@ -237,7 +223,7 @@ function BuscarVehiculoComponent() {
                 Buscar por inventario
               </div>
             </button>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>

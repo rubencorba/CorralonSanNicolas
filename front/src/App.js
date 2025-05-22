@@ -23,6 +23,10 @@ import RegistrosComponent from "./components/registrosComponent/registrosCompone
 import OpcionesFotoComponent from "./views/ingreso/opcionesFotoComponent";
 import SubirFotoComponent from "./views/ingreso/subirFotoComponent";
 import TakeFotoToDetailComponent from "./views/detail/takeFotoToDetailComponent";
+import ACompactarComponent from "./components/aCompactarComponent/aCompactarComponent";
+import LevantamientosComponent from "./components/levantamientosComponent/levantamientosComponent";
+import CompactacionComponent from "./components/compactacionComponent/compactacionComponent";
+import StockActualComponent from "./components/stockActual/stockActual";
 
 
 function App() {
@@ -52,6 +56,10 @@ function App() {
                 <Route path='/leerQR' element={<LeerQRComponent />} />
                 <Route path='/buscar' element={<BuscarVehiculoComponent />} />
                 <Route path='/registros' element={<RegistrosComponent />} />
+                <Route path='/levantamientos' element={<LevantamientosComponent />} />
+                <Route path='/compactacion' element={<CompactacionComponent />} />
+                <Route path='/a_compactar' element={<ACompactarComponent />} />
+                <Route path='/stock_actual' element={<StockActualComponent />} />
                 <Route path='/usuarios' element={<UsuariosComponent />} />
                 <Route path='/resetear_usuario' element={<ResetearUsuarioComponent />} />
                 <Route path='/nuevo_usuario' element={<NuevoUsuarioComponent />} />

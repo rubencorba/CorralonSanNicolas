@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { getDetailSecuestro } from "../../redux/actions";
 import CambiarSectorComponent from "../../components/cambiarSectorComponent/cambiarSectorComponent";
 import EgresarVehiculoComponent from "../../components/egresarVehiculoComponent/egresarVehiculoComponent";
 import TakeFotoToDetailComponent from "./takeFotoToDetailComponent";
 import UploadFotoToDetailComponent from "./uploadFotoToDetailComponent";
-import QRCodeComponent from "../../components/qrCodeComponent/qrCodeComponent";
 import VerEgresoComponent from "../../components/verEgresoComponent/verEgresoComponent";
+import CambiarEstadoComponent from "../../components/cambiarEstadoComponent/cambiarEstadoComponent";
+import CompactarComponent from "../../components/compactarComponent/compactarComponent";
+import { generatePdf } from "../ingreso/generatePdfComponent";
 
 function DetailComponent() {
   const detail = useSelector((state) => state.detail);
@@ -20,26 +22,29 @@ function DetailComponent() {
 
   useEffect(() => {
     dispatch(getDetailSecuestro(id));
-  }, [id]);
+  }, [id, dispatch]);
+
+  const [puedeCompactar, setPuedeCompactar] = useState(null);
+  useEffect(() => {
+    if (/* detail.estado!=="No compactar" && COMENTADO, porque sino, no podrán luego cambiar a "A compactar"*/
+      (detail?.infoJuzgado === null || detail?.infoJuzgado?.compactar === true)) {
+      setPuedeCompactar(true)
+    } else {
+      setPuedeCompactar(false)
+    }
+  }, [detail]);
+
+  const tipoCurrentUser = useSelector((state) => state.tipoCurrentUser);
 
   //------------Foto------------//
-  const [foto, setFoto] = useState("");
 
-  useEffect(() => {
-    if (!detail.foto) {
-      setFoto(""); // Si no hay foto, establece un valor vacío
-      return;
-    }
+  const env = process.env.REACT_APP_ENVIRONMENT || "development";  // Detectar el entorno (development, stage, production)
 
-    const isBase64 = detail.foto.startsWith("data:image/"); // Verifica si es Base64
+  // Directorios según el entorno
 
-    if (isBase64) {
-      setFoto(detail.foto);
-    } else {
-      const extension = detail.foto.replace(".png", ".jpg"); // Cambia .png por .jpg si es necesario
-      setFoto(`https://corralon.movisn.com/api${extension}`);
-    }
-  }, [detail.foto]);
+  const remoteDir = env === "production" ? "images/corralon/production/fotos" : "images/corralon/stage/fotos";
+  const urlFoto = `https://staticcontent.sannicolasciudad.gob.ar/${remoteDir}/${detail.foto}`;
+
   //-----------------Fecha y Hora--------------//
 
   const date = new Date(detail.Acta?.fecha_hora); // Fecha en UTC
@@ -73,15 +78,52 @@ function DetailComponent() {
       setImagen(reader.result); // Muestra la imagen en formato base64
     };
   };
+  //---------------Estado actual------------------------//
+  const [estado, setEstado] = useState("");
+
+  useEffect(() => {
+    if (detail.estado !== null) {
+      setEstado(detail.estado)
+    } else {
+      if (detail.compactado !== null) {
+        setEstado("compactado")
+      } else if (detail.compactado === null && detail.egreso !== null) {
+        setEstado("egresado")
+      } else if (detail.compactado === null && detail.egreso === null) {
+        setEstado("ingresado")
+      }
+    }
+  }, [detail]);
+
   //---------------------------------------------------//
 
   const handleBackClick = () => {
     navigate(-1); // Esto navega a la página anterior en el historial
   };
 
-  const [imprimirQr, setImprimirQr] = useState(false);
-  const handleImprimirQr = () => {
-    setImprimirQr(true); // Abre la pestaña para imprimir un QR
+  const handleImprimirQr = async () => {
+    try {
+      const pdfResponse = await generatePdf({
+        idSecuestro: id,
+        nroActa: detail.Acta?.nro || "Sin acta"
+      });
+
+      if (pdfResponse !== "PDF generado con éxito") {
+        throw new Error(pdfResponse); // Si la respuesta de generatePdf no es de éxito, lanzamos un error
+      }
+
+      /* alert("PDF descargado con éxito"); */
+    } catch (error) {
+      console.error("Error al generar el PDF:", error);
+      alert("Hubo un error al generar el PDF. Por favor, intenta nuevamente.");
+    }
+  };
+
+
+  const openURL = (url) => {
+    if (url) {
+      window.open(url, "_blank");
+    }
   };
 
   // Estados para controlar los modal
@@ -89,6 +131,8 @@ function DetailComponent() {
   const [isModalEgresoOpen, setIsModalEgresoOpen] = useState(false);
   const [isTakeFotoOpen, setIsTakeFotoOpen] = useState(false);
   const [isVerEgresoOpen, setIsVerEgresoOpen] = useState(false);
+  const [isCambiarEstadoOpen, setIsCambiarEstadoOpen] = useState(false);
+  const [compactarOpen, setCompactarOpen] = useState(false);
 
   // Abrir y cerrar modal
   const openModal = () => setIsModalOpen(true);
@@ -96,6 +140,9 @@ function DetailComponent() {
 
   const openModalEgreso = () => setIsModalEgresoOpen(true);
   const closeModalEgreso = () => setIsModalEgresoOpen(false);
+
+  const openModalCompactar = () => setCompactarOpen(true);
+  const closeModalCompactar = () => setCompactarOpen(false);
 
   const openTakeFoto = () => setIsTakeFotoOpen(true);
   const closeTakeFoto = () => setIsTakeFotoOpen(false);
@@ -106,8 +153,11 @@ function DetailComponent() {
   const openVerEgreso = () => setIsVerEgresoOpen(true);
   const closeVerEgreso = () => setIsVerEgresoOpen(false);
 
+  const openCambiarEstado = () => setIsCambiarEstadoOpen(true);
+  const onCloseEstado = () => setIsCambiarEstadoOpen(false);
+
   return (
-    <div>
+    <div >
       <Navbar></Navbar>
 
       {/* Render condicional para cambiar sector */}
@@ -115,7 +165,7 @@ function DetailComponent() {
 
       {/* Render condicional para egresar vehiculo */}
       {isModalEgresoOpen && (
-        <EgresarVehiculoComponent onCloseEgresar={closeModalEgreso} />
+        <EgresarVehiculoComponent onCloseEgresar={closeModalEgreso} idLevantamiento={detail.infoJuzgado?.levantamiento?.id || null} />
       )}
 
       {/* Render condicional para tomar foto */}
@@ -137,8 +187,19 @@ function DetailComponent() {
         <VerEgresoComponent idSecuestro={id} closeVerEgreso={closeVerEgreso} />
       )}
 
-      
-      <div className=" flex flex-col items-center justify-center bg-[#F5FAFF]">
+
+      {/* Render condicional para ver egreso */}
+      {isCambiarEstadoOpen && (
+        <CambiarEstadoComponent onCloseEstado={onCloseEstado} puedeCompactar={puedeCompactar} />
+      )}
+      {/* Render condicional para compactar */}
+      {compactarOpen && (
+        <CompactarComponent idSecuestro={id} closeModalCompactar={closeModalCompactar} nroActa={detail.Acta?.nro || null} lugar={detail.Acta?.lugar || null} />
+      )}
+
+
+      <div className={` flex flex-col items-center justify-center bg-[#F5FAFF] min-h-screen
+      ${tipoCurrentUser === "viewer" ? "pointer-events-none opacity-50" : ""}`}>
         <div className="flex items-center max-w-[65rem] px-2.5 w-full my-5">
           <button
             onClick={handleBackClick}
@@ -172,7 +233,7 @@ function DetailComponent() {
           </div>
         </div>
 
-      {!imprimirQr?(
+
         <div className="mb-9 px-2.5 my-2 max-w-[65rem] gap-[1rem]  grid grid-cols-1 mid:grid-cols-3 custom:grid-cols-2">
           <div>
             <div class="flex justify-center items-center gap-[0.5rem] mb-[1rem] ">
@@ -198,57 +259,13 @@ function DetailComponent() {
                   />
                 </svg>
               </button>
-
-              {detail.egreso ? (
-                <button
-                  onClick={openVerEgreso}
-                  class="flex w-full h-[45px] px-[4px] py-[6px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center text-[#0477AD] text-[16px] font-inter font-semibold flex gap-[4px]"
-                >
-                  Ver egreso
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
-                    />
-                  </svg>
-                </button>
-              ) : (
-                <button
-                  onClick={openModalEgreso}
-                  class="flex w-full h-[45px] px-[4px] py-[6px] bg-white rounded-[8px] overflow-hidden border border-[#0477AD] justify-center items-center text-[#0477AD] text-[16px] font-inter font-semibold flex gap-[4px]"
-                >
-                  Egreso
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-                    />
-                  </svg>
-                </button>
-              )}
             </div>
 
             <div className=" items-center flex justify-center">
-              {foto ? (
+              {detail.foto ? (
                 <img
                   className="object-cover  h-[500px] w-full rounded-[12px]"
-                  src={foto}
+                  src={urlFoto}
                   alt=""
                 />
               ) : (
@@ -355,6 +372,375 @@ function DetailComponent() {
               </div>
             </div>
 
+            {/* ----------------------------EGRESO--------------------------- */}
+
+            {/* Preguntamos si está compactado, así omitir info sobre egreso */}
+            {estado === "Compactado" ? ( /* En este caso, está compactado  */
+              null  /* no se muestra opción para egresar o ver egreso */
+            ) : (
+
+              /* Preguntamos si ya está egresado */
+              /* estado!=="egresado" No puedo tomar este caso, porque no se puede cambiar estado a "egresado"*/
+              detail.egreso === null ? ( /* En este caso, no está egresado  */
+
+
+                /* Preguntamos si hay información de juzgado */
+                detail.infoJuzgado !== null ? (
+
+                  /* Preguntamos si el secuestro tiene levantamiento */
+                  Array.isArray(detail.infoJuzgado?.levantamiento)
+                    ? (
+                      /* En este caso no tiene levantamiento */
+                      <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                        <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                          <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                            EGRESO
+                          </dt>
+                          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                            <button
+                              type="button"
+
+                              className="px-4 py-2 text-xs ml-3 text-center text-white bg-gray-400 rounded-lg "
+                            >
+                              Egresar
+                            </button>
+                          </dd>
+                        </div>
+                        <div className="flex flex-col py-2 grid  px-4">
+                          <dt className="text-sm/6 font-medium text-gray-900">Este vehículo aún no se puede egresar</dt>
+                        </div>
+                      </div>
+                    )
+                    : (
+                      /* En este caso, tiene levantamiento, se puede egresar */
+                      <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                        <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                          <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                            EGRESO
+                          </dt>
+                          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                            <button
+                              type="button"
+                              onClick={openModalEgreso}
+                              className="flex gap-[4px] px-4 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                            >
+                              Egresar
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="size-4"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                                />
+                              </svg>
+                            </button>
+                          </dd>
+                        </div>
+
+                        <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                          <dt className="text-sm/6 font-medium text-gray-900">Observacion</dt>
+                          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                            {detail.infoJuzgado?.levantamiento.observacion}
+                          </dd>
+                        </div>
+                        <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                          <dt className="text-sm/6 font-medium text-gray-900">Retira</dt>
+                          <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                            {detail.infoJuzgado?.levantamiento.retira}
+                          </dd>
+                        </div>
+                        <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                          <dt className="text-sm/6 font-medium text-gray-900 col-start-1 flex items-center">
+                            URL
+                          </dt>
+                          <dd className=" text-sm/6 text-gray-700 justify-between  flex items-center">
+                            <button
+                              type="button"
+                              onClick={() => openURL(detail.infoJuzgado?.levantamiento.levantamientoURL)}
+                              class="px-2 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                            >
+                              Ver archivo
+                            </button>
+                          </dd>
+                        </div>
+
+                      </div>
+                    )
+
+                ) : (
+                  /* En este caso no hay información de juzgado de si se puede egresar o no */
+                  <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                    <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                      <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                        EGRESO
+                      </dt>
+                      <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                        <button
+                          type="button"
+                          onClick={openModalEgreso}
+                          className="flex gap-[4px] px-4 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                        >
+                          Egresar
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                            />
+                          </svg>
+                        </button>
+                      </dd>
+                    </div>
+                    <div className="flex flex-col py-2 grid  px-4">
+                      <dt className="text-sm/6 font-medium text-gray-900">No hay información de juzgado sobre si este vehículo se puede egresar, el egreso queda a criterio de corralón</dt>
+                    </div>
+                  </div>
+                )
+              ) : ( /* En este caso, ya está egresado */
+                <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                  <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                    <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                      EGRESADO
+                    </dt>
+                    <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                      <button
+                        type="button"
+                        onClick={openVerEgreso}
+                        className="flex gap-[4px] px-3 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                      >
+                        Ver egreso
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="size-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+                          />
+                        </svg>
+                      </button>
+                    </dd>
+                  </div>
+
+                {detail.infoJuzgado?.levantamiento.levantamientoURL &&
+                  <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                    <dt className="text-sm/6 font-medium text-gray-900 col-start-1 flex items-center">
+                      URL
+                    </dt>
+                    <dd className=" text-sm/6 text-gray-700 justify-between  flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => openURL(detail.infoJuzgado?.levantamiento.levantamientoURL)}
+                        class="px-2 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                      >
+                        Ver archivo
+                      </button>
+                    </dd>
+                  </div>
+                }
+                </div>
+              )
+            )
+            }
+            {/* ----------------------------COMPACTACIÓN--------------------------- */}
+
+            {estado === "Compactado" ? ( /* En este caso, está compactado  */
+              <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+                <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                  <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                    COMPACTADO
+                  </dt>
+                  <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                    <div
+                      type="button"
+
+                      className="flex gap-[4px] px-3 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                    >
+                      Vehículo compactado
+
+                    </div>
+                  </dd>
+                </div>
+              </div>
+            ) : (
+              estado === "A compactar" ? (
+                /* Preguntamos si hay información de juzgado */
+                detail.infoJuzgado !== null ? (
+                  /* Preguntamos si el secuestro se puede compactar */
+                  !detail.infoJuzgado?.compactar ? (
+                    /* En este caso no se puede compactar */
+
+
+                    <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                      <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                        <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                          COMPACTACIÓN
+                        </dt>
+                        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                          <button
+                            type="button"
+
+                            className="px-4 py-2 text-xs ml-3 text-center text-white bg-gray-400 rounded-lg "
+                          >
+                            Compactar
+                          </button>
+                        </dd>
+                      </div>
+                      <div className="flex flex-col py-2 grid  px-4">
+                        <dt className="text-sm/6 font-medium text-gray-900">Compactación bloqueada desde juzgado</dt>
+                      </div>
+                    </div>
+                  ) : (
+                    /* En este caso, si se puede compactar */
+                    <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                      <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                        <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                          COMPACTACIÓN
+                        </dt>
+                        <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                          <button
+                            type="button"
+                            onClick={openModalCompactar}
+                            className="flex gap-[4px] px-4 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                          >
+                            Compactar
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="size-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                              />
+                            </svg>
+                          </button>
+                        </dd>
+                      </div>
+                    </div>
+
+                  )) : (
+                  /* En este caso no hay información de juzgado de si se puede compactar o no */
+                  <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                    <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                      <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                        COMPACTACIÓN
+                      </dt>
+                      <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                        <button
+                          type="button"
+                          onClick={openModalCompactar}
+                          className="flex gap-[4px] px-4 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                        >
+                          Compactar
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                            />
+                          </svg>
+                        </button>
+                      </dd>
+                    </div>
+                    <div className="flex flex-col py-2 grid  px-4">
+                      <dt className="text-sm/6 font-medium text-gray-900">No hay información de juzgado sobre este vehículo, la compactación queda a critero de corralón</dt>
+                    </div>
+                  </div>
+
+                )) : (estado === "No compactar" ? (
+                  <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+
+                    <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                      <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                        COMPACTACIÓN
+                      </dt>
+                      <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                        <button
+                          type="button"
+
+                          className="px-4 py-2 text-xs ml-3 text-center text-white bg-gray-400 rounded-lg "
+                        >
+                          Compactar
+                        </button>
+                      </dd>
+                    </div>
+                    <div className="flex flex-col py-2 grid  px-4">
+                      <dt className="text-sm/6 font-medium text-gray-900">Compactación bloqueada desde corralón</dt>
+                    </div>
+                  </div>
+                ) : (null)))
+            }
+
+
+            {/* ----------------------------ESTADO--------------------------- */}
+
+
+
+            {(estado === "Desconocido" || estado === "A compactar" || estado === "Ingresado" || estado === "No compactar") && (detail.egreso === null && detail.compactado === null) &&
+              <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+                <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                  <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
+                    ESTADO
+                  </dt>
+                  <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                    <button
+                      type="button"
+                      onClick={openCambiarEstado}
+                      className="flex gap-[4px] px-4 py-2 text-xs ml-3 text-center text-white bg-[#0477AD] rounded-lg "
+                    >
+                      Cambiar estado
+
+                    </button>
+                  </dd>
+                </div>
+                <div className="flex flex-col py-2 grid grid-cols-2 px-4">
+                  <dt className="text-sm/6 font-medium text-gray-900">Estado actual</dt>
+                  <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
+                    {estado}
+                  </dd>
+                </div>
+
+              </div>
+            }
+
+
             <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
                 <dt className=" text-sm/6 font-bold text-[#036395] font-inter">
@@ -379,7 +765,8 @@ function DetailComponent() {
                   Inspector
                 </dt>
                 <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
-                  {detail.Acta?.inspector}
+                  {/* {detail.Acta?.inspector} En corralón se almacena un id del inspector */}
+                  {detail.infoJuzgado?.inspector || detail.Acta?.inspector || null}
                 </dd>
               </div>
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
@@ -392,6 +779,11 @@ function DetailComponent() {
                 </dd>
               </div>
             </div>
+
+
+
+
+
           </div>
 
           <div className="flex flex-col gap-4">
@@ -440,13 +832,13 @@ function DetailComponent() {
                   Apellido y Nombres
                 </dt>
                 <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
-                  {detail.Infractore?.nombreCompleto}
+                  {detail.Infractore?.nombreCompleto || detail.infoJuzgado?.infractor?.nombre}
                 </dd>
               </div>
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
                 <dt className="text-sm/6 font-medium text-gray-900">DNI</dt>
                 <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0">
-                  {detail.Infractore?.dni}
+                  {detail.Infractore?.dni || detail.infoJuzgado?.infractor?.dni}
                 </dd>
               </div>
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
@@ -463,7 +855,7 @@ function DetailComponent() {
               </div>
             </div>
 
-            <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
+            {detail.infoJuzgado?.infracciones && <div className="sm:gap-4 bg-white rounded-[8px]  border border-[#61ABCF] divide-y divide-[#61ABCF]">
               <div className="flex flex-col py-2 grid grid-cols-2 px-4">
                 <dt className="text-sm/6 font-bold text-[#036395] font-inter">
                   INFRACCIÓN/ES
@@ -471,20 +863,26 @@ function DetailComponent() {
                 <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0"></dd>
               </div>
               <div className="flex flex-col divide-y divide-[#61ABCF]">
-                {detail.infracciones?.map((infr) => (
+                {/* {detail.infracciones?.map((infr) => (
                   <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
                     {infr.Infraccione.descrip}
                     {infr.Infraccione.digesto}
                   </div>
+                ))} */}
+                {detail.infoJuzgado?.infracciones && detail.infoJuzgado?.infracciones?.map((infr) => (
+                  <div className="divide-y divide-[#61ABCF] px-4 py-2 ">
+                    {infr.descripcion}
+                    {infr.digesto}
+                  </div>
                 ))}
               </div>
-            </div>
+            </div>}
           </div>
         </div>
-      ):(
-        /* Renderiza el QRCodeComponent */
-        <QRCodeComponent idSecuestro={id} />
-      )}
+        {/* ) : (
+          
+          <QRCodeComponent idSecuestro={id} nroActa={detail.Acta?.nro || "Sin acta"} />
+        )} */}
       </div>
     </div>
   );

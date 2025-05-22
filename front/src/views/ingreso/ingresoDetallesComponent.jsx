@@ -1,6 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
-import { useState } from "react";
 import { ingresoDetalles } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -12,8 +11,7 @@ function IngresoDetallesComponent() {
   const {
     register,
     handleSubmit,
-    setError,
-    formState: { errors }, // Accede a los errores del formulario
+    formState: { errors },
   } = useForm();
 
   const handleback = (e) => {
@@ -21,25 +19,28 @@ function IngresoDetallesComponent() {
     navigate(-1);
   };
 
-  const [secuestroId, setSecuestroId] = useState("");
 
   const onSubmit = async (data) => {
-    const resp = await dispatch(ingresoDetalles(data)); //Recibimos un objeto con 3 propiedades (isUnique,message,secuestroId)
+    /* const resp =  */await dispatch(ingresoDetalles(data));
 
-    if (data.nroInventario=="" || resp.isUnique) {
+    //Esto servía cuando se ingresaba nro de inventario
+    /* if (data.nroInventario=="" || resp.isUnique) {
       navigate("/opciones_ingreso_foto");
-    } else {
-      setError("nroInventario", {
-        type: "server",
-        message: resp.message || "Error desconocido", // Muestra el mensaje del servidor
+      } else {
+        setError("nroInventario", {
+      type: "server",
+      message: resp.message || "Error desconocido", // Muestra el mensaje del servidor
       });
       setSecuestroId(resp.secuestroId);
-    }
+      } */
+
+    navigate("/opciones_ingreso_foto");
   };
 
-  const handleVerIngreso = async () => {
+  /*  const [secuestroId, setSecuestroId] = useState("");
+   const handleVerIngreso = async () => {
     navigate(`/detail/${secuestroId}`);
-  };
+  }; */
 
   return (
     <div>
@@ -54,7 +55,7 @@ function IngresoDetallesComponent() {
           </div>
         </div>
 
-        <div className="w-[20rem] sm:w-[32rem] h-[56.40px] flex-col justify-start items-start gap-1 inline-flex">
+        <div className="w-[20rem] sm:w-[32rem] flex-col justify-start items-start gap-1 inline-flex">
           <div className="self-stretch justify-start items-center inline-flex">
             <div className="w-[33.40px] h-[33.40px] px-[5.01px] py-[6.68px] bg-[#0477ad] rounded-[33.40px] border-2 border-[#0477ad] justify-center items-center gap-[3.34px] flex">
               <div className="w-5 h-5 relative" />
@@ -78,8 +79,8 @@ function IngresoDetallesComponent() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="h-[319px] w-[20rem] sm:w-[23rem] flex-col justify-start items-start gap-5 inline-flex">
-            <div className="self-stretch h-[249px] flex-col justify-start items-start gap-3 flex">
+          <div className=" w-[20rem] sm:w-[23rem] flex-col justify-start items-start gap-5 inline-flex">
+            <div className="self-stretch flex-col justify-start items-start gap-3 flex">
               <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   Sector
@@ -103,6 +104,22 @@ function IngresoDetallesComponent() {
                 </select>
               </div>
               <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
+                <div className="text-[#3d4245] text-sm font-normal font-inter">
+                  Estado
+                </div>
+
+                <select
+                  className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
+                  defaultValue="ingresado"
+                  {...register("estado", {
+                    required: "Ingrese un estado por favor",
+                  })}
+                >
+                  <option value="Ingresado">Ingresado</option>
+                  <option value="Desconocido">Desconocido</option>
+                </select>
+              </div>
+              {/* <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   N° Inventario (si corresponde)
                 </div>
@@ -134,7 +151,7 @@ function IngresoDetallesComponent() {
                   }}
                   className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2 h-[50px]"
                 />
-              </div>
+              </div> */}
               <div className="self-stretch h-[75px] flex-col justify-start items-start gap-2 flex">
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   Fecha y hora de ingreso
@@ -146,10 +163,16 @@ function IngresoDetallesComponent() {
                   type="datetime-local"
                   defaultValue={(() => {
                     const now = new Date();
-                    // Convertimos a UTC-3 (Argentina)
-                    const offset = now.getTimezoneOffset(); // En minutos
-                    now.setMinutes(now.getMinutes() - offset /*  - 180 */); // Ajuste al huso horario de Argentina (UTC-3)
-                    return now.toISOString().slice(0, 16); // Formateamos la fecha
+
+                    const pad = (n) => n.toString().padStart(2, '0');
+
+                    const year = now.getFullYear();
+                    const month = pad(now.getMonth() + 1);
+                    const day = pad(now.getDate());
+                    const hours = pad(now.getHours());
+                    const minutes = pad(now.getMinutes());
+
+                    return `${year}-${month}-${day}T${hours}:${minutes}`;
                   })()}
                   className="w-full  text-sm font-normal font-inter outline-none rounded-md pl-4  py-2 h-[50px]"
                   {...register("fecha_hora", {
@@ -164,9 +187,8 @@ function IngresoDetallesComponent() {
                         return "La fecha no puede ser superior a la actual";
                       }
                       if (selectedDate < threeYearsAgo) {
-                        return `El año no puede ser menor a ${
-                          threeYearsAgo.getFullYear() + 1
-                        }`;
+                        return `El año no puede ser menor a ${threeYearsAgo.getFullYear() + 1
+                          }`;
                       }
                       return true; // La fecha es válida
                     },
@@ -200,7 +222,7 @@ function IngresoDetallesComponent() {
               {error.message}
             </p>
           ))}
-          {errors.nroInventario?.message ==
+          {/* {errors.nroInventario?.message ==
             "Ya hay un ingreso con ese número de inventario" && (
             <button
               onClick={handleVerIngreso}
@@ -208,7 +230,7 @@ function IngresoDetallesComponent() {
             >
               Ver ingreso
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>

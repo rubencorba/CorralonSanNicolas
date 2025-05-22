@@ -10,20 +10,16 @@ function CambiarSectorComponent({ onClose }) {
 
   const {
     register,
-    setValue,
     handleSubmit,
-    setError,
-    getValues,
-    clearErrors,
-    formState: { errors },
+    /* formState: { errors }, */
   } = useForm();
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
     // Agregar el campo "id" a los datos
     const finalData = { ...data, id: id };
-    console.log(finalData);
-    const response = await dispatch(updateSector(finalData));
+
+    /* const response =  */await dispatch(updateSector(finalData));
     //Luego falta sumar una animación que confirme la actualización,
     navigate(0);
   };

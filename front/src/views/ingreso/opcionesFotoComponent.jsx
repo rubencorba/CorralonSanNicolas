@@ -1,15 +1,18 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
 import { useState } from "react";
 import SubirFotoComponent from "./subirFotoComponent";
 import { useDispatch } from "react-redux";
+import { limpiarFoto } from "../../redux/actions";
 
 function OpcionesFotoComponent() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [imagen, setImagen] = useState(null);
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -27,11 +30,14 @@ function OpcionesFotoComponent() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImagen(reader.result); // Muestra la imagen en formato base64
-    };
+
+    // Crear vista previa
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+
+    // Guardar el archivo en el estado
+    setImagen(file);
+
   };
 
   const handleBack = () => {
@@ -40,6 +46,12 @@ function OpcionesFotoComponent() {
 
   const handleVolver = () => {
     navigate(-1);
+  };
+ 
+  //----Limpiar store si el secuestro se sube sin foto-----//
+  const handlePostearSinFoto = async() => {
+    await dispatch(limpiarFoto()); // Limpiar foto del store
+    navigate("/ingreso_confirmacion");
   };
 
   return (
@@ -153,8 +165,8 @@ function OpcionesFotoComponent() {
                 onChange={handleFileChange}
               />
             </label>
-            <Link
-              to="/ingreso_confirmacion"
+            <button
+              onClick={handlePostearSinFoto}
               className="self-stretch px-4 py-7 bg-white rounded-lg border border-[#c5dfff] justify-start items-center gap-2.5 inline-flex"
             >
               <div className="w-[49px] h-[49px] relative">
@@ -182,7 +194,7 @@ function OpcionesFotoComponent() {
                 </div>
               </div>
               <div className="p-0.5 justify-start items-center gap-2.5 flex" />
-            </Link>
+            </button>
             <button
               onClick={handleVolver}
               className="self-stretch px-4 py-7 bg-white rounded-lg border border-[#c5dfff] justify-start items-center gap-2.5 inline-flex"
@@ -216,7 +228,7 @@ function OpcionesFotoComponent() {
         </div>
       ) : (
         /* Renderiza la imagen sólo en caso de subirla desde el dispositivo */
-        <SubirFotoComponent imagen={imagen} handleBack={handleBack} />
+        <SubirFotoComponent imagen={imagen} preview={preview} handleBack={handleBack} />
       )}
     </div>
   );

@@ -1,8 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbarComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllInfracciones, ingresoOficioPolicial } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { ingresoOficioPolicial } from "../../redux/actions";
 import { useForm } from "react-hook-form";
 
 function IngresoPolicialComponent() {
@@ -11,15 +10,11 @@ function IngresoPolicialComponent() {
 
   const {
     register,
-    setValue,
     handleSubmit,
-    setError,
-    getValues,
-    clearErrors,
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
-  const infracciones = useSelector((state) => state.infracciones);
+  /* const infracciones = useSelector((state) => state.infracciones);
 
   const [infraccionesSelected, setInfraccionesSelected] = useState([]);
 
@@ -40,16 +35,16 @@ function IngresoPolicialComponent() {
 
     // También actualizar el estado local de infracciones seleccionadas
     setInfraccionesSelected(updatedInfracciones);
-  };
+  }; */
 
   const onSubmit = (data, event) => {
     event.preventDefault(); // Evita el comportamiento por defecto
-    if (!data.infracciones || data.infracciones.length === 0) {
+    /* if (!data.infracciones || data.infracciones.length === 0) {
       return setError("infracciones", {
         type: "manual",
         message: "Debe seleccionar al menos una infracción",
       });
-    }
+    } */
     // Reemplazar patente vacía por "sin patente"
     const processedData = {
       ...data,
@@ -155,15 +150,17 @@ function IngresoPolicialComponent() {
                       <option value="" disabled>
                         Seleccionar tipo de vehículo
                       </option>
-                      <option value="Automovil">Automovil</option>
+                      <option value="Automóvil">Automóvil</option>
                       <option value="Moto">Moto</option>
                       <option value="Camioneta">Camioneta</option>
-                      <option value="Taxi-Remis">Taxi-Remis</option>
-                      <option value="Autobus">Autobus</option>
+                      <option value="Taxi - remis">Taxi-remis</option>
+                      <option value="Autobús">Autobús</option>
                       <option value="Ciclomotor">Ciclomotor</option>
-                      <option value="Camion">Camion</option>
-                      <option value="Combi">Combi</option>
-                      <option value="Cuatriciclo">Cuatriciclo</option>
+                      <option value="Camión">Camión</option>
+                      {/* <option value="Combi">Combi</option> */}
+                      {/* <option value="Cuatriciclo">Cuatriciclo</option> */}
+                      <option value="Peaton">Peaton</option>
+                      <option value="Equino">Equino</option>
                       <option value="Vehiculo desconocido">Otro</option>
                     </select>
                   </div>
@@ -395,7 +392,7 @@ function IngresoPolicialComponent() {
                 </div>
               </div>
             </div>
-            <div className="self-stretch flex-col justify-start items-start gap-2 flex">
+            {/* <div className="self-stretch flex-col justify-start items-start gap-2 flex">
               <div className="text-[#0a5477] text-base font-bold font-inter uppercase">
                 Infracción
               </div>
@@ -472,10 +469,17 @@ function IngresoPolicialComponent() {
                   )}
                 </div>
               </div>
-            </div>
-            <button
+            </div> */}
+        <div className="gap-0  justify-center items-center text-center w-full">
+          {Object.values(errors).map((error, index) => (
+            <p className="text-red-500 text-center" key={index}>
+              {error.message}
+            </p>
+          ))}
+        </div>
+           <button
               type="submit"
-              className=" self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 inline-flex"
+              className=" mb-[3rem] self-stretch h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center inline-flex"
             >
               <span className="text-[#f6f5f5] text-base font-semibold font-inter">
                 Siguiente
@@ -483,13 +487,6 @@ function IngresoPolicialComponent() {
             </button>
           </div>
         </form>
-        <div className="gap-0  mb-[3rem] justify-center items-center text-center">
-          {Object.values(errors).map((error, index) => (
-            <p className="text-red-500" key={index}>
-              {error.message}
-            </p>
-          ))}
-        </div>
       </div>
     </div>
   );

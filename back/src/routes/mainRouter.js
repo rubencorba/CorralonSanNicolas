@@ -7,6 +7,8 @@ const infraccionesRouter = require("./infraccionesRouter");
 const actasRouter = require("./actasRouter");
 const usersRouter = require("./usersRouter");
 const egresosRouter = require("./egresosRouter");
+const compactadosRouter = require("./compactadosRouter");
+const licenciasRouter = require("./licenciasRouter");
 
 
 const router = Router();
@@ -17,6 +19,8 @@ router.use('/infracciones',infraccionesRouter)
 router.use('/actas',actasRouter)
 router.use('/users',usersRouter)
 router.use('/egresos',egresosRouter)
+router.use('/compactados',compactadosRouter)
+router.use('/licencias',licenciasRouter)
 
 
 

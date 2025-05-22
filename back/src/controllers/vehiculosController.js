@@ -7,17 +7,26 @@ const getAllVehiculosController = async (req, res) => {
 const getVehiculoByDominioController = async (req, res) => {
   try {
     const { dominio } = req.params;
-    const response = await getVehiculoByDominio(dominio);
+    const secuestro = await getVehiculoByDominio(dominio);
 
-    /* if (response.error) {
-          
-          return res.status(404).json({ message: response.error });
-        } */
+    if (!secuestro) {
+      return res.status(404).json({
+        success: false,
+        message: "No se encontró vehículo con este dominio",
+      });
+    }
 
-    res.status(200).json(response);
+    return res.status(200).json({
+      success: true,
+      message: "Secuestro encontrado",
+      data: secuestro
+    });
   } catch (error) {
-    console.error("Error en getVehiculoByDominioHandler:", error);
-    res.status(500).json({ message: "Error interno del servidor" });
+    console.error("Error en getVehiculoByDominioController:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error interno del servidor",
+    });
   }
 };
 

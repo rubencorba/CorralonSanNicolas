@@ -12,9 +12,9 @@ function VerEgresoComponent({ idSecuestro, closeVerEgreso }) {
       const resp = await dispatch(getEgreso(idSecuestro));
       setEgreso(resp);
     };
-  
+
     fetchEgreso();
-  }, [dispatch, idSecuestro]); 
+  }, [dispatch, idSecuestro]);
 
   const { bPago,domicilio,dni,fecha_hora,firma,licencia,nombreCompleto,obs,tarjetaVerde,User } = egreso;
 
@@ -23,6 +23,17 @@ function VerEgresoComponent({ idSecuestro, closeVerEgreso }) {
    const date = new Date(fecha_hora); // Fecha en UTC
    // Ajustar a zona horaria de Argentina
    const options = { timeZone: "America/Argentina/Buenos_Aires", hour12: false };
+
+   //-----------------Firma--------------//
+
+   const env = process.env.REACT_APP_ENVIRONMENT || "development";  // Detectar el entorno (development, stage, production)
+
+
+  // Directorios según el entorno
+  const remoteDir = env === "production" ? "images/corralon/production/firmas_secuestros" : "images/corralon/stage/firmas_secuestros";
+
+
+    const urlFirma = `https://staticcontent.sannicolasciudad.gob.ar/${remoteDir}/${firma}`;
 
   return (
     <div
@@ -106,8 +117,8 @@ function VerEgresoComponent({ idSecuestro, closeVerEgreso }) {
               Firma
             </dt>
             <dd className="mt-1 text-sm/6 text-gray-700  sm:mt-0 max-w-[10rem]">
-              <img src={firma} alt="firma" />
-              
+              <img src={urlFirma} alt="firma" />
+
             </dd>
           </div>
         </div>

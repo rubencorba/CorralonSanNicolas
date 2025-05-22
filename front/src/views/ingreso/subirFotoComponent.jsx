@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
-import Navbar from "../../components/navbar/navbarComponent";
-import Webcam from "react-webcam";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import {  useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ingresoFoto } from "../../redux/actions";
 
-function SubirFotoComponent({imagen,handleBack}) {  
+function SubirFotoComponent({imagen,preview,handleBack}) {  
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,20 +13,16 @@ function SubirFotoComponent({imagen,handleBack}) {
           navigate('/ingreso_confirmacion')
   };
 
-
-
   return (
     <div>
-
       <div className="flex min-h-screen flex-col  items-center bg-[#F5FAFF]">
-        {imagen ? (
+        {preview ? (
           <div className="flex flex-col  items-center">
             <img
-              src={imagen}
+              src={preview}
               alt="Imagen"
               className="w-[20rem] my-[3rem] rounded-lg overflow-hidden"
             />
-
             <div className="justify-center items-center flex">
               <div className="w-[21.5rem] justify-center items-center gap-2 inline-flex">
                 <button

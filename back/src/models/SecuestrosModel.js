@@ -28,9 +28,15 @@ module.exports = (sequelize) => {
     fecha_hora:{
       type:DataTypes.DOUBLE,
       allowNull:true
+    },estado: {
+      type: DataTypes.TEXT,
+      allowNull: true, 
     },
+    infracciones: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    }
 
-    
   }, {
     tableName: "secuestros",
     timestamps:false

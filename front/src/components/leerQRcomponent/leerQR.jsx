@@ -1,7 +1,7 @@
 import React, { useRef, useState ,useCallback, useEffect} from "react";
 import Navbar from "../../components/navbar/navbarComponent";
 import Webcam from "react-webcam";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import jsQR from "jsqr";
 
@@ -81,6 +81,9 @@ function LeerQRComponent() {
               screenshotFormat="image/jpeg"
               width={500}
               className="sm:w-[500px] w-full "
+              videoConstraints={{
+                facingMode: { exact: "environment" } // Usa la cámara trasera
+              }}
             />
           </div>
           <div className="flex flex-col justify-center items-center     ">

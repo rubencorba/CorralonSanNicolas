@@ -1,4 +1,6 @@
 const { Egresos,Users, Secuestros } = require("../db.js");
+const axios = require("axios");
+require("dotenv").config();
 
 const postEgreso = async (
   bPago,
@@ -9,7 +11,7 @@ const postEgreso = async (
   nombreCompleto,
   obs,
   tarjetaVerde,
-  firma,
+  firmaUrl,
   userId,
   idSecuestro
 ) => {
@@ -30,7 +32,7 @@ const postEgreso = async (
       nombreCompleto,
       obs,
       tarjetaVerde,
-      firma,
+      firma:firmaUrl,
     });
 
     const user =await Users.findOne({where:{id:userId}})
@@ -39,7 +41,9 @@ const postEgreso = async (
 
     // Actualizar el secuestro con el nuevo id de egreso
     await Secuestros.update(
-      { egreso: newEgreso.id }, // Actualizar la columna egreso con el nuevo id
+      { egreso: newEgreso.id, // Actualizar la columna egreso con el nuevo id
+        estado: "Egresado" // Actualizar el estado del secuestro
+       }, // Actualizar la columna egreso con el nuevo id
       { where: { id: idSecuestro } } // Filtrar por el id del secuestro correspondiente
     );
 
@@ -47,6 +51,34 @@ const postEgreso = async (
   } catch (error) {
     console.error("Error al crear un nuevo egreso:", error.message);
     throw new Error("Error al crear un nuevo egreso en la base de datos.");
+  }
+};
+
+
+const notificateEgresoToJuzgado = async (userId, idLevantamiento) => {
+  try {
+
+    const user = await Users.findOne({ where: { id: userId } });
+
+    if (!user) {
+      throw new Error(`No se encontró el usuario con ID: ${userId}`);
+    }
+
+    const response = await axios.put(
+      `${process.env.API_JUZGADO_URL}/corralon/levantamiento/${idLevantamiento}`,
+      new URLSearchParams({ user: user.dni }).toString(), // Formato x-www-form-urlencoded
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${process.env.SEARCH_ACTAS_TOKEN}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error al notificar egreso a Juzgado", error.message);
+    throw new Error("Error al llamar al endpoint de juzgado para notificar el egreso.");
   }
 };
 
@@ -85,4 +117,4 @@ const getEgreso = async (idSecuestro) => {
     }
   };
 
-module.exports = { postEgreso, getEgreso };
+module.exports = { postEgreso, getEgreso, notificateEgresoToJuzgado };

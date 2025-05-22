@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { updateContrasena } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 function ResetearUsuarioComponent({ userId, onClose }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    setError,
     watch,
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
@@ -24,11 +25,21 @@ function ResetearUsuarioComponent({ userId, onClose }) {
     // Agregar el campo id a los datos
     const finalData = { ...data, id: userId };
     await dispatch(updateContrasena(finalData));
+
+    alert("Contraseña cambiada con éxito");
+    navigate(0);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[20rem] bg-white p-6 rounded-lg shadow-lg">
+    <div 
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    onClick={onClose} /* Cierra al hacer clic fuera */
+    >
+      <div 
+      className="w-[20rem] bg-white p-6 rounded-lg shadow-lg"
+      onClick={(e) =>
+        e.stopPropagation()
+      } /* Evita que el clic dentro lo cierre */>
         <div className="text-2xl font-bold mb-4 text-center">
           Cambiar contraseña
         </div>

@@ -1,31 +1,64 @@
-import React, { useRef, useState } from "react";
-import Navbar from "../../components/navbar/navbarComponent";
+import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actualizarFoto } from "../../redux/actions";
 
 function TakeFotoToDetailComponent({ id, closeTakeFoto }) {
   const webcamRef = useRef(null);
   const [imagen, setImagen] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //------------Capturar foto------------//
-  const capturarFoto = () => {
+  /* const capturarFoto = () => {
     const captura = webcamRef.current.getScreenshot();
     setImagen(captura);
+  }; */
+  const capturarFoto = async () => {
+    const captura = webcamRef.current.getScreenshot();
+  
+    if (captura) {
+      // Convertir Base64 a Blob
+      const blob = await fetch(captura).then(res => res.blob());
+  
+      // Crear un objeto File
+      const file = new File([blob], `foto_${Date.now()}.jpeg`, { type: "image/jpeg" });
+  
+      setImagen(file); // Guardamos el archivo de la foto en el estado
+    }
   };
+  useEffect(() => {
+    if (imagen) {
+      const objectUrl = URL.createObjectURL(imagen);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [imagen]);
 
-  const handleConfirmar = () => {
-    const info = {
-      foto: imagen,
-      id: id,
-    };
-    dispatch(actualizarFoto(info));
+  const handleConfirmar = async () => {
+    if (imagen) {
+      // Crear un FormData
+      const formData = new FormData();
+  
+      // Agregar los datos a FormData, incluyendo la foto
+      formData.append("foto", imagen); // Usamos 'imagen' como el archivo
+      formData.append("id", id);
 
-    navigate(0); // Recarga la página completamente
+      const response =await dispatch(actualizarFoto(formData));
+      if (response) {
+        alert("Foto subida con éxito.");
+      } else {
+        alert("Hubo un error al subir la foto.");
+      }
+
+      closeTakeFoto(); // Cerrar el modal o componente después de la subida
+      navigate(0); // Recarga la página completamente
+    } else {
+      console.error("No hay imagen capturada");
+    }
   };
 
   return (
@@ -42,7 +75,7 @@ function TakeFotoToDetailComponent({ id, closeTakeFoto }) {
             } /* Evita que el clic dentro lo cierre */
           >
             <img
-              src={imagen}
+              src={preview}
               alt="Captura"
               className="mt-[6rem] rounded-lg overflow-hidden"
             />
@@ -81,6 +114,9 @@ function TakeFotoToDetailComponent({ id, closeTakeFoto }) {
                 ref={webcamRef}
                 screenshotFormat="image/jpeg"
                 width={500}
+                videoConstraints={{
+                  facingMode: { exact: "environment" } // Usa la cámara trasera
+                }}
               />
             </div>
             <button

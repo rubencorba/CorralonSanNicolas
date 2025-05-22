@@ -14,10 +14,6 @@ module.exports = (sequelize) => {
       type: DataTypes.DOUBLE,
       allowNull: true,
     },
-    /* inspector:{
-      type:DataTypes.INTEGER,
-      allowNull:true,
-    }, */
     
   }, {
     tableName: "compactados",  // Asegura que use minúsculas

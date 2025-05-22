@@ -15,20 +15,20 @@ module.exports = (sequelize) => {
       allowNull:true,
     }, */
     dni:{
-      type:DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull:true,
     },
     nombreCompleto:{
       type:DataTypes.TEXT,
       allowNull:true,
-      
+
     },
     domicilio:{
       type:DataTypes.TEXT,
       allowNull:true
     },
     licencia:{
-      type:DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull:true
     },
     fecha_hora:{
@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     bPago:{
-      type:DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull:true
     },
     obs:{

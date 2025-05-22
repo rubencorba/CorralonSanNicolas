@@ -9,8 +9,12 @@ const verificarToken = (req, res, next) => {
     req.user = verified; // Agrega los datos del token a `req.user` para usarlos en el controlador si es necesario
     next(); // Continúa con el siguiente middleware/controlador
   } catch (err) {
+    // Si falla, verificar si es un token fijo autorizado
+    if (token === process.env.FIXED_API_TOKEN) {
+      return next();
+    }
     res.status(403).json({ message: "Token inválido o expirado" });
-  }
+  };
 };
 
 module.exports = verificarToken;

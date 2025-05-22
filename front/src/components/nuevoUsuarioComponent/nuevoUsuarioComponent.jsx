@@ -17,7 +17,11 @@ function NuevoUsuarioComponent() {
     formState: { errors }, // Accede a los errores del formulario
   } = useForm();
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data) => {
+    setLoading(true);
+
     // Generar fecha y hora actual en el formato deseado
     const now = new Date();
     const formattedDate = `${now.getFullYear()}-${String(
@@ -30,16 +34,20 @@ function NuevoUsuarioComponent() {
 
     // Agregar el campo "fecha" a los datos
     const finalData = { ...data, fecha: formattedDate };
-    console.log(finalData);
+
     const resp = await dispatch(postNewUser(finalData));
 
     if (resp.error) {
       setError("dni", {
-      type: "server",
-      message: resp.error || "Error desconocido", // Muestra el mensaje del servidor
-    });
-  }
+        type: "server",
+        message: resp.error || "Error desconocido", // Muestra el mensaje del servidor
+      })
+    } else {
+      alert("Usuario ingresado con éxito");
+      navigate("/usuarios");
+    }
 
+    setLoading(false);
   };
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -48,10 +56,10 @@ function NuevoUsuarioComponent() {
   // Para verificar la primera contraseña ingresada
   const contrasena = watch("contrasena");
 
-  const handleback =(e)=>{
+  const handleback = (e) => {
     e.preventDefault();
     navigate(-1)
-    }
+  }
 
   return (
     <div>
@@ -69,7 +77,7 @@ function NuevoUsuarioComponent() {
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   Nombre y apellido
                 </div>
-                
+
                 <input
                   placeholder="Nombre y apellido"
                   className="self-stretch p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex  text-sm font-normal font-inter"
@@ -127,12 +135,12 @@ function NuevoUsuarioComponent() {
                       if (!/^\d+$/.test(value)) {
                         return "El DNI solo puede contener números.";
                       }
-                
+
                       // Validar longitud permitida (6 a 9 dígitos)
                       if (value.length < 6 || value.length > 9) {
                         return "El DNI debe tener entre 6 y 9 dígitos.";
                       }
-                
+
                       return true; // Válido
                     },
                     setValueAs: (value) => value?.trim(), // Eliminar espacios innecesarios
@@ -143,11 +151,6 @@ function NuevoUsuarioComponent() {
                 <div className="text-[#3d4245] text-sm font-normal font-inter">
                   Tipo de usuario
                 </div>
-                {/* <div className="self-stretch p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex">
-                <div className="text-[#a3b8c1] text-sm font-normal font-inter">
-                  Tipo de usuario
-                </div>
-              </div> */}
                 <select
                   className="self-stretch p-2 rounded-md border border-[#687073] justify-start items-center gap-1 inline-flex text-sm font-normal font-inter"
                   defaultValue=""
@@ -158,8 +161,10 @@ function NuevoUsuarioComponent() {
                   <option value="" disabled>
                     Seleccionar tipo de usuario
                   </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option value="super_admin">Super admin</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                  <option value="viewer">Viewer</option>
                 </select>
               </div>
               <div className="self-stretch flex-col justify-start items-start gap-2 flex">
@@ -237,7 +242,7 @@ function NuevoUsuarioComponent() {
                 </div>
 
                 <div className="relative w-[20rem] sm:w-[32rem]">
-                <input
+                  <input
                     type={isPasswordVisible2 ? "text" : "password"}
                     placeholder="Contraseña"
                     className="w-full text-sm font-normal font-inter outline-none rounded-md pl-4 pr-10 py-2"
@@ -294,15 +299,48 @@ function NuevoUsuarioComponent() {
                 </div>
               </div>
             </div>
-            <div className="self-stretch justify-center items-center gap-2 sm:inline-flex ">
+
+            {Object.values(errors).map((error, index) => (
+            <p className="text-red-500" key={index}>
+              {error.message}
+            </p>
+          ))}
+            <div className="self-stretch justify-center items-center gap-2 sm:inline-flex mb-[1rem]">
+
+
+              
               <button
                 type="submit"
                 className="w-full grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-[#0477ad] rounded-lg justify-center items-center gap-1 flex overflow-hidden sm:mb-0 mb-[0.5rem]"
+                disabled={loading} // Deshabilita el botón mientras carga
               >
-                <div className="text-[#f6f5f5] text-center font-semibold font-inter">
-                  Registrar usuario
-                </div>
+                {loading ? (
+                  <div role="status">
+                    <svg
+                      aria-hidden="true"
+                      className="w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-white"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="text-[#f6f5f5] text-center font-semibold font-inter">
+                    Registrar usuario
+                  </div>
+                )}
               </button>
+
+
               <button onClick={handleback} className="w-full grow shrink basis-0 h-[50px] px-[18px] py-[13px] bg-white rounded-lg border border-[#0477ad] justify-center items-center gap-1 flex overflow-hidden">
                 <div className="text-[#0477ad] text-base font-semibold font-inter">
                   Cancelar
@@ -311,13 +349,6 @@ function NuevoUsuarioComponent() {
             </div>
           </div>
         </form>
-        <div className="gap-0 mt-[1rem] mb-[3rem] justify-center items-center text-center">
-          {Object.values(errors).map((error, index) => (
-            <p className="text-red-500" key={index}>
-              {error.message}
-            </p>
-          ))}
-        </div>
       </div>
     </div>
   );
